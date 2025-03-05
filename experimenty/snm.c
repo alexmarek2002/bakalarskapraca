@@ -90,40 +90,40 @@ void iterateSteinerAlgorithm(Point steinerPoints[], Point terminals[], int numSt
     }
 }
 
-main(){
-Point terminals[] = {
-    {1.0, 3.0}, // T1
-    {2.0, 1.0}, // T2
-    {5.0, 4.0}, // T3
-    {4.0, 0.6}  // T4
-};
+int main(void)
+{
+    Point terminals[] = {
+        {1.0, 3.0}, // T1
+        {2.0, 1.0}, // T2
+        {5.0, 4.0}, // T3
+        {4.0, 0.6}  // T4
+    };
 
     Point steinerPoints[] = {
         {3.0, 2.0, {0, NULL}}, // S1
         {4.0, 2.0, {0, NULL}}  // S2
     };
 
-Point neighborsS1[] = {terminals[0], terminals[1], steinerPoints[1]}; // Susedia S1 (T1 a T2)
-Point neighborsS2[] = {terminals[2], terminals[3], steinerPoints[0]}; //Susedia S2
+    Point neighborsS1[] = {terminals[0], terminals[1], steinerPoints[1]}; // Susedia S1 (T1 a T2)
+    Point neighborsS2[] = {terminals[2], terminals[3], steinerPoints[0]}; // Susedia S2
 
-SteinerNeighbors steinerConnections[] = {
-    {3, neighborsS1},
-    {3, neighborsS2}
-};
+    SteinerNeighbors steinerConnections[] = {
+        {3, neighborsS1},
+        {3, neighborsS2}
+    };
 
-steinerPoints[0].neighbors = steinerConnections[0];
-steinerPoints[1].neighbors = steinerConnections[1];
+    steinerPoints[0].neighbors = steinerConnections[0];
+    steinerPoints[1].neighbors = steinerConnections[1];
 
-printf("Pôvodné Steinerove body:\n");
-for (int i = 0; i < 2; i++) {
-    printf("s%d = (%.6f, %.6f)\n", i + 1, steinerPoints[i].x, steinerPoints[i].y);
-}
-printf("terminal points:\n");
-for (int i = 0; i < 4; i++) {
-    printf("s%d = (%.6f, %.6f)\n", i + 1, terminals[i].x, terminals[i].y);
-}
+    printf("Pôvodné Steinerove body:\n");
+    for (int i = 0; i < 2; i++) {
+        printf("s%d = (%.6f, %.6f)\n", i + 1, steinerPoints[i].x, steinerPoints[i].y);
+    }
 
-iterateSteinerAlgorithm(steinerPoints, terminals, 2, 1);
+    printf("terminal points:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("s%d = (%.6f, %.6f)\n", i + 1, terminals[i].x, terminals[i].y);
+    }
 
-
+    iterateSteinerAlgorithm(steinerPoints, terminals, 2, 1);
 };
