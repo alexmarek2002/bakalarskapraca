@@ -90,8 +90,7 @@ void iterateSteinerAlgorithm(Point steinerPoints[], Point terminals[], int numSt
     }
 }
 
-int main(void)
-{
+int main(void) {
     Point terminals[] = {
         {1.0, 3.0}, // T1
         {2.0, 1.0}, // T2
