@@ -7,12 +7,13 @@ typedef struct Point Point;
 
 typedef struct {
     int count;        
-    Point* neighbors; 
+    Point** neighbors; 
 } SteinerNeighbors;
 
 struct Point {
     double x; // X-coordinate
     double y; // Y-coordinate
+    int isSP; // 1 if Steiner point, 0 if terminal point
     SteinerNeighbors neighbors; // Neighbors of this point
 };
 
@@ -28,38 +29,57 @@ void updateSteinerPoints(Point steinerPoints[], int numSteinerPoints) {
     gsl_permutation *p = gsl_permutation_alloc(n);
     int signum;
 
+
     for (int i = 0; i < numSteinerPoints; i++) {
-        double sumW = 0.0, sumX = 0.0, sumY = 0.0;
-
+        double sumW = 0.0;
+        double betaX = 0.0, betaY = 0.0;
+        
         for (int j = 0; j < steinerPoints[i].neighbors.count; j++) {
-            Point neighbor = steinerPoints[i].neighbors.neighbors[j];
-            double Dj = distance(steinerPoints[i], neighbor);
-            if (Dj < 1e-6) continue; // Predchádza deleniu nulou
-
-            double w = 1.0 / Dj;
-            sumW += w;
-            sumX += w * neighbor.x;
-            sumY += w * neighbor.y;
+            Point* neighbor = steinerPoints[i].neighbors.neighbors[j];
+            double Dj = distance(steinerPoints[i], *neighbor);
+            if (Dj < 1e-6) continue; 
+            sumW += 1.0 / Dj;
         }
 
-        gsl_matrix_set(A, 2 * i, 2 * i, sumW);
-        gsl_matrix_set(A, 2 * i + 1, 2 * i + 1, sumW);
-        gsl_vector_set(b, 2 * i, sumX);
-        gsl_vector_set(b, 2 * i + 1, sumY);
-    }
+        for (int j = 0; j < steinerPoints[i].neighbors.count; j++) {
+            Point* neighbor = steinerPoints[i].neighbors.neighbors[j]; 
 
+            double Dj = distance(steinerPoints[i], *neighbor);
+            double alpha = (1.0 / Dj) / sumW;
+
+            int rowX = 2 * i;     // Riadok pre x
+            int rowY = 2 * i + 1; // Riadok pre y
+            
+            if(neighbor->isSP == 1){
+                int colX = 2 * (neighbor - steinerPoints);     // Index x v A
+                int colY = 2 * (neighbor - steinerPoints) + 1; // Index y v A
+                gsl_matrix_set(A, rowX, colX, alpha);
+                gsl_matrix_set(A, rowY, colY, alpha);
+            }else{
+                betaX += neighbor->x / Dj;
+                betaY += neighbor->y / Dj;
+            }
+        }
+        gsl_vector_set(b, 2 * i, betaX / sumW);
+        gsl_vector_set(b, 2 * i + 1, betaY / sumW);
+
+        gsl_matrix_set(A, 2 * i, 2 * i, -1);
+        gsl_matrix_set(A, 2 * i + 1, 2 * i + 1, -1);
+    }
+    
     gsl_linalg_LU_decomp(A, p, &signum);
     gsl_linalg_LU_solve(A, p, b, x);
-
+    
     for (int i = 0; i < numSteinerPoints; i++) {
-        steinerPoints[i].x = gsl_vector_get(x, 2 * i);
-        steinerPoints[i].y = gsl_vector_get(x, 2 * i + 1);
+        steinerPoints[i].x = -gsl_vector_get(x, 2 * i);
+        steinerPoints[i].y = -gsl_vector_get(x, 2 * i + 1);
     }
-
+    
     gsl_matrix_free(A);
     gsl_vector_free(b);
     gsl_vector_free(x);
     gsl_permutation_free(p);
+    
 }
 
 double calculateDistance(Point terminals[], Point steinerPoints[], int numSteinerPoints) {
@@ -67,21 +87,21 @@ double calculateDistance(Point terminals[], Point steinerPoints[], int numSteine
 
     for (int i = 0; i < numSteinerPoints; i++) {
         for (int j = 0; j < steinerPoints[i].neighbors.count; j++) {
-            Point neighbor = steinerPoints[i].neighbors.neighbors[j];
-            sum += distance(steinerPoints[i], neighbor);
-            printf("Vzdialenosť medzi s%d a n%d: %.6f\n", i + 1, j + 1, distance(steinerPoints[i], neighbor));
+            Point* neighbor = steinerPoints[i].neighbors.neighbors[j]; // Použitie ukazovateľa
+            sum += distance(steinerPoints[i], *neighbor);
+            printf("Vzdialenosť medzi s%d a n%d: %.6f\n", i + 1, j + 1, distance(steinerPoints[i], *neighbor));
         }
     }
-    sum -= distance(steinerPoints[0],steinerPoints[1]);
+    sum -= distance(steinerPoints[0], steinerPoints[1]); // Odčítanie redundantnej hrany medzi S1 a S2
 
     return sum;
 }
-
-
 void iterateSteinerAlgorithm(Point steinerPoints[], Point terminals[], int numSteinerPoints, int iterations) {
     for (int i = 0; i < iterations; i++) {
         updateSteinerPoints(steinerPoints, numSteinerPoints);
-        printf("\nIterácia %d - Celková vzdialenosť: %.6f\n", i + 1, calculateDistance(terminals, steinerPoints, numSteinerPoints));
+        
+        double totalLength = calculateDistance(terminals, steinerPoints, numSteinerPoints);
+        printf("\nIterácia %d - Celková vzdialenosť: %.6f\n", i + 1, totalLength);
 
         printf("\nIterácia %d - Aktualizované Steinerove body:\n", i + 1);
         for (int j = 0; j < numSteinerPoints; j++) {
@@ -90,21 +110,52 @@ void iterateSteinerAlgorithm(Point steinerPoints[], Point terminals[], int numSt
     }
 }
 
+void outputTikZ(Point steinerPoints[], Point terminals[], int numSteinerPoints, int numOfTerminals) {
+    FILE *file = fopen("outputTikZ.txt", "w");
+
+    // Vypis vrcholov
+    for (int i = 0; i < numSteinerPoints; i++) {
+        fprintf(file, "\\addvertex{S%d}{%.6f}{%.6f}\n", i + 1, steinerPoints[i].x, steinerPoints[i].y);
+    }
+    for (int i = 0; i < numOfTerminals; i++) {
+        fprintf(file, "\\addvertex{T%d}{%.6f}{%.6f}\n", i + 1, terminals[i].x, terminals[i].y);
+    }
+
+    // Vypis hran
+    for (int i = 0; i < numSteinerPoints; i++) {
+        for (int j = 0; j < steinerPoints[i].neighbors.count; j++) {
+            Point *neighbor = steinerPoints[i].neighbors.neighbors[j];
+
+            if (neighbor->isSP == 1) {
+                int neighborIndex = (neighbor - steinerPoints) + 1; 
+                fprintf(file, "\\addedge{S%d}{S%d}\n", i + 1, neighborIndex);
+            } else {
+                int neighborIndex = (neighbor - terminals) + 1; 
+                fprintf(file, "\\addedge{S%d}{T%d}\n", i + 1, neighborIndex);
+            }
+        }
+    }
+    
+    fclose(file);
+    printf("'outputTikZ.txt' bolo vytvorene\n");
+}
+
+
 int main(void) {
     Point terminals[] = {
-        {1.0, 3.0}, // T1
-        {2.0, 1.0}, // T2
-        {5.0, 4.0}, // T3
-        {4.0, 0.6}  // T4
+        {1.0, 3.0, 0, {0, NULL}}, // T1
+        {2.0, 1.0, 0, {0, NULL}}, // T2
+        {5.0, 4.0, 0, {0, NULL}}, // T3
+        {4.0, 0.6, 0, {0, NULL}}  // T4
     };
 
     Point steinerPoints[] = {
-        {3.0, 2.0, {0, NULL}}, // S1
-        {4.0, 2.0, {0, NULL}}  // S2
+        {3.0, 2.0, 1, {0, NULL}}, // S1
+        {4.0, 2.0, 1, {0, NULL}}  // S2
     };
 
-    Point neighborsS1[] = {terminals[0], terminals[1], steinerPoints[1]}; // Susedia S1 (T1 a T2)
-    Point neighborsS2[] = {terminals[2], terminals[3], steinerPoints[0]}; // Susedia S2
+    Point* neighborsS1[] = {&terminals[0], &terminals[1], &steinerPoints[1]}; // S1 neighbors
+    Point* neighborsS2[] = {&terminals[2], &terminals[3], &steinerPoints[0]}; // S2 neighbors
 
     SteinerNeighbors steinerConnections[] = {
         {3, neighborsS1},
@@ -124,5 +175,7 @@ int main(void) {
         printf("s%d = (%.6f, %.6f)\n", i + 1, terminals[i].x, terminals[i].y);
     }
 
-    iterateSteinerAlgorithm(steinerPoints, terminals, 2, 1);
+    iterateSteinerAlgorithm(steinerPoints, terminals, 2, 3);
+
+    outputTikZ(steinerPoints, terminals, 2, 4);
 }

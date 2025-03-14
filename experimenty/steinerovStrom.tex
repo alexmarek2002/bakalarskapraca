@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage{tikz}
+
+\begin{document}
+	
+	\begin{center}
+		\begin{tikzpicture}[scale=3]
+			
+			\newcommand{\addvertex}[3]{\node[draw, circle, minimum size=8mm] (#1) at (#2,#3) {#1};}
+			\newcommand{\addedge}[2]{\draw (#1) -- (#2);}
+			
+			\input{outputTikZ.txt}
+			
+		\end{tikzpicture}
+	\end{center}
+	
+\end{document}
