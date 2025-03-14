@@ -178,4 +178,5 @@ int main(void) {
     iterateSteinerAlgorithm(steinerPoints, terminals, 2, 3);
 
     outputTikZ(steinerPoints, terminals, 2, 4);
+
 }
