@@ -1,0 +1,23 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+	\begin{tikzpicture}
+		\begin{axis}[
+			view={60}{30}, % uhol(azimut, elevacia)
+			grid=major, % mriezka
+			xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+			width=12cm,
+			height=12cm,
+			scatter/classes={
+				terminal={blue}, steiner={red}
+			}
+			]
+			
+			\input{outputTikZ3D.txt}
+			
+		\end{axis}
+	\end{tikzpicture}
+\end{document}
+
