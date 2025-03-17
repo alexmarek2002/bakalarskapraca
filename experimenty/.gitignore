@@ -1,2 +1,5 @@
 *.o
+*.aux
+*.log
+*.pdf
 snm
