@@ -1,2 +1,5 @@
 *.o
-snm
+*.aux
+*.log
+*.pdf
+test_3d_strom
