@@ -1,1 +1,14 @@
-*.pdf
+# Ignoruje celý adresár experimenty
+experimenty/*
+GenStromy/*
+# Musíme znova povoliť adresár, inak výnimky nebudú fungovať
+!experimenty/
+!GenStromy/
+# Povolenie konkrétnych súborov
+!experimenty/snm.c
+!experimenty/steinerovStrom.tex
+!experimenty/steinerovStrom3D.tex
+!GenStromy/prufer.c
+!GenStromy/vykresliStromy.tex
+!GenStromy/genTopology.c
+
