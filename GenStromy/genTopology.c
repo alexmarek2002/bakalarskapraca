@@ -243,7 +243,7 @@ int main(){
 
 int* limits = malloc((10) * sizeof(int));
 for (int i = 0; i <= 9; i++) {
-    limits[i] = points[i].isSP ? 3 : 2;
+    limits[i] = points[i].isSP ? 2 : 1;
 }
 printf("Limits: \n");
 for (int i = 0; i <= 8; i++) {
