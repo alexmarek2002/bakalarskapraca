@@ -88,7 +88,7 @@ void filterValidSequences(int*** pruferSequencies, int* count, int seqLength, in
 
         bool valid = true;
         for (int j = 0; j < N; j++) {
-            if (points[j].isSP && tempCounts[j] != 3) {
+            if (points[j].isSP && tempCounts[j] != 2) {
                 valid = false;
                 break;
             }
