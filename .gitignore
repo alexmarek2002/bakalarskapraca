@@ -1,5 +1,4 @@
 # Ignoruje celý adresár experimenty
-experimenty/*
 GenStromy/*
 # Musíme znova povoliť adresár, inak výnimky nebudú fungovať
 !experimenty/
