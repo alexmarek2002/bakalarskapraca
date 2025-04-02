@@ -50,12 +50,15 @@ void freeAllPruferMemory(int** pruferSequencies, int numberOfTrees, int* sequenc
     free(pruferSequencies);
     free(sequence);
 }
+// rekurzivna funkcia na generovane pruferovych sekvencii s omedzenim ze kazdy bod (cislo 1-N) sa moze nachadzat nanjvys 2 krat
 void generateLimitedPrufer(int** pruferSequencies, int* sequence, int* counts, int position, int N, int sequenciesLength, int* indexPtr, int* limits, Point* points) {
-    if (position == sequenciesLength) {
+    if (position == sequenciesLength) { // toto je vlastne hranica pokial mame rekurzivne volat funkciu ... potialto sa iteruje
         if (pruferSequencies != NULL) { // pre prve volanie sa nezapisuju seq iba sa zistuje pocet
             for (int i = 0; i < sequenciesLength; i++) {
                 pruferSequencies[*indexPtr][i] = sequence[i];
             }
+            // (***) tuto by som pridal funkcionalitu z filterValidSequences, tak, ze by sa presla sekvencia zratali sa jedntlive cisla a ak (isSP==1 pocet==2) tak sa zapisu len tie .
+            // to by usetrilo pamat a vyrazne, (implementujem ked nebude robit treba dolezitejsie veci alebo sa stane implementacia dolezitejsou ako ostante veci)
         }
         (*indexPtr)++;
         return;
@@ -70,6 +73,9 @@ void generateLimitedPrufer(int** pruferSequencies, int* sequence, int* counts, i
         }
     }
 }
+// FILTER pre vygenerovane pruferove sekvencie
+// cize funkcia ktora prejde vsetky sekvenice a necha len tie kde isSP==1 su 2 krat v sekvencii, maju 3 hrany
+// ak bude kod moc pomaly tak na miesto kde su hviezdicky (***)(generateLimitedPrufer()) pridam tuto funkcionalitu a nebudem to muset prechadzat cele (neviem preco som to takto vymyslel teraz mi to pride hlupe)
 void filterValidSequences(int*** pruferSequencies, int* count, int seqLength, int N, Point* points) {
     int** input = *pruferSequencies;
     int** filtered = malloc(*count * sizeof(int*));
@@ -118,8 +124,9 @@ void GenAllSteinerSequencies(Point* points, int* Nptr, int dim, SequenceSet** re
     *results = malloc((maxS + 1) * sizeof(SequenceSet));
     *setCount = 0;
 
-    for (int s = 1; s <= maxS; s++) {
-
+    for (int s = 1; s <= maxS; s++) { // takze postupne pridavame 1 sp (steiner point), 2 sp, 3 sp, ... n-2 sp a pre kazdy pocet sp generujeme vsetky sekvencie
+                                                    // ak budeme neskor uvazovat len pripady kedy vsetky terminaly==listy tak nebude treba iterat, lebo pre taketo stromy je jedina pripustna
+                                                    // topologia - full steiner topology - N-2 sp 
         int dummyCoords[2] = {1, 1};
         addSteinerPoint(&points, Nptr, dim, dummyCoords); // aktualizuje *Nptr
 
@@ -243,7 +250,8 @@ int main(){
 
 int* limits = malloc((10) * sizeof(int));
 for (int i = 0; i <= 9; i++) {
-    limits[i] = points[i].isSP ? 2 : 1;
+ //   limits[i] = points[i].isSP ? 2 : 1;
+    limits[i] = 2;
 }
 printf("Limits: \n");
 for (int i = 0; i <= 8; i++) {
