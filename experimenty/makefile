@@ -4,7 +4,12 @@ LIBEUTREEPATH=../euclidean_tree_lib
 
 # ------------------------------------------------------------------- tests ---
 
-tests: test_3d_strom #test_strom_z_clanku test_zlozitejsi_2d_strom
+tests: test_3d_okamzita_planarizacia
+#tests: test_3d_strom #test_strom_z_clanku test_zlozitejsi_2d_strom
+
+test_3d_okamzita_planarizacia: test_3d_okamzita_planarizacia.c
+	gcc -c test_3d_okamzita_planarizacia.c -I$(LIBEUTREEPATH)
+	gcc -o test_3d_okamzita_planarizacia test_3d_okamzita_planarizacia.o -lm -lgsl -lgslcblas -L$(LIBEUTREEPATH) -leutree
 
 test_3d_strom: test_3d_strom.c
 	gcc -c test_3d_strom.c -I$(LIBEUTREEPATH)
@@ -23,6 +28,7 @@ clean:
 
 deepclean: clean
 	rm -f test_3d_strom
+	rm -f test_3d_okamzita_planarizacia
 	rm -f test_strom_z_clanku
 	rm -f test_zlozitejsi_2d_strom
 
