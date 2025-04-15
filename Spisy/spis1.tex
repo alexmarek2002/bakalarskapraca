@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+
+\title{Bachelor Thesis}
+\author{Alex Marek}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section*{LED trees}
+	LED (leaves of equal depth)
+	
+	\maketitle
+	
+	\section*{relaxed LED tree with 3 leaves}
+	
+	Let \( T \) be a tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e. leaves) and exactly one vertex \( S \) of degree tree.
+	The triangle determined by vertices \( A , B , C \) is acute-angled and vertex \( S \) is inside this triangle and is adjacent to all the leaves. 
+	Lets call these edges as follows:
+	\[
+	\alpha = |AS| \quad \beta = |BS| \quad \gamma = |CS|
+	\]
+		
+
+	Now lets place a vertex \( R \) on an arbitrary one of these edges. This vertex will be referred to as the \textbf{root} of the tree.
+
+	// niekde vysvetlit relaxed co znamena
+	
+	For every edge that connects two points, we assign two values:
+	\begin{itemize}
+	\item \( D_f(u, v) \): the Euclidean distance between the two points \( u \) and \( v \),
+	\item \( D_j(u, v) \): the relaxed (or curved) value of the edge between \( u \) and \( v \),
+	\end{itemize}
+	where \( D_j(u, v) \geq D_f(u, v) \).
+ 	
+	A tree is considered a LED tree if \( D_j \) is equal for all paths from the root to each leaf.
+	
+	We define the total length \( L() \) of the tree as sum of all \( D_j \). //este neni dobre naformulovane 
+	
+	This section is devoted to analyze the properties of a minimal LED tree with exactly three leaves.
+ 	Thus where \( L \) for set of leaves is minimal.
+ 	
+	On tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \gamma \). For this topology the \( L(T) = D_f(A, S) + D_f(B, S) + D_f(C, R) + D_f(R, S) \). Minimal L(T) depends on position of \( S \), to be more specific, in which segment of the triangle \( A , B , C \), \(S\) lies. We can    
+	
+	
+	When analyzing the properties of minimal LED tree \( T \)  
+\end{document}
