@@ -1,4 +1,5 @@
 \documentclass[12pt]{article}
+\usepackage{amsmath}
 
 \title{Bachelor Thesis}
 \author{Alex Marek}
@@ -35,14 +36,58 @@
 	where \( D_j(u, v) \geq D_f(u, v) \).
  	
 	A tree is considered a LED tree if \( D_j \) is equal for all paths from the root to each leaf.
+	\[
+	D_j(R, A) = D_j(R, B) = D_j(R, C)
+	\]
 	
 	We define the total length \( L() \) of the tree as sum of all \( D_j \). //este neni dobre naformulovane 
 	
 	This section is devoted to analyze the properties of a minimal LED tree with exactly three leaves.
  	Thus where \( L \) for set of leaves is minimal.
  	
-	On tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \gamma \). For this topology the \( L(T) = D_f(A, S) + D_f(B, S) + D_f(C, R) + D_f(R, S) \). Minimal L(T) depends on position of \( S \), to be more specific, in which segment of the triangle \( A , B , C \), \(S\) lies. We can    
+	On tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \gamma \). For this topology the \( L(T) = D_j(A, S) + D_j(B, S) + D_j(C, R) + D_j(R, S) \). Minimal L(T) depends on position of \( S \), to be more specific, in which segment of the triangle \( A , B , C \), \(S\) lies. We can determine four segments of triangle that are specified by inequalities:
+	\begin{enumerate}
+	\item \( \alpha > \beta, \quad \alpha < \gamma \)
+	\item \( \beta > \alpha, \quad \beta < \gamma \)
+	\item \( \alpha > \beta, \quad \alpha > \gamma \)
+	\item \(  \beta > \alpha, \quad \beta > \gamma \)
+	\end{enumerate}
 	
+	Lets further analyse the first segment:
+	\begin{align*}
+		D_j(R, C) = D_j(R, S) + D_j(S, A) = D_j(R, S) + D_j(S, B) \\
+		\Rightarrow \quad D_j(S, A) = D_j(S, B) \\
+		D_f(S, A) > D_f(S, B) \\
+		min(D_j(S,A)) = min(D_j(S,B)) = D_f(S, A) \\
+	\end{align*}
+	Since our goal si to minimize the three lets consider \( D_j(S, A) = D_j(S, B) = D_f(S, A) \) and also since we do not have any condition for \(D_j(R, S)\) and \(min(D_j(R, S)) = D_f(R, S)\), lets consider \( D_j(R, S) = D_f(R, S)  \).
+	The total length \( L() \) of three T is now computed as follows:
+	\begin{align*}
+		L(T) &= D_j(R, C) + D_j(R, S) + D_j(S, A) + D_j(S, B)\\
+		&= D_f(R, S) + D_f(S, A) + D_f(R,S) + D_f(S, A) + D_f(S, A)\\
+		&= 2 D_f(R, S) + 3 D_f(S, A) \\
+	\end{align*}
 	
-	When analyzing the properties of minimal LED tree \( T \)  
+	similarly for second segment: 
+	...
+	\begin{align*}
+		L(T) = 2 D_f(R, S) + 3 D_f(S, B)
+	\end{align*}
+	 // chyba podmienka aby \(D_j(R, B/A) > D_j(R, C) \)
+	 // odtialto dole je to volnopis
+	 
+	 For third segment, \(D_j(R, B/A) > D_j(R, C) \) can not happen since \(\alpha > \gamma \)
+	for that reason we will get the shortest tree by minimizing \( D_f(R,S) \) ... \(R = S\). 
+	This means that the length \( L() \) of three is:
+	\begin{align*}
+		L(T) = 3 D_f(S, A)
+	\end{align*}
+	
+	Fourth Segment:
+	\begin{align*}
+		L(T) = 3 D_f(S, B)
+	\end{align*}
+		 
+	 
+		 
 \end{document}
