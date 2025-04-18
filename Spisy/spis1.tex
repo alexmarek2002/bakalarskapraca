@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 
+\newcommand{\Prize}[2]{P(#1,#2)}
+
 \title{Bachelor Thesis}
 \author{Alex Marek}
 \date{\today}
@@ -14,80 +16,140 @@
 	
 	\maketitle
 	
+	\section*{relaxed LED trees}
+	
+	\maketitle
+	
 	\section*{relaxed LED tree with 3 leaves}
 	
-	Let \( T \) be a tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e. leaves) and exactly one vertex \( S \) of degree tree.
-	The triangle determined by vertices \( A , B , C \) is acute-angled and vertex \( S \) is inside this triangle and is adjacent to all the leaves. 
-	Lets call these edges as follows:
-	\[
-	\alpha = |AS| \quad \beta = |BS| \quad \gamma = |CS|
-	\]
-		
-
-	Now lets place a vertex \( R \) on an arbitrary one of these edges. This vertex will be referred to as the \textbf{root} of the tree.
-
-	// niekde vysvetlit relaxed co znamena
+	Let T be a tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e. leaves) and exactly one vertex \( S \) of degree tree. Vertex \( S \) lies inside the triangle(convex hull) determined by determined by vertices \( A , B , C \) and is adjacent to all of them. Let us place a vertex \( R \) on an arbitrary one of these edges. This vertex will be referred to as the \textbf{root} of the tree.
 	
 	For every edge that connects two points, we assign two values:
 	\begin{itemize}
-	\item \( D_f(u, v) \): the Euclidean distance between the two points \( u \) and \( v \),
-	\item \( D_j(u, v) \): the relaxed (or curved) value of the edge between \( u \) and \( v \),
+	\item \( |UV| \): the Euclidean distance between the two points \( u \) and \( v \),
+	\item $\Prize{U}{V}$: the relaxed (or curved) value of the edge between \( u \) and \( v \),
 	\end{itemize}
-	where \( D_j(u, v) \geq D_f(u, v) \).
+	where \( |UV| \leq  $ \Prize{U}{V}$ \).\\
  	
-	A tree is considered a LED tree if \( D_j \) is equal for all paths from the root to each leaf.
-	\[
-	D_j(R, A) = D_j(R, B) = D_j(R, C)
-	\]
+	A tree is considered a LED tree if $\Prize{}{}$ is equal for all paths from the root to each leaf. In case of three T:
+	\begin{align*}
+		\Prize{R}{A} = \Prize{R}{B} = \Prize{R}{C}
+	\end{align*}
 	
-	We define the total length \( L() \) of the tree as sum of all \( D_j \). //este neni dobre naformulovane 
+	We define the total length \( L() \) of the tree as sum of all $\Prize{}{}$ .
 	
-	This section is devoted to analyze the properties of a minimal LED tree with exactly three leaves.
- 	Thus where \( L \) for set of leaves is minimal.
- 	
-	On tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \gamma \). For this topology the \( L(T) = D_j(A, S) + D_j(B, S) + D_j(C, R) + D_j(R, S) \). Minimal L(T) depends on position of \( S \), to be more specific, in which segment of the triangle \( A , B , C \), \(S\) lies. We can determine four segments of triangle that are specified by inequalities:
+	For tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \overline{CS} \). For this topology the total length would be:
+	 \begin{align*}
+	 	L(T) = \Prize{A}{S} + \Prize{B}{S} + \Prize{C}{R} + \Prize{R}{S}
+	 \end{align*}
+	 
+	 
+	 Now we will look at how minimal Total length depends on certain properties (lenghts of segments): 
 	\begin{enumerate}
-	\item \( \alpha > \beta, \quad \alpha < \gamma \)
-	\item \( \beta > \alpha, \quad \beta < \gamma \)
-	\item \( \alpha > \beta, \quad \alpha > \gamma \)
-	\item \(  \beta > \alpha, \quad \beta > \gamma \)
+	\item \( |AS| > |BS|, |AS|+|SR| > |CR| \)
+	\item \( |AS| < |BS|, |BS|+|SR| > |CR| \)
+	\item \( |AS| > |BS|, |AS|+|SR| \leq |CR| \)
+	\item \( |AS| < |BS|, |BS|+|SR| \leq |CR| \)
 	\end{enumerate}
 	
-	Lets further analyse the first segment:
+	
+	Let us analyze the first case where \( |AS| > |BS|, |AS|+|SR| > |CR| \).
+	We know that:
 	\begin{align*}
-		D_j(R, C) = D_j(R, S) + D_j(S, A) = D_j(R, S) + D_j(S, B) \\
-		\Rightarrow \quad D_j(S, A) = D_j(S, B) \\
-		D_f(S, A) > D_f(S, B) \\
-		min(D_j(S,A)) = min(D_j(S,B)) = D_f(S, A) \\
+	\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} \\
+	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} = \Prize{R}{S} + \Prize{S}{B} \\
+	&\Rightarrow \Prize{S}{A} = \Prize{S}{B}
 	\end{align*}
-	Since our goal si to minimize the three lets consider \( D_j(S, A) = D_j(S, B) = D_f(S, A) \) and also since we do not have any condition for \(D_j(R, S)\) and \(min(D_j(R, S)) = D_f(R, S)\), lets consider \( D_j(R, S) = D_f(R, S)  \).
+	We also know that \( |UV| \leq  $ \Prize{U}{V}$ \), this means that the smallest possible value for \Prize{S}{A} is \(|SA|\) and for \Prize{S}{R} is \(|SR|\).
+	\begin{align*}	
+		\Prize{S}{A} = \Prize{S}{B} &= |SA| \\
+		\Prize{S}{R} &= |SR| \\
+		\Prize{R}{C} = \Prize{R}{S} + \Prize{S}{A} &= |SA| + |SR|
+	\end{align*}
 	The total length \( L() \) of three T is now computed as follows:
-	\begin{align*}
-		L(T) &= D_j(R, C) + D_j(R, S) + D_j(S, A) + D_j(S, B)\\
-		&= D_f(R, S) + D_f(S, A) + D_f(R,S) + D_f(S, A) + D_f(S, A)\\
-		&= 2 D_f(R, S) + 3 D_f(S, A) \\
+	\begin{align*}	
+		L(T) &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		&= |SA| + |SA| + |SR| + |SA| + |SR| \\
+		&= 2 |SR| + 3 |SA|
 	\end{align*}
 	
-	similarly for second segment: 
-	...
+	
+	For second case \( |AS| < |BS|, |BS|+|SR| > |CR| \), similarly as in first case:
 	\begin{align*}
-		L(T) = 2 D_f(R, S) + 3 D_f(S, B)
+		\Prize{S}{B} = \Prize{S}{A} &= |SB| \\
+		\Prize{S}{R} &= |SR| \\
+		\Prize{R}{C} &= |SB| + |SR|
 	\end{align*}
-	 // chyba podmienka aby \(D_j(R, B/A) > D_j(R, C) \)
-	 // odtialto dole je to volnopis
-	 
-	 For third segment, \(D_j(R, B/A) > D_j(R, C) \) can not happen since \(\alpha > \gamma \)
-	for that reason we will get the shortest tree by minimizing \( D_f(R,S) \) ... \(R = S\). 
-	This means that the length \( L() \) of three is:
-	\begin{align*}
-		L(T) = 3 D_f(S, A)
+		and total length \( L() \) of three T is:
+	\begin{align*}	
+		L(T) = 2 |SR| + 3 |SB|
 	\end{align*}
 	
-	Fourth Segment:
+	Let us analyze the third case where \( |AS| > |BS|, |AS|+|SR| \leq |CR| \).
+	We know that:
 	\begin{align*}
-		L(T) = 3 D_f(S, B)
+		\Prize{S}{A} = \Prize{S}{B}
+	\end{align*}
+	also that smallest possible value for \Prize{S}{A} is \(|SA|\).
+	\begin{align*}	
+		\Prize{S}{A} = \Prize{S}{B} = |SA| \\
+	\end{align*}
+	since \(|CR| \geq |AS|+|SR| > |BS|+|SR| \), the smallest possible value for \Prize{R}{C} is \(|CR|\)
+	\begin{align*}
+	 	\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} = |CR| \\
+	 	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} \\
+	 	\Prize{R}{S} &= |CR| - |AS|
+	\end{align*}
+	The total length \( L() \) of three T is then computed as follows:
+	\begin{align*}	
+		L(T) &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		&= |SA| + |SA| + |CR| + |CR| - |SA| \\
+		&= |SA| + 2 |CR|
+	\end{align*}
+
+	For fourth case \( |AS| < |BS|, |BS|+|SR| \leq |CR| \), similarly as in third case:
+	\begin{align*}
+		\Prize{S}{B} &= \Prize{S}{A} = |BS| \\
+		\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} = |CR| \\
+	 	\Prize{R}{S} &= |CR| - |BS|
+	\end{align*}
+	and total length \( L() \) of three T is:
+	\begin{align*}	
+		L(T) = |SB| + 2 |CR|
 	\end{align*}
 		 
-	 
 		 
+	We have not yet considered the case where \( |AS| = |BS| \). Let us take a closer look at it. 
+	
+	First, we assume that \( |AS| + |SR| > |CR| \) and \( |BS| + |SR| > |CR| \), and let \( |SR| \) be a fixed distance.
+	\begin{align*}
+		|AS| = |BS| = d, \quad d \in R \\
+		L(T_1) = 2|SR| + 3|SA| = 2|SR| + 3|BS| = 2|SR| + 3d
+	\end{align*}
+	Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total length becomes:
+	\[
+	L(T_2) = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > L(T_1)
+	\]
+	Similarly, if \( |BS| = d + k \), we have:
+	\[
+	L(T_3) = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > L(T_1)
+	\]
+	In both cases, when either \( |AS| \) or \( |BS| \) deviates from \( d \), the total length of the tree increases compared to the symmetric case. It follows that the minimal total length is achieved when \( |AS| = |BS| \).
+	
+	Now consider the second case, where \( |AS| + |SR| \leq |CR| \) and \( |BS| + |SR| \leq |CR| \), and let \( |CR| \) be fixed:
+	\begin{align*}
+		|AS| = |BS| = d, \quad d \in R \\
+		L(T_1) = 2|CR| + |SA| = 2|CR| + |SB| = 2|CR| + d
+	\end{align*}
+	Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total length becomes:
+	\[
+	L(T_2) = 2|CR| + d + k > L(T_1)
+	\]
+	If \( |BS| = d + k \), we have:
+	\[
+	L(T_3) = 2|CR| + d + k > L(T_1)
+	\]
+	Again, it is clear that the minimal total length is achieved when \( |AS| = |BS| \).
+
+	
 \end{document}
