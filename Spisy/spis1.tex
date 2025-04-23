@@ -149,7 +149,50 @@
 	\[
 	L(T_3) = 2|CR| + d + k > L(T_1)
 	\]
-	Again, it is clear that the minimal total length is achieved when \( |AS| = |BS| \).
+	Again, it is clear that the minimal total length is achieved when \( |AS| = |BS| \).\\
 
+	Now let us analyze the case when \(|AS|+|SR| = |CR| \).
+	The total length would be \[ L(T) = |SA| + 2 |CR| = L(T) = |AS| + 2|AS| + 2|SR| = 3|AS| + 2|SR|  )\]
+	Let \( d > 0 \) and suppose we fix \( |CR| \) and \( |SR| \), and increase \( |AS| \) by \( d \):
+	\[
+	|AS|^* = |AS| + d \quad \Rightarrow \quad L(T_1) = 2|SR| + 3|AS|^* = 2|SR| + 3(|AS| + d) = L(T) + 3d > L(T)
+	\]
 	
-\end{document}
+	Now fix \( |CR| \) and \( |AS| \), and increase \( |SR| \) by \( d \):
+	\[
+	|SR|^* = |SR| + d \quad \Rightarrow \quad L(T_2) = 2|SR|^* + 3|AS| = 2(|SR| + d) + 3|AS| = L(T) + 2d > L(T)
+	\]
+	
+	Now fix \( |SR| \) and \( |AS| \), and increase \( |CR| \) by \( d \):
+	\[
+	|CR|^* = |CR| + d \quad \Rightarrow \quad L(T_3) = |AS| + 2|CR|^* = |AS| + 2(|CR| + d) = L(T) + 2d > L(T)
+	\]
+	
+	In all cases, any deviation from the equality \( |AS| + |SR| = |CR| \) leads to an increase in the total length.  
+	Therefore, the minimal total length of the tree is achieved exactly when
+	\[
+	|AS| + |SR| = |CR|
+	\]
+	A completely analogous argument applies when \( |BS| + |SR| = |CR| \).  
+	Again, increasing \( |BS| \), \( |SR| \), or \( |CR| \) individually while keeping the others fixed leads to an increase in the total length.  
+	Hence, the minimal total length is achieved exactly when:
+	\[
+	|BS| + |SR| = |CR|
+	\]
+	
+	
+	This leads us to the question of how to place the root \( R \in \overline{CS} \) for given points \( A, B, C, S \), so that the total length of the LED tree is minimized. From the constraint \( |AS|+|SR| = |CR|  \), we derive:
+	
+	\begin{align*}
+		|AS| + |CS| &= |AS| + |SR| + |RC| \\
+		|AS|+|CS| &= |AS|+|SR|+|AS|+|SR| \\ 
+		|CS| &= |AS|+2|SR| \\
+		|SR| &= \frac{|CS| - |AS|}{2} \\
+		\Rightarrow \quad |RC| &= |CS| - |SR| = |CS| - \frac{|CS| + |AS|}{2}
+	\end{align*}
+	Therefore, to minimize the total length of the LED tree, the root \( R \) should be placed on edge \( \overline{CS} \) such that its distance from \( S, C\) is:
+	\[
+	|SR| = \frac{|CS| - |AS|}{2},  |RC| = |CS| - \frac{|CS| + |AS|}{2}
+	\]
+	
+	\end{document}
