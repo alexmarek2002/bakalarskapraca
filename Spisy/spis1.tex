@@ -195,4 +195,27 @@
 	|SR| = \frac{|CS| - |AS|}{2},  |RC| = |CS| - \frac{|CS| + |AS|}{2}
 	\]
 	
+	Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( \overline{BS} \).  
+	Let us assume that the minimal LED tree satisfies:
+	\[
+	\Prize{R}{C} = \Prize{R}{B} = \Prize{R}{A}
+	\]
+	Then in particular:
+	\[
+	\Prize{R}{C} = \Prize{R}{S} + \Prize{S}{C} = \Prize{R}{B} = |BR|
+	\]
+	
+	Now since \( R \in \overline{BS} \), we have \( |BR| < |BS| \), and from the assumption above:
+	\[
+	|SR| + |CS| = |BR| < |BS| < |CS|
+	\quad \Rightarrow \quad |SR| < 0
+	\]
+	
+	which is a contradiction.  
+	Thus, placing \( R \) on \( \overline{BS} \) leads to a contradiction with \( |SR| \geq 0 \).  
+	The same argument applies if \( R \in \overline{AS} \).  
+	Therefore, the only edge that avoids contradiction is the longest one, i.e. \( \overline{CS} \).  
+	Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).
+	
+	
 	\end{document}
