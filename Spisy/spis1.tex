@@ -1,7 +1,21 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
 
 \newcommand{\Prize}[2]{P(#1,#2)}
+\newcommand{\Ptotal}[1]{P_{\text{total}}(#1)}
+
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proof}{Proof}
 
 \title{Bachelor Thesis}
 \author{Alex Marek}
@@ -11,48 +25,196 @@
 	
 	\maketitle
 	
-	\section*{LED trees}
+	\section{LED/Steiner trees}
+		
+	% dopisat	( into )			
+		
+	\subsection{Introduction to graph theory}
+	\begin{itemize} 
+		\item Graph theory is considered a relatively young mathematical discipline. Its official beginning is often associated with the first monograph on graph theory, written by Dénes Kőnig in 1936. However, the origins of graph theory date 200 year back, when in 1736 Leonhard Euler published paper, that is regarded as the first paper in the history of graph theory. In this paper, Euler addressed the famous problem of walking through all the bridges of the city of Königsberg without crossing any bridge more than once. Euler represented the map of city and its bridges as a graph, topology and theory that he had done has shown it's importance much later, in various fields, including for example traffic planning, computer science or electrical engineering. More importantly it laid the groundwork for a new branch of mathematics, graph theory.
+		
+		\item From the perspective of graph theory, a graph is a mathematical structure consisting of a set of objects (vertices) and connections (edges) between these objects.
+ 		Graphs can represent various real-world structures, from maps of cities connected by roads to electrical networks connecting sockets.
+		Formally, a graph is defined as ordered pair \( G = (V, E) \), where \( V \) is a set of vertices, and \( E \subseteq \{\{v_i, v_j\} : v_i, v_j \in V, v_i \neq v_j\} \) is a set of edges, pairs of vertices(In this thesis, we will exclusively consider graphs with undirected edges). Two vertices connected by an edge are called adjacent. 
+		
+		Let us now introduce several basic terms and definitions, readers familiar with graph theory may skip it:
+			\item Two vertices connected by an edge are called adjacent.
+			\item Degree of a vertex is the number of times it occurs in set of edges 
+			% dopisat
+			\item lenght
+			\item weighted graph
+		 	\item subgraph
+		 
+	\end{itemize}	
+	\subsection{Trees}
+	\begin{itemize} 
+		\item We will particularly focus on a special type of graph — a tree.
+		Tree is a (undirected)circuit less graph, where all vertices are connected.
+		The term "tree" was first used by the English mathematician Arthur Cayley, who applied it to count the number of different types of alkanes. The fusion of mathematical and chemical research later led to the establishment of standard terminology in graph theory.
+		
+		%toto sa mi nepaci - prepisem
+		\item Consider we have finite connected graph G(V, E), than a subgraph of G(V, E) which contains all the vertices of G and is a tree, is called a spanning tree. If additionally each edge of G has a known length \(l(e)>0\), than the spanning tree of G with the minimal sum of the lengths of the edges, is called minimum spanning tree. The importance of minimum spanning trees is evident. For example, if we aim to build railway connections between a set of cities at minimal cost. We can model the cities and all possible connections as a graph, and then find a minimum spanning tree of this graph to determine the most efficient network. 
+		The minimal spanning tree problem is formulated as follows: Find the spanning tree, G'(V,E), for which the sum of the lengths of the edges \( \sum_{ein E} l(e)\) is a minimum. Two most common algorithms used to solve the minimum spanning tree problem are Prim's algorithm and Kruskal's algorithm.
+	\end{itemize}		
+
+	\subsection{Trees in \(E^2\)}
+		The concept of a Euclidean graph is quite intuitive, as most of the graphs we commonly encounter are Euclidean. In a Euclidean graph, the vertices are points in the Euclidean plane. The lengths of the edges are given by the Euclidean distances between adjacent vertices. If we have an edge \( (u, v) \), where \( u = (u_1, u_2, \dots, u_n) \) and \( v = (v_1, v_2, \dots, v_n) \), the Euclidean distance between \( u \) and \( v \) (that is, the length of the edge) is denoted by \( |uv| \) and is defined as:
+		\[
+		|uv| = \sqrt{ \sum_{i=1}^{n} (u_i - v_i)^2 }
+		\]
+		Euclidean spanning tree, similarly to the previous chapter, is a spanning tree of a Euclidean graph. Minimum spanning tree problem becomes Euclidean minimum spanning tree problem and is: Find the Euclidean spanning tree for which the sum of the Euclidean distances between n points connected by edges is a minimum. 
+
+	\subsection{The Euclidean Steiner Problem}
+		Euclidean steiner problem is a modification to euclidean minimum spanning tree, which goal is to find even shorter total connecting leght of edges. In order to do so, in steiner problem there can be included vertices %nedopisane
+	% OBRAZOK GRAFOV 
+	\begin{figure}[h!]
+		\centering
+		\begin{subfigure}[b]{0.4\textwidth}
+			\centering
+			\begin{tikzpicture}[baseline=(current bounding box.north)]
+				\node (v1) at (0,1) [circle,fill,inner sep=2pt] {};
+				\node (v2) at (0,0) [circle,fill,inner sep=2pt] {};
+				\node (v3) at (2,1.5) [circle,fill,inner sep=2pt] {};
+				\node (v4) at (2,-0.5) [circle,fill,inner sep=2pt] {};
+				
+				\draw (v1) -- (v2);
+				\draw (v1) -- (v3);
+				\draw (v2) -- (v4);
+			\end{tikzpicture}
+			\caption{Spanning tree with 4 vertices}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.4\textwidth}
+			\centering
+			\begin{tikzpicture}[baseline=(current bounding box.north)]
+				\node (v1) at (0,1) [circle,fill,inner sep=2pt] {};
+				\node (v2) at (0,0) [circle,fill,inner sep=2pt] {};
+				\node (v3) at (2,1.5) [circle,fill,inner sep=2pt] {};
+				\node (v4) at (2,-0.5) [circle,fill,inner sep=2pt] {};
+				\node (s1) at (0.6,0.5) [circle,fill,inner sep=2pt] {};
+				\node (s2) at (1.3,0.5) [circle,fill,inner sep=2pt] {};
+				
+				\draw (v1) -- (s1);
+				\draw (v2) -- (s1);
+				\draw (v3) -- (s2);
+				\draw (s1) -- (s2);
+				\draw (v4) -- (s2);
+			\end{tikzpicture}
+			\caption{Steiner tree with additional points}
+		\end{subfigure}
+	\end{figure}
+
+	\subsection{minimal Steiner trees}
+	
+	
+	\subsection{LED trees}
+		-intro
+	
+		-def rooted tree
+		
+		-some descrition (drz sa clanku L-M LEDtrees)
+		
+	\subsection{Relaxed LED trees}	
+	
+		- treba vysvetlit pojmy relaxovania a natahoania lebo s nimi pracujes v pravej sekcii o led s 3 listami
+			\\
+		
+		% presunute z kapitoly 2 a zovseobecnene
+				
+		For every edge connecting two vertices in a tree, we assign two values:
+		\begin{itemize}
+			\item \( |uv| \): the Euclidean distance between the two vertices \( u \) and \( v \),
+			\item \( \Prize{u}{v} \): the relaxed (or curved) value of the edge between \( u \) and \( v \),
+		\end{itemize}
+		where \( |uv| \leq \Prize{u}{v} \) for every edge.
+		
+		We will also denote \( \Prize{u}{v} \) for vertices \( u \) and \( v \) that are not directly connected by an edge. In this case, \( \Prize{u}{v} \) represents the sum of relaxed values along the unique path from \( u \) to \( v \). Since a tree contains no cycles, there exists exactly one such path for every pair of vertices.
+		
+		% tu neviem ci mam pisat takto alebo je v clanku L-M LEDtrees
+		\begin{definition}\label{def:led}
+			A tree is called a relaxed LED (Leaves of Equal Depth) tree if the prize of the path from the root \( R \) to each leaf is the same. That is, for any two leaves \( l_1 \) and \( l_2 \), it holds that
+			\[
+			\Prize{R}{l_1} = \Prize{R}{l_2}.
+			\]
+		\end{definition}
+	
+		In other words, for any two leaves \( l_1 \) and \( l_2 \):
+		\[
+		 \sum_{(u,v) \in M_1} \Prize{u}{v} = \sum_{(u,v) \in M_2} \Prize{u}{v},
+		\]
+		where \( M_1 \) and \( M_2 \) are the sets of edges of paths from the root \( R \) to the leaves \( l_1 \) and \( l_2 \), respectively. The sums are taken over all edges \( (u,v) \) along the corresponding paths.
+		
+		From the definition of relaxed LED trees, we obtain a relation that we will find useful later.
+		\begin{corollary}\label{cor:led}
+			Let \( V \) be a vertex that is neither a leaf nor a root, and let \( L_1 \) and \( L_2 \) be leaves.  
+			If the root \( R \) does not lie on either of the paths from \( V \) to \( L_1 \) or from \( V \) to \( L_2 \), then:
+			\[
+			\Prize{V}{L_1} = \Prize{V}{L_2}.
+			\]			
+		\end{corollary}
+		\begin{proof}
+			Let \(N\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = R\) and \(v_k = V\).
+			Let \(M'_1\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = V\) and \(v_k = L_1\).
+			Let \(M'_2\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = V\) and \( v_k = L_2\).
+			Define \( M_1 = N \cup M'_1 \) and \( M_2 = N \cup M'_2 \).\\
+			Since the prizes along the paths from \( R \) to \( L_1 \) and \( R \) to \( L_2 \) are equal, we have:
+			\begin{align*}
+			\Prize{R}{l_1} &= \Prize{R}{l_2}\\
+			\sum_{(u,v) \in M_1} \Prize{u}{v} &= \sum_{(u,v) \in M_2} \Prize{u}{v}\\
+			\sum_{(v_i,v_{i+1}) \in N}\Prize{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_1}\Prize{v_i}{v_{i+1}} 
+			&=\sum_{(v_i,v_{i+1}) \in N}\Prize{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_2}\Prize{v_i}{v_{i+1}}\\
+			\Prize{R}{V} + \Prize{V}{l_1} &= \Prize{R}{V} + \Prize{V}{l_2} \\
+			\Prize{V}{l_1} &= \Prize{V}{l_2}
+			\end{align*}
+			 For clarity, we expanded the prize terms into sums here.  
+			 However, in the rest of the text, we will write prize values without explicitly unfolding the paths.
+		\end{proof}
+			
+		We define the total prize \(\Ptotal{T}\) of a tree \(T\) as the sum of all individual \(\Prize{}{}\) values.
+	
 	LED (leaves of equal depth)
+
 	
+	
+	%--------------------------------------------------------------------------------------------
 	\maketitle
+
+	\section*{relaxed LED tree with 3 leaves and Fermat Problem}
 	
-	\section*{relaxed LED trees}
 	
-	\maketitle
+	 
+	\subsection{Fermat problem}
 	
-	\section*{relaxed LED tree with 3 leaves}
 	
-	Let T be a tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e. leaves) and exactly one vertex \( S \) of degree tree. Vertex \( S \) lies inside the triangle(convex hull) determined by determined by vertices \( A , B , C \) and is adjacent to all of them. Let us place a vertex \( R \) on an arbitrary one of these edges. This vertex will be referred to as the \textbf{root} of the tree.
 	
-	For every edge that connects two points, we assign two values:
-	\begin{itemize}
-	\item \( |UV| \): the Euclidean distance between the two points \( u \) and \( v \),
-	\item $\Prize{U}{V}$: the relaxed (or curved) value of the edge between \( u \) and \( v \),
-	\end{itemize}
-	where \( |UV| \leq  $ \Prize{U}{V}$ \).\\
- 	
-	A tree is considered a LED tree if $\Prize{}{}$ is equal for all paths from the root to each leaf. In case of three T:
-	\begin{align*}
-		\Prize{R}{A} = \Prize{R}{B} = \Prize{R}{C}
-	\end{align*}
+	\subsection{minimal relaxed LED tree with 3}
 	
-	We define the total length \( L() \) of the tree as sum of all $\Prize{}{}$ .
+	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behaviour and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
-	For tree \( T \), we have three options for placing the root vertex \( R \), depending on which edge it lies on. Let us consider the case where \( R \in \overline{CS} \). For this topology the total length would be:
+	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two (i.e., the root). Vertex \( S \) is adjacent to two leaves and to the root \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has prize value \(\Prize{u}{v}; |uv| \leq \Prize{u}{v} \) and according to \cref{def:led}: 
+	\[
+	\Prize{R}{A} = \Prize{R}{B} = \Prize{R}{C}
+	\] 
+	
+	In the following steps, we will focus on minimizing the total prize \(\Ptotal{T}\).
+	
+	First we will analyze which edges of the tree we can tighten:
+	
+	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to. Without loss of generality, assume that \(R\) is adjacent to \(C\). Which means that edges for this particular tree T are \((A,S),(B,S),(R,S),(R,C)\). According to  \cref{cor:led} for this topology the total price would be:
 	 \begin{align*}
-	 	L(T) = \Prize{A}{S} + \Prize{B}{S} + \Prize{C}{R} + \Prize{R}{S}
+	 	\Ptotal{T} = \Prize{A}{S} + \Prize{B}{S} + \Prize{C}{R} + \Prize{R}{S}
 	 \end{align*}
 	 
-	 
-	 Now we will look at how minimal Total length depends on certain properties (lenghts of segments): 
-	\begin{enumerate}
-	\item \( |AS| > |BS|, |AS|+|SR| > |CR| \)
-	\item \( |AS| < |BS|, |BS|+|SR| > |CR| \)
-	\item \( |AS| > |BS|, |AS|+|SR| \leq |CR| \)
-	\item \( |AS| < |BS|, |BS|+|SR| \leq |CR| \)
-	\end{enumerate}
-	
-	
+	\begin{proposition}\label{prop:tp} 
+		 Minimal total prize \(\Ptotal{T}\) of tree T, depending of lengths of edges is:
+		\begin{enumerate}
+		\item if \( |AS| > |BS|, |AS|+|SR| \geq |CR| \); than \(\Ptotal{T} = 2 |SR| + 3 |SA|\)
+		\item if \( |AS| < |BS|, |BS|+|SR| \geq |CR| \); than \(\Ptotal{T} = 2 |SR| + 3 |SB|\)
+		\item if \( |AS| > |BS|, |AS|+|SR| \leq |CR| \); than \(\Ptotal{T} = |SA| + 2 |CR|\)
+		\item if \( |AS| < |BS|, |BS|+|SR| \leq |CR| \); than \(\Ptotal{T} = |SB| + 2 |CR|\)
+		\end{enumerate}
+	\end{proposition}
+	\begin{proof}
 	Let us analyze the first case where \( |AS| > |BS|, |AS|+|SR| > |CR| \).
 	We know that:
 	\begin{align*}
@@ -60,15 +222,15 @@
 	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} = \Prize{R}{S} + \Prize{S}{B} \\
 	&\Rightarrow \Prize{S}{A} = \Prize{S}{B}
 	\end{align*}
-	We also know that \( |UV| \leq  $ \Prize{U}{V}$ \), this means that the smallest possible value for \Prize{S}{A} is \(|SA|\) and for \Prize{S}{R} is \(|SR|\).
+	We also know that \( |UV| \leq  $ \Prize{U}{V}$ \), hence the smallest possible value for \Prize{S}{A} is \(|SA|\) and for \Prize{S}{R} is \(|SR|\).
 	\begin{align*}	
 		\Prize{S}{A} = \Prize{S}{B} &= |SA| \\
 		\Prize{S}{R} &= |SR| \\
 		\Prize{R}{C} = \Prize{R}{S} + \Prize{S}{A} &= |SA| + |SR|
 	\end{align*}
-	The total length \( L() \) of three T is now computed as follows:
+	The total prize of three is now computed as follows:
 	\begin{align*}	
-		L(T) &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		\Ptotal{T} &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
 		&= |SA| + |SA| + |SR| + |SA| + |SR| \\
 		&= 2 |SR| + 3 |SA|
 	\end{align*}
@@ -80,9 +242,9 @@
 		\Prize{S}{R} &= |SR| \\
 		\Prize{R}{C} &= |SB| + |SR|
 	\end{align*}
-		and total length \( L() \) of three T is:
+		and total prize of three is:
 	\begin{align*}	
-		L(T) = 2 |SR| + 3 |SB|
+		\Ptotal{T} = 2 |SR| + 3 |SB|
 	\end{align*}
 	
 	Let us analyze the third case where \( |AS| > |BS|, |AS|+|SR| \leq |CR| \).
@@ -100,9 +262,9 @@
 	 	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} \\
 	 	\Prize{R}{S} &= |CR| - |AS|
 	\end{align*}
-	The total length \( L() \) of three T is then computed as follows:
+	The total prize of three is then computed as follows:
 	\begin{align*}	
-		L(T) &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		\Ptotal{T} &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
 		&= |SA| + |SA| + |CR| + |CR| - |SA| \\
 		&= |SA| + 2 |CR|
 	\end{align*}
@@ -113,26 +275,26 @@
 		\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} = |CR| \\
 	 	\Prize{R}{S} &= |CR| - |BS|
 	\end{align*}
-	and total length \( L() \) of three T is:
+	and total length of three is:
 	\begin{align*}	
-		L(T) = |SB| + 2 |CR|
+		\Ptotal{T} = |SB| + 2 |CR|
 	\end{align*}
-		 
+	\end{proof}	 
 		 
 	We have not yet considered the case where \( |AS| = |BS| \). Let us take a closer look at it. 
 	
 	First, we assume that \( |AS| + |SR| > |CR| \) and \( |BS| + |SR| > |CR| \), and let \( |SR| \) be a fixed distance.
 	\begin{align*}
 		|AS| = |BS| = d, \quad d \in R \\
-		L(T_1) = 2|SR| + 3|SA| = 2|SR| + 3|BS| = 2|SR| + 3d
+		\Ptotal{T_1} = 2|SR| + 3|SA| = 2|SR| + 3|BS| = 2|SR| + 3d
 	\end{align*}
-	Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total length becomes:
+	Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total prize becomes:
 	\[
-	L(T_2) = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > L(T_1)
+	\Ptotal{T_2} = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > \Ptotal{T_1}
 	\]
 	Similarly, if \( |BS| = d + k \), we have:
 	\[
-	L(T_3) = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > L(T_1)
+	\Ptotal{T_3} = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > \Ptotal{T_1}
 	\]
 	In both cases, when either \( |AS| \) or \( |BS| \) deviates from \( d \), the total length of the tree increases compared to the symmetric case. It follows that the minimal total length is achieved when \( |AS| = |BS| \).
 	
@@ -212,7 +374,6 @@
 	\]
 	
 	which is a contradiction.  
-	Thus, placing \( R \) on \( \overline{BS} \) leads to a contradiction with \( |SR| \geq 0 \).  
 	The same argument applies if \( R \in \overline{AS} \).  
 	Therefore, the only edge that avoids contradiction is the longest one, i.e. \( \overline{CS} \).  
 	Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).
