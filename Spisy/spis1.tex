@@ -5,8 +5,10 @@
 \usepackage{subcaption}
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
+\usepackage{amssymb}
 
-\newcommand{\Prize}[2]{P(#1,#2)}
+
+\newcommand{\Price}[2]{P(#1,#2)}
 \newcommand{\Ptotal}[1]{P_{\text{total}}(#1)}
 
 
@@ -15,6 +17,7 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{definition}{Definition}
 \newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
 \newtheorem{proof}{Proof}
 
 \title{Bachelor Thesis}
@@ -25,45 +28,59 @@
 	
 	\maketitle
 	
-	\section{LED/Steiner trees}
-		
-	% dopisat	( into )			
-		
+	\section{Basic notions}
+				
 	\subsection{Introduction to graph theory}
-	\begin{itemize} 
-		\item Graph theory is considered a relatively young mathematical discipline. Its official beginning is often associated with the first monograph on graph theory, written by Dénes Kőnig in 1936. However, the origins of graph theory date 200 year back, when in 1736 Leonhard Euler published paper, that is regarded as the first paper in the history of graph theory. In this paper, Euler addressed the famous problem of walking through all the bridges of the city of Königsberg without crossing any bridge more than once. Euler represented the map of city and its bridges as a graph, topology and theory that he had done has shown it's importance much later, in various fields, including for example traffic planning, computer science or electrical engineering. More importantly it laid the groundwork for a new branch of mathematics, graph theory.
+		Graph theory is considered a relatively young mathematical discipline. Its official beginning is often associated with the first monograph on graph theory, written by Dénes Kőnig in 1936. However, the origins of graph theory date 200 year back, when in 1736 Leonhard Euler published paper, that is regarded as the first paper in the history of graph theory. In this paper, Euler addressed the famous problem of walking through all the bridges of the city of Königsberg without crossing any bridge more than once. Euler represented the map of city and its bridges as a graph, topology and theory that he had done has shown it's importance much later, in various fields, including for example traffic planning, computer science or electrical engineering. More importantly it laid the groundwork for a new branch of mathematics, graph theory.
 		
-		\item From the perspective of graph theory, a graph is a mathematical structure consisting of a set of objects (vertices) and connections (edges) between these objects.
+		From the perspective of graph theory, a graph is a mathematical structure consisting of a set of objects (vertices) and connections (edges) between these objects.
  		Graphs can represent various real-world structures, from maps of cities connected by roads to electrical networks connecting sockets.
-		Formally, a graph is defined as ordered pair \( G = (V, E) \), where \( V \) is a set of vertices, and \( E \subseteq \{\{v_i, v_j\} : v_i, v_j \in V, v_i \neq v_j\} \) is a set of edges, pairs of vertices(In this thesis, we will exclusively consider graphs with undirected edges). Two vertices connected by an edge are called adjacent. 
+		Formally, a graph is defined as ordered pair \( G = (V, E) \), where \( V \) is a set of vertices, and \( E \subseteq \{\{v_i, v_j\} : v_i, v_j \in V\} \) is a set of edges, pairs of vertices
 		
-		Let us now introduce several basic terms and definitions, readers familiar with graph theory may skip it:
-			\item Two vertices connected by an edge are called adjacent.
-			\item Degree of a vertex is the number of times it occurs in set of edges 
-			% dopisat
-			\item lenght
-			\item weighted graph
-		 	\item subgraph
-		 
-	\end{itemize}	
+		Edges in a graph can be either directed or undirected. A graph with directed edges is called a directed graph. In such a graph, each edge has an assigned direction from one vertex to another, we will not go into detail, as all graphs considered in this work are undirected. In an undirected graph, all edges are unordered pairs of vertices, undirected edges, representing symmetric relationships. Unless stated otherwise, consider all graphs in this work undirected.
+		To understand next basic property of graphs, connectivity, we need to define term path. A path in a graph is a finite or infinite sequence of edges which joins a sequence of vertices, all of which are distinct. A graph is said to be connected if there exists a path between every pair of vertices.	In contrast, a disconnected graph contains at least two vertices between which no path exists. This means the graph consists of two or more separate parts, called connected components. 
+		We will refer to two vertices connected by an edge as adjacent, and the degree of a vertex is defined as the number of vertices adjacent to it(i.e., number of times it occurs in set of edges). In this context, a path can also be seen as a sequence of adjacent vertices, each of which appears at most once.
+	
+	\subsection{Weighted graphs}	
+		In many applications, it is useful to associate a numerical value, called a weight, with each edge of a graph. For example, when modeling traffic, the vertices may represent cities and the edges represent roads, while the weight corresponds to the time required to travel from one city to another. 
+		A weighted graph is a triple \( G = (V, E, w) \), where \( (V, E) \) is a graph and \( w : E \to \mathbb{R} \) is a weight function that assigns a real number to each edge. 
+		In such graph, distance between two vertices \( u, v \in V \), denoted \( d_G(u,v) \),  is defined as the length of the shortest path between \( u \) and \( v \) in \( G \), it is computed as sum of the weights of edges along that path. Let us mention that if the graph is not weighted then usually distance is computed in the same way, with the only difference being that each edge is considered to have weight 1, i.e., \( d_G(u,v) \) equals the number of edges in the path.
+		Based on the notion of distance, we define the following related terms: eccentricity, radius, and center of a graph. The eccentricity of a vertex is the greatest distance from that vertex to any other vertex in the graph. The radius of the graph is the smallest eccentricity among all vertices. The center of the graph is the set of all vertices whose eccentricity is equal to the radius.
+		
+		Another example, perhaps the most intuitive one, of a structure that can be represented by a weighted graph is network of points in a plane or space. Such a structure is called Euclidean graph or geometric graph.
+		A Euclidean graph is defined as a triple \( G = (V, E, \mu) \), where:
+		\begin{itemize}
+			\item \( (V, E) \) is a graph,
+			\item \( \mu : V \to \mathbb{E}^\mathbb{N} \) is a mapping that assigns to each vertex a position in \(\mathbb{N}\)-dimensional Euclidean space.
+		\end{itemize}
+		The weight of an edge \( \{u,v\} \in E \) is given by the Euclidean distance between the images of its endpoints:
+		\[
+		w(\{u,v\}) = \| \mu(u) - \mu(v) \| = \sqrt{ \sum_{i=1}^{n} (\mu(u)_i - \mu(v)_i)^2 }.
+		\]
+		
+		
 	\subsection{Trees}
 	\begin{itemize} 
-		\item We will particularly focus on a special type of graph — a tree.
-		Tree is a (undirected)circuit less graph, where all vertices are connected.
+		\item We will particularly focus on a special type of graph, a tree.
+		Tree is a connected graph with no cycle.
 		The term "tree" was first used by the English mathematician Arthur Cayley, who applied it to count the number of different types of alkanes. The fusion of mathematical and chemical research later led to the establishment of standard terminology in graph theory.
 		
 		%toto sa mi nepaci - prepisem
-		\item Consider we have finite connected graph G(V, E), than a subgraph of G(V, E) which contains all the vertices of G and is a tree, is called a spanning tree. If additionally each edge of G has a known length \(l(e)>0\), than the spanning tree of G with the minimal sum of the lengths of the edges, is called minimum spanning tree. The importance of minimum spanning trees is evident. For example, if we aim to build railway connections between a set of cities at minimal cost. We can model the cities and all possible connections as a graph, and then find a minimum spanning tree of this graph to determine the most efficient network. 
+		\item Consider we have finite connected graph G(V, E), then a subgraph of G(V, E) which contains all the vertices of G and is a tree, is called a spanning tree. If additionally each edge of G has a known length \(l(e)>0\), than the spanning tree of G with the minimal sum of the lengths of the edges, is called minimum spanning tree. The importance of minimum spanning trees is evident. For example, if we aim to build railway connections between a set of cities at minimal cost. We can model the cities and all possible connections as a graph, and then find a minimum spanning tree of this graph to determine the most efficient network. 
 		The minimal spanning tree problem is formulated as follows: Find the spanning tree, G'(V,E), for which the sum of the lengths of the edges \( \sum_{ein E} l(e)\) is a minimum. Two most common algorithms used to solve the minimum spanning tree problem are Prim's algorithm and Kruskal's algorithm.
 	\end{itemize}		
 
 	\subsection{Trees in \(E^2\)}
+		%tato definicia nevyhovuje
 		The concept of a Euclidean graph is quite intuitive, as most of the graphs we commonly encounter are Euclidean. In a Euclidean graph, the vertices are points in the Euclidean plane. The lengths of the edges are given by the Euclidean distances between adjacent vertices. If we have an edge \( (u, v) \), where \( u = (u_1, u_2, \dots, u_n) \) and \( v = (v_1, v_2, \dots, v_n) \), the Euclidean distance between \( u \) and \( v \) (that is, the length of the edge) is denoted by \( |uv| \) and is defined as:
 		\[
 		|uv| = \sqrt{ \sum_{i=1}^{n} (u_i - v_i)^2 }
 		\]
 		Euclidean spanning tree, similarly to the previous chapter, is a spanning tree of a Euclidean graph. Minimum spanning tree problem becomes Euclidean minimum spanning tree problem and is: Find the Euclidean spanning tree for which the sum of the Euclidean distances between n points connected by edges is a minimum. 
-
+	
+	\subsection{Prufer Sequence}
+	\subsection{Rooted trees}
+	
 	\subsection{The Euclidean Steiner Problem}
 		Euclidean steiner problem is a modification to euclidean minimum spanning tree, which goal is to find even shorter total connecting leght of edges. In order to do so, in steiner problem there can be included vertices %nedopisane
 	% OBRAZOK GRAFOV 
@@ -124,34 +141,35 @@
 		For every edge connecting two vertices in a tree, we assign two values:
 		\begin{itemize}
 			\item \( |uv| \): the Euclidean distance between the two vertices \( u \) and \( v \),
-			\item \( \Prize{u}{v} \): the relaxed (or curved) value of the edge between \( u \) and \( v \),
+			\item \( \Price{u}{v} \): the relaxed (or curved) value of the edge between \( u \) and \( v \),
 		\end{itemize}
-		where \( |uv| \leq \Prize{u}{v} \) for every edge.
+		where \( |uv| \leq \Price{u}{v} \) for every edge.
 		
-		We will also denote \( \Prize{u}{v} \) for vertices \( u \) and \( v \) that are not directly connected by an edge. In this case, \( \Prize{u}{v} \) represents the sum of relaxed values along the unique path from \( u \) to \( v \). Since a tree contains no cycles, there exists exactly one such path for every pair of vertices.
+		We will also denote \( \Price{u}{v} \) for vertices \( u \) and \( v \) that are not directly connected by an edge. In this case, \( \Price{u}{v} \) represents the sum of relaxed values along the unique path from \( u \) to \( v \). Since a tree contains no cycles, there exists exactly one such path for every pair of vertices.
 		
 		% tu neviem ci mam pisat takto alebo je v clanku L-M LEDtrees
 		\begin{definition}\label{def:led}
-			A tree is called a relaxed LED (Leaves of Equal Depth) tree if the prize of the path from the root \( R \) to each leaf is the same. That is, for any two leaves \( l_1 \) and \( l_2 \), it holds that
+			A tree is called a relaxed LED (Leaves of Equal Depth) tree if the price of the path from the root \( R \) to each leaf is the same. That is, for any two leaves \( l_1 \) and \( l_2 \), it holds that
 			\[
-			\Prize{R}{l_1} = \Prize{R}{l_2}.
+			\Price{R}{l_1} = \Price{R}{l_2}.
 			\]
 		\end{definition}
 	
 		In other words, for any two leaves \( l_1 \) and \( l_2 \):
 		\[
-		 \sum_{(u,v) \in M_1} \Prize{u}{v} = \sum_{(u,v) \in M_2} \Prize{u}{v},
+		 \sum_{(u,v) \in M_1} \Price{u}{v} = \sum_{(u,v) \in M_2} \Price{u}{v},
 		\]
 		where \( M_1 \) and \( M_2 \) are the sets of edges of paths from the root \( R \) to the leaves \( l_1 \) and \( l_2 \), respectively. The sums are taken over all edges \( (u,v) \) along the corresponding paths.
 		
 		From the definition of relaxed LED trees, we obtain a relation that we will find useful later.
-		\begin{corollary}\label{cor:led}
+		\begin{lemma}\label{lem:led}
+			% musi byt povedane ze listy su obe za V
 			Let \( V \) be a vertex that is neither a leaf nor a root, and let \( L_1 \) and \( L_2 \) be leaves.  
 			If the root \( R \) does not lie on either of the paths from \( V \) to \( L_1 \) or from \( V \) to \( L_2 \), then:
 			\[
-			\Prize{V}{L_1} = \Prize{V}{L_2}.
+			\Price{V}{L_1} = \Price{V}{L_2}.
 			\]			
-		\end{corollary}
+		\end{lemma}
 		\begin{proof}
 			Let \(N\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = R\) and \(v_k = V\).
 			Let \(M'_1\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = V\) and \(v_k = L_1\).
@@ -159,18 +177,18 @@
 			Define \( M_1 = N \cup M'_1 \) and \( M_2 = N \cup M'_2 \).\\
 			Since the prizes along the paths from \( R \) to \( L_1 \) and \( R \) to \( L_2 \) are equal, we have:
 			\begin{align*}
-			\Prize{R}{l_1} &= \Prize{R}{l_2}\\
-			\sum_{(u,v) \in M_1} \Prize{u}{v} &= \sum_{(u,v) \in M_2} \Prize{u}{v}\\
-			\sum_{(v_i,v_{i+1}) \in N}\Prize{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_1}\Prize{v_i}{v_{i+1}} 
-			&=\sum_{(v_i,v_{i+1}) \in N}\Prize{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_2}\Prize{v_i}{v_{i+1}}\\
-			\Prize{R}{V} + \Prize{V}{l_1} &= \Prize{R}{V} + \Prize{V}{l_2} \\
-			\Prize{V}{l_1} &= \Prize{V}{l_2}
+			\Price{R}{l_1} &= \Price{R}{l_2}\\
+			\sum_{(u,v) \in M_1} \Price{u}{v} &= \sum_{(u,v) \in M_2} \Price{u}{v}\\
+			\sum_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_1}\Price{v_i}{v_{i+1}} 
+			&=\sum_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_2}\Price{v_i}{v_{i+1}}\\
+			\Price{R}{V} + \Price{V}{l_1} &= \Price{R}{V} + \Price{V}{l_2} \\
+			\Price{V}{l_1} &= \Price{V}{l_2}
 			\end{align*}
 			 For clarity, we expanded the prize terms into sums here.  
 			 However, in the rest of the text, we will write prize values without explicitly unfolding the paths.
 		\end{proof}
 			
-		We define the total prize \(\Ptotal{T}\) of a tree \(T\) as the sum of all individual \(\Prize{}{}\) values.
+		We define the total prize \(\Ptotal{T}\) of a tree \(T\) as the sum of all individual \(\Price{}{}\) values.
 	
 	LED (leaves of equal depth)
 
@@ -179,7 +197,7 @@
 	%--------------------------------------------------------------------------------------------
 	\maketitle
 
-	\section*{relaxed LED tree with 3 leaves and Fermat Problem}
+	\section*{Case of 3 leaves}
 	
 	
 	 
@@ -191,9 +209,9 @@
 	
 	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behaviour and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
-	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two (i.e., the root). Vertex \( S \) is adjacent to two leaves and to the root \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has prize value \(\Prize{u}{v}; |uv| \leq \Prize{u}{v} \) and according to \cref{def:led}: 
+	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two (i.e., the root). Vertex \( S \) is adjacent to two leaves and to the root \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has prize value \(\Price{u}{v}; |uv| \leq \Price{u}{v} \) and according to \cref{def:led}: 
 	\[
-	\Prize{R}{A} = \Prize{R}{B} = \Prize{R}{C}
+	\Price{R}{A} = \Price{R}{B} = \Price{R}{C}
 	\] 
 	
 	In the following steps, we will focus on minimizing the total prize \(\Ptotal{T}\).
@@ -202,7 +220,7 @@
 	
 	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to. Without loss of generality, assume that \(R\) is adjacent to \(C\). Which means that edges for this particular tree T are \((A,S),(B,S),(R,S),(R,C)\). According to  \cref{cor:led} for this topology the total price would be:
 	 \begin{align*}
-	 	\Ptotal{T} = \Prize{A}{S} + \Prize{B}{S} + \Prize{C}{R} + \Prize{R}{S}
+	 	\Ptotal{T} = \Price{A}{S} + \Price{B}{S} + \Price{C}{R} + \Price{R}{S}
 	 \end{align*}
 	 
 	\begin{proposition}\label{prop:tp} 
@@ -218,19 +236,19 @@
 	Let us analyze the first case where \( |AS| > |BS|, |AS|+|SR| > |CR| \).
 	We know that:
 	\begin{align*}
-	\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} \\
-	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} = \Prize{R}{S} + \Prize{S}{B} \\
-	&\Rightarrow \Prize{S}{A} = \Prize{S}{B}
+	\Price{R}{C} &= \Price{R}{A} = \Price{R}{B} \\
+	\Price{R}{C} &= \Price{R}{S} + \Price{S}{A} = \Price{R}{S} + \Price{S}{B} \\
+	&\Rightarrow \Price{S}{A} = \Price{S}{B}
 	\end{align*}
-	We also know that \( |UV| \leq  $ \Prize{U}{V}$ \), hence the smallest possible value for \Prize{S}{A} is \(|SA|\) and for \Prize{S}{R} is \(|SR|\).
+	We also know that \( |UV| \leq  $ \Price{U}{V}$ \), hence the smallest possible value for \Price{S}{A} is \(|SA|\) and for \Price{S}{R} is \(|SR|\).
 	\begin{align*}	
-		\Prize{S}{A} = \Prize{S}{B} &= |SA| \\
-		\Prize{S}{R} &= |SR| \\
-		\Prize{R}{C} = \Prize{R}{S} + \Prize{S}{A} &= |SA| + |SR|
+		\Price{S}{A} = \Price{S}{B} &= |SA| \\
+		\Price{S}{R} &= |SR| \\
+		\Price{R}{C} = \Price{R}{S} + \Price{S}{A} &= |SA| + |SR|
 	\end{align*}
 	The total prize of three is now computed as follows:
 	\begin{align*}	
-		\Ptotal{T} &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		\Ptotal{T} &= \Price{S}{A} + \Price{S}{B} + \Price{C}{R} + \Price{R}{S} \\
 		&= |SA| + |SA| + |SR| + |SA| + |SR| \\
 		&= 2 |SR| + 3 |SA|
 	\end{align*}
@@ -238,9 +256,9 @@
 	
 	For second case \( |AS| < |BS|, |BS|+|SR| > |CR| \), similarly as in first case:
 	\begin{align*}
-		\Prize{S}{B} = \Prize{S}{A} &= |SB| \\
-		\Prize{S}{R} &= |SR| \\
-		\Prize{R}{C} &= |SB| + |SR|
+		\Price{S}{B} = \Price{S}{A} &= |SB| \\
+		\Price{S}{R} &= |SR| \\
+		\Price{R}{C} &= |SB| + |SR|
 	\end{align*}
 		and total prize of three is:
 	\begin{align*}	
@@ -250,30 +268,30 @@
 	Let us analyze the third case where \( |AS| > |BS|, |AS|+|SR| \leq |CR| \).
 	We know that:
 	\begin{align*}
-		\Prize{S}{A} = \Prize{S}{B}
+		\Price{S}{A} = \Price{S}{B}
 	\end{align*}
-	also that smallest possible value for \Prize{S}{A} is \(|SA|\).
+	also that smallest possible value for \Price{S}{A} is \(|SA|\).
 	\begin{align*}	
-		\Prize{S}{A} = \Prize{S}{B} = |SA| \\
+		\Price{S}{A} = \Price{S}{B} = |SA| \\
 	\end{align*}
-	since \(|CR| \geq |AS|+|SR| > |BS|+|SR| \), the smallest possible value for \Prize{R}{C} is \(|CR|\)
+	since \(|CR| \geq |AS|+|SR| > |BS|+|SR| \), the smallest possible value for \Price{R}{C} is \(|CR|\)
 	\begin{align*}
-	 	\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} = |CR| \\
-	 	\Prize{R}{C} &= \Prize{R}{S} + \Prize{S}{A} \\
-	 	\Prize{R}{S} &= |CR| - |AS|
+	 	\Price{R}{C} &= \Price{R}{A} = \Price{R}{B} = |CR| \\
+	 	\Price{R}{C} &= \Price{R}{S} + \Price{S}{A} \\
+	 	\Price{R}{S} &= |CR| - |AS|
 	\end{align*}
 	The total prize of three is then computed as follows:
 	\begin{align*}	
-		\Ptotal{T} &= \Prize{S}{A} + \Prize{S}{B} + \Prize{C}{R} + \Prize{R}{S} \\
+		\Ptotal{T} &= \Price{S}{A} + \Price{S}{B} + \Price{C}{R} + \Price{R}{S} \\
 		&= |SA| + |SA| + |CR| + |CR| - |SA| \\
 		&= |SA| + 2 |CR|
 	\end{align*}
 
 	For fourth case \( |AS| < |BS|, |BS|+|SR| \leq |CR| \), similarly as in third case:
 	\begin{align*}
-		\Prize{S}{B} &= \Prize{S}{A} = |BS| \\
-		\Prize{R}{C} &= \Prize{R}{A} = \Prize{R}{B} = |CR| \\
-	 	\Prize{R}{S} &= |CR| - |BS|
+		\Price{S}{B} &= \Price{S}{A} = |BS| \\
+		\Price{R}{C} &= \Price{R}{A} = \Price{R}{B} = |CR| \\
+	 	\Price{R}{S} &= |CR| - |BS|
 	\end{align*}
 	and total length of three is:
 	\begin{align*}	
@@ -360,11 +378,11 @@
 	Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( \overline{BS} \).  
 	Let us assume that the minimal LED tree satisfies:
 	\[
-	\Prize{R}{C} = \Prize{R}{B} = \Prize{R}{A}
+	\Price{R}{C} = \Price{R}{B} = \Price{R}{A}
 	\]
 	Then in particular:
 	\[
-	\Prize{R}{C} = \Prize{R}{S} + \Prize{S}{C} = \Prize{R}{B} = |BR|
+	\Price{R}{C} = \Price{R}{S} + \Price{S}{C} = \Price{R}{B} = |BR|
 	\]
 	
 	Now since \( R \in \overline{BS} \), we have \( |BR| < |BS| \), and from the assumption above:
