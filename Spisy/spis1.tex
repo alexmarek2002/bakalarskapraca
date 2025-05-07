@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt]{book}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{caption}
@@ -28,9 +28,9 @@
 	
 	\maketitle
 	
-	\section{Basic notions}
+	\chapter{Basic notions}
 				
-	\subsection{Introduction to graph theory}
+	\section{Introduction to graph theory}
 		Graph theory is considered a relatively young mathematical discipline. Its official beginning is often associated with the first monograph on graph theory, written by Dénes Kőnig in 1936. However, the origins of graph theory date 200 year back, when in 1736 Leonhard Euler published paper, that is regarded as the first paper in the history of graph theory. In this paper, Euler addressed the famous problem of walking through all the bridges of the city of Königsberg without crossing any bridge more than once. Euler represented the map of city and its bridges as a graph, topology and theory that he had done has shown it's importance much later, in various fields, including for example traffic planning, computer science or electrical engineering. More importantly it laid the groundwork for a new branch of mathematics, graph theory.
 		
 		From the perspective of graph theory, a graph is a mathematical structure consisting of a set of objects (vertices) and connections (edges) between these objects.
@@ -46,7 +46,7 @@
 		To understand next basic property of graphs, connectivity, we need to define term path. A path in a graph is a finite or infinite sequence of edges which joins a sequence of vertices, all of which are distinct. A graph is said to be connected if there exists a path between every pair of vertices. In contrast, a disconnected graph contains at least two vertices between which no path exists. This means the graph consists of two or more separate parts, called connected components. 
 		We will refer to two vertices connected by an edge as adjacent, and the degree of a vertex is defined as the number of vertices adjacent to it(i.e., number of times it occurs in set of edges). In this context, a path can also be seen as a sequence of adjacent vertices, each of which appears at most once.
 	
-	\subsection{Weighted graphs}	
+	\section{Weighted graphs}	
 		In many applications, it is useful to associate a numerical value, called a weight, with each edge of a graph. For example, when modeling traffic, the vertices may represent cities and the edges represent roads, while the weight corresponds to the time required to travel from one city to another. 
 		A weighted graph is a triple \( G = (V, E, w) \), where \( (V, E) \) is a graph and \( w : E \to \mathbb{R} \) is a weight function that assigns a real number to each edge. 
 		In such graph, distance between two vertices \( u, v \in V \), denoted \( d_G(u,v) \),  is defined as the length of the shortest path between \( u \) and \( v \) in \( G \), it is computed as sum of the weights of edges along that path. Let us mention that if the graph is not weighted then usually distance is computed in the same way, with the only difference being that each edge is considered to have weight 1, i.e., \( d_G(u,v) \) equals the number of edges in the path.
@@ -64,7 +64,7 @@
 		w(\{u,v\}) = |\mu(u) - \mu(v)| = \sqrt{ \sum_{i=1}^{n} (\mu(u)_i - \mu(v)_i)^2 }.
 		\]
 		
-	\subsection{Trees}
+	\section{Trees}
 		In this thesis we will particularly focus on a special type of graph, a tree.
 		Tree is a connected graph with no cycle.
 		The term "tree" was first used by the English mathematician Arthur Cayley, who applied it to count the number of different types of alkanes. The fusion of mathematical and chemical research later led to the establishment of standard terminology in graph theory.
@@ -81,7 +81,7 @@
 		\\- alg
 		\\After doing so, for each tree, we are let with list of edges, so we just sum all the weights of edges, (Euclidean Distances if Euclidean graph), and only thing remaining is to compare the total lengths of trees and choose one that is minimal. To sum up, when obtaining the minimal spanning tree on a given graph, we first generate all prufer seqences, then convert them to trees, compute the total length, choose minimal. This approach gives bulletproof recipe, that we will find useful later.   
 	
-	\subsection{The Euclidean Steiner Problem}
+	\section{The Euclidean Steiner Problem}
 		Euclidean steiner problem is a modification to euclidean minimum spanning tree, which goal is to find even shorter total connecting leght of edges. In order to do so, in steiner problem there can be included vertices %nedopisane
 	% OBRAZOK GRAFOV 
 	\begin{figure}[h!]
@@ -122,7 +122,7 @@
 	\end{figure}
 
 	
-	\subsection{LED trees}
+	\section{LED trees}
 		-intro
 	
 		A special type of tree is rooted tree, a rooted tree is a tree\(G = (V , E, R)\) in which one vertex \( R \in V \) has been designated the root.A Euclidean rooted tree can be defined as a pair \( \Psi = (G, \psi) \), where \( G \) is a rooted tree and \( \psi : V \to \mathbb{R}^n \) is an arbitrary map. The vertices of \( \Psi \) are the images of the elements of \( V \), and the role of the root is naturally assigned to the vertex \( \psi(R) \). Since \( \mathbb{R}^n \) is equipped with its standard metric, we can measure the length of any edge of \( \Psi \) by evaluating the distance between its adjacent vertices.
@@ -139,7 +139,7 @@
 		
 		-some descrition (drz sa clanku L-M LEDtrees)
 		
-	\subsection{Relaxed LED trees}	
+	\section{Relaxed LED trees}	
 	
 		- treba vysvetlit pojmy relaxovania a natahoania lebo s nimi pracujes v pravej sekcii o led s 3 listami
 			\\
@@ -205,15 +205,15 @@
 	%--------------------------------------------------------------------------------------------
 	\maketitle
 
-	\section*{Case of 3 leaves}
+	\chapter{Case of 3 leaves}
 	
 	
 	 
-	\subsection{Fermat problem}
+	\section{Fermat problem}
 	
 	
 	
-	\subsection{minimal relaxed LED tree with 3}
+	\section{minimal relaxed LED tree with 3}
 	
 	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behaviour and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
@@ -395,4 +395,4 @@
 	Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).
 	
 	
-	\end{document}
+\end{document}
