@@ -213,7 +213,7 @@
 	
 	
 	
-	\section{minimal relaxed LED tree with 3}
+	\section{minimal relaxed LED tree with 3  leaves}
 	
 	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behaviour and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
@@ -421,7 +421,7 @@
 		\Price{R}{C} = \Price{R}{S} + \Price{S}{C} = \Price{R}{B} = |BR|
 		\]
 		
-		Now since \( R \in \overline{BS} \), we have \( |BR| < |BS| \), and from the assumption above:
+		Now since \( R \in \overline{BS} \), we have \( |BR| < |BS| \), and from the assumption above
 		\[
 		|SR| + |CS| = |BR| < |BS| < |CS|
 		\quad \Rightarrow \quad |SR| < 0
@@ -432,5 +432,105 @@
 		Therefore, the only edge that avoids contradiction is the longest one, i.e. \( \overline{CS} \).  
 		Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).\hfill $\square$
 	\end{proof}
+
+		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\).
+		
+		The point \(S\) is constrained to lie on the axis of symmetry of two leaves(Proposition~2). For the time being, we leave the choice of the particular axis open. The placement of \(S\) is then formulated as a minimization problem. 
+		Let us fix a symmetry axis and consider the total price of the tree as a function of the position of \(S\) along this axis. 
+		
+		For the purpose of minimizing the total length of the relaxed LED tree with respect to the position of the point \(S\) on the symmetry axis, we work with the geometric configuration depicted in Figure~\ref{fig:Sopt}.
+		Points \(A,B,C\) are the leaves of the relaxed LED tree, and \(S\) denotes the Steiner point. 
+		The point \(S\) lies on the symmetry axis of the leaves \(A\) and \(B\), indicated by the dashed blue line, and therefore satisfies \( |SA| = |SB| \).
+		The quantities \(a\), \(c\), \(x\), and \(\ell\) denote the distances indicated in the figure.
+		
+		\begin{figure}[ht]
+			\centering
+			\begin{tikzpicture}[
+				>=stealth,
+				point/.style={circle,fill=black,inner sep=1.5pt},
+				axis/.style={black, line width=1.2pt},
+				pathred/.style={red!75!black, line width=1.2pt}
+				]
+				
+				% --- body ---
+				\coordinate (S) at (0,0);
+				\coordinate (A) at (-3,3);
+				\coordinate (C) at (6,-2);
+				\coordinate (B) at (-3,-3);
+				
+				% --- vodorovné osi ---
+				\draw[axis,dash dot,blue] (-5,0) -- (7,0);
+
+				
+				% --- zvislá os cez O ---
+				\draw[dashed] (0,0) -- (0,4);
+				\draw[dashed] (6,0) -- (6,4.2);
+				
+				% --- červená trajektória ---
+				\draw[pathred] (A) -- (S) -- (C);
+				\draw[pathred] (S) -- (B);
+				
+				% --- body ---
+				\node[point,label=above right:$S$] at (S) {};
+				\node[point,label=right:$A$] at (A) {};
+				\node[point,label=right:$C$] at (C) {};
+				\node[point,label=right:$B$] at (B) {};
+				
+				% --- vertikálne vzdialenosti ---
+				\draw[<->] (-3,0) -- (-3,3)
+				node[midway,fill=white,inner sep=1pt] {$a$};
+				
+				\draw[<->] (6,0) -- (6,-2)
+				node[midway,fill=white,inner sep=1pt] {$c$};
+				
+				% --- horizontálne vzdialenosti ---
+				\draw[<->] (-3,3.6) -- (0,3.6)
+				node[midway,fill=white,inner sep=1pt] {$x$};
+				
+				\draw[<->] (-3,4.2) -- (6,4.2)
+				node[midway,fill=white,inner sep=1pt] {$\ell$};
+				
+
+								
+			\end{tikzpicture}
+			\caption{Geometric configuration used for the optimization of point S}
+			\label{fig:Sopt}
+			
+		\end{figure}
+		 
+		 
+		 We will now spend the following lines to construct the minimization problem.
+		 
+		 Let us first rewrite the \(L(T)\) function to more helpful form. Since we are minimizing, In line 3 we assume that we put \(R\) to optimal possition as well, in accordance with Proposition 4.
+		 
+		 
+		\begin{align*}
+			L(T)
+			&= |AS| + 2|CR| \\
+			&= 3|AS| + 2|SR| \\
+			&= 3|AS| + 2 \cdot \frac{|CS| - |AS|}{2} \\
+			&= 3|AS| + |CS| - |AS| \\
+			&= \boldsymbol{2|AS| + |CS|} \\
+			&= |AS|+|AS|+|CS| \\
+			&= |AS| + |BS| + |CS|
+		\end{align*}
+		
+		We do the last two lines so we can notice that if \(|AS|=|BS|, |AS|+|SR|=|CR|\) is satisfied then minimal \(P(T)\) is just sum of all euclidean lengths of the edges. 
+		
+		We now express \(L(T)\) according to Figure~\ref{fig:Sopt}, using Pythagoras theorem. 
+		\begin{align*}
+			L(T)
+			&= 2|AS| + |CS| \\
+			&= 2\sqrt{a^{2} + x^{2}} + \sqrt{c^{2} + (\ell - x)^{2}} ,
+		\end{align*}
+		
+		where \(a\), \(c\), and \(\ell\) are fixed, and variable \(x\) represents the position of the Steiner point \(S\) along the symmetry axis.
+		Since the total length \(L(T)\) is expressed as a differentiable function of the variable \(x\), its minimum is attained at a critical point. We therefore compute the derivative of \(L(T)\) with respect to \(x\) and set it equal to zero.
+		\begin{align*}
+			\frac{\mathrm{d}L}{\mathrm{d}x}
+			&= \frac{2x}{\sqrt{a^{2} + x^{2}}}
+			- \frac{\ell - x}{\sqrt{c^{2} + (\ell - x)^{2}}} =0 
+		\end{align*}
+		
 	
 \end{document}
