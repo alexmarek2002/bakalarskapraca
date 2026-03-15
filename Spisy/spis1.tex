@@ -540,4 +540,75 @@
 		\end{equation*}
 	
 	
+	(We now know how to compute where on the axis of 2 points S lies, we still not know which axis to choose for the S)
+	
+	
+	(We will approach this problem numerically)
+	
+	(We will compute the optimal S for all tree axes, compare them and find the lowest \(L(T)\))
+	
+	We would like to approach this task universally for all possible triangles. To describe all triangles up to similarity transformations, we construct a representative domain in the plane such that each similarity class of triangles corresponds to exactly one point in this domain.
+	Let $\mathcal{T}$ denote the set of all non-degenerate triangles in the plane. 
+	Two triangles $T_1, T_2 \in \mathcal{T}$ are said to be similar if their corresponding 
+	side lengths are proportional. That is, if $a_i \le b_i \le c_i$ are the ordered 
+	side lengths of $T_i$ for $i = 1,2$, then
+	\[
+	T_1 \sim T_2 
+	\quad \text{if and only if} \quad
+	\frac{a_1}{c_1} = \frac{a_2}{c_2}
+	\quad \text{and} \quad
+	\frac{b_1}{c_1} = \frac{b_2}{c_2}.
+	\]
+	This relation defines an equivalence relation on $\mathcal{T}$, and each 
+	equivalence class represents one triangle shape.
+	
+	To obtain a unique representative of each similarity class, we fix two vertices
+	\[
+	A = (0,0), \qquad B = (1,0),
+	\]
+	so that the side $AB$ has unit length and lies on the $x$-axis. 
+	The third vertex is denoted by $C = (x,y)$.
+	
+	Since $AB$ is chosen as the longest side of the triangle, the remaining sides 
+	must satisfy
+	\[
+	|AC| \le 1, \qquad |BC| \le 1.
+	\]
+	In Cartesian coordinates this implies the conditions
+	\[
+	x^2 + y^2 \le 1, \qquad (x-1)^2 + y^2 \le 1.
+	\]
+	
+	To avoid counting mirror images, we restrict to the upper half-plane
+	\[
+	y > 0.
+	\]
+	Furthermore, interchanging the vertices $A$ and $B$ reflects the point $C$ across 
+	the line $x = \tfrac{1}{2}$. To ensure uniqueness of the representation, 
+	we therefore impose the additional condition
+	\[
+	x \le \tfrac{1}{2}.
+	\]
+	
+	We thus define the representative domain
+	\[
+	\Omega =
+	\left\{
+	(x,y) \in \mathbb{R}^2 :
+	y > 0,\;
+	x^2 + y^2 \le 1,\;
+	(x-1)^2 + y^2 \le 1,\;
+	x \le \tfrac{1}{2}
+	\right\}.
+	\]
+	
+	Each point $C \in \Omega$ uniquely determines a triangle
+	\[
+	T(C) = \{(0,0), (1,0), (x,y)\},
+	\]
+	and every triangle in $\mathcal{T}$ is similar to exactly one such triangle. 
+	Therefore, the domain $\Omega$ provides a complete and non-redundant 
+	parametrization of all triangle shapes.
+
+	
 \end{document}
