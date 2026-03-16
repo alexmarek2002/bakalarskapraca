@@ -4,51 +4,73 @@ This is here to help me (Peter Sarkoci) to keep track of the overal buildup.
     defined as an vertext-wise immersion of a regular graph theoretic tree
     into a Euclidean space. This is important in order to allow for overlaping
     vertices while not coalescing their identities.
-2) then we have the notion of relaxed euclidean tree -- it is an edge-valued
-    euclidean tree where the value of each edge is greater or equal to its
-    euclidean length.
-    Price of such a tree is the sum of all edge-values over all edges.
+2) then we have the notion of a euclidean tree with relaxation, which is an
+    edge-valued euclidean tree where the value of each edge is greater or equal
+    to its euclidean length.
+    Price of such a tree is the sum of all edge-valuations over all edges.
     This edge-valuation can be seen as another, concurent information about
     lengths of edges -- kind of _imposed_ edge lengths.
-    Hence every relaxed euclidean tree has one center with respect to its 
-    natural edge-lengths and another (possibly the same) with respect to 
+    The notion actually captures a natural concept -- a euclidean tree with
+    curvy edges.
+    Indeed, while euclidean space imposes a lower bound on the length of an
+    edge (which corresponds to straigth edges that are line segments), here the
+    edge can be curvy and longer.
+    If for an edge the edge-valuation equals the euclidean distance of its
+    vertices, it is said to be spanned; otherwise it is said to be relaxed.
+    If all adges are spanned, the whole euclidean tree with relaxation is said
+    to be spanned.
+    Clearly, every euclidean tree with relaxation has one center with respect
+    to its natural edge-lengths and another (possibly the same) with respect to 
     the imposed edge lengths.
-3) A relaxed tree is said to be LED if, with respect to the imposed
-    edge-lengths all leaves have the same excentricity.
-   For every euclidean tree there are infinitely many valuations turning it
-    into a LED tree.
-    These valuations form a convex polytope and the price is a linear
+3) A euclidean tree with relaxation is said to be LED if, with respect to the
+    imposed edge-lengths all leaves have the same excentricity.
+    For every euclidean tree with at least one edge there are infinitely many
+    valuations that turn it into a LED tree.
+    These valuations form a convex polytope and the relaxed price is a linear
     functional over this set.
-    Hence there exist a unique minimal price for every given euclidean tree.
-    We can call it LED-price of a euclidean tree.
-    In this view every euclidean tree has a natural price given as a sum of
-    edge-lengths over all edges and the LED-price.
-    Optimisation of so defined prices over all possibe topologies and
-    possitions of non-leaves is the euclidean steiner tree problem in the
-    case of the native price, and the euclidean steiner led-tree problem in
-    case of the LED-price.
-4) Our aim (or one of our aims) is to solve completely the euclidean steiner
-    led tree problem in cse of three leaves.
-5) For every euclidean tree its LED-price and its center can be computed by a
-    simple algorithm (this should be included in the theses)
-6) In the case of three leaves every tree will have exactly one steiner
+    Observe that this convex polytope depends only on the structure of the
+    underlying euclidean tree; consequently, the minimum price over all
+    led-trees in said polytope depends only on the underlying euclidean tree.
+    Hence there exists a unique minimal price for every euclidean tree, we can
+    call it the led-price of the euclidean tree as opposed to the standard (or
+    vanilla, or euclidean) price of the euclidean tree.
+4)  Searching for the euclidean tree with prescribed positions of leaves which
+    minimizes the euclidean price gives rise to the minimal Steiner tree
+    problem.
+    Similarly, searching for the euclidean tree with prescribed positions of
+    leaves which minimizes the led-price gives rise to the minimal led-tree
+    problem.
+5) Our aim (or one of our aims) is to completely solve the minimal led tree
+    problem in cse of three leaves.
+6) For every euclidean tree its LED-price and its center can be computed by a
+    simple algorithm (this should be included, explained and proven in the
+    theses)
+7) The vertices that have to be added to the set of prescribed leaves in order
+    to construct a tree are called steiner vertices.
+    In the case of three leaves every tree will have exactly one steiner
     vertex $S$.
     Solving the euclidean steiner led-tree problem ammounts to finding the
     optimal position of this $S$.
     So far this is done by a series of results that incrementaly uncovers the
     structure of the problem.
-6a) Three given leaves always form a triangle, albeit sometimes a degenerate
-    one.
+7a) Three given leaves always form vertices of a triangle, albeit sometimes a
+    degenerate one.
+    Therefore all possible positions of three vertices in the plane map
+    bijectively onto the set of all planar triangles (including the degenerate
+    ones).
     Obviously, our problem is equivariant wrt to all conformalities of the
     plane, so instances of this problem naturally decompose into classes of
     equivalence.
-    These are in one-to-one correspondence with equivalence classes of the
+    These are in one-to-one correspondence with similarity classes of the
     triangles in plane.
     Every such class has a unique representative with vertices at $(0,0)$ and
     $(1,0)$ and with the third vertex above the $x$-axis to the left of the
-    $x-0.5$ axis with the side incident with $x$-axis being its longes side.
-6a) First of all, it is relatively simple to prove, that the optimal LED-price
+    line $x=0.5$ where the side incident with $x$-axis being its longes side.
+7b) First of all, it is relatively simple to prove, that the optimal LED-price
     is attained when $S$ lies on one of the axes of symmetry of the three
     sides of the triangle gien by the three leaves.
     This is true even in all the degenerate cases.
-6b) what is next?
+7c) Now the question is on which of those side axes should the steiner vertex
+    sit.
+    Our claim is that the minimal led price is obtained whenever $S$ sits on
+    the axis of the shortest side.
