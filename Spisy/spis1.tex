@@ -551,7 +551,7 @@
 	Let $\mathcal{T}$ denote the set of all non-degenerate triangles in the plane. 
 	Two triangles $T_1, T_2 \in \mathcal{T}$ are said to be similar if their corresponding 
 	side lengths are proportional. That is, if $a_i \le b_i \le c_i$ are the ordered 
-	side lengths of $T_i$ for $i = 1,2$, then
+	side lengths of $T_i$ for $i = 1,2,3$, then
 	\[
 	T_1 \sim T_2 
 	\quad \text{if and only if} \quad
@@ -609,6 +609,120 @@
 	and every triangle in $\mathcal{T}$ is similar to exactly one such triangle. 
 	Therefore, the domain $\Omega$ provides a complete and non-redundant 
 	parametrization of all triangle shapes.
+	
+	"finding the minimizing axis that S lies on"
+	
+	We have previously stated in proposition 2 that to minimize P(T), the point S has to lie on axis of symmetry of two points of triangle. We have not yet specified which two points it should be. 
+	
+	\begin{proposition}
+	To minimize P(T), point S has to lie on axis of symmetry of two points that's euclidean distance is the shortest among all.
+ 	\end{proposition}
+ 
+	\begin{proof}
+	Let us modify the representative domain we formulated earlier, so that we shift A, B. It's new coordinates will be 
+	\[
+	A = (-0,5;0), \qquad B = (0,5;0),
+	\]
+	to simplify matters we will not consider boundaries.
+	
+	First we focus on comparison of Total lenghts of trees of axis of point A,C and B,C.
+	
+	Let $T_1$ be an arbitrary tree in the plane such that S lies on axis of A,C. Furthermore lets denote this C $C_1$ and S $S_1$ accordingly. 
+	Also Let $T_2$ be an arbitrary tree in the plane such that S lies on axis of A,B and also denote this C $C_2$ and S $S_2$ accordingly.
+	
+	Let \(C_1 = [x_{C1},k], C_2 = [x_{C2},k] \) where \(k \in \mathbb{R}\) is an arbitrary constant
+	
+	and \(S_1 = [x_{S1},y_{S2}], S_2 = [x_{S2},y_{S2} ] \), where we consider the coordinates to be given by the aforementioned computation. So for each C, exactly one S is assigned. 
+	
+	In this case we can express \(\Ptotal{T}\) as sum of all euclidean distances between points of triangle and S:
+	(Tu sa predpoklada ze sa vzdy da najst take R ze strom je plne napnuty(do dokazovania toho sa radsej nepustam))
+	\begin{align*}
+	P(T) = |(x_S,y_S),(x_A,y_A)| + |(x_S,y_S),(x_B,y_B)| + |(x_S,y_S),(x_C,y_C)| =\\
+	 \sqrt{(-0,5 - x_S)^2 + y_S^2}
+	+ \sqrt{(0,5 - x_S)^2 + y_S^2}
+	+ \sqrt{(x_C - x_S)^2 + (k - y_S)^2}
+	\end{align*}
+	
+	
+	Next, we define the functions $f_1$ and $f_2$ as follows:
+	(citim ze tento uhol pohladu sa mi bude neskor byt s vecami... lebo tu je vlastnost f1 f2 definovana cez c1 , c2 a to myslim ze nieje uplne spravne. v danom momente ked som to pisal mi to prislo elegantne ale teraz ked dochadzam ku koncu celeho dokazu tak to robi problem a kazi mi to pohlad na vec. Potreboval by som od vas triezvy pohlat a radu. lebo moj pohlad uz nieje triezvy uz je taky domotany, opity tym ze nad tym uz dlho rozmyslam)
+	\begin{align*}
+		f_1(x_{C1}) = \Ptotal{T_1}
+		&= \sqrt{(-0.5 - x_{S1})^2 + y_{S1}^2}
+		+ \sqrt{(0.5 - x_{S1})^2 + y_{S1}^2} \\
+		&\quad + \sqrt{(x_{C1} - x_{S1})^2 + (k - y_{S1})^2}, \\[1em]
+		f_2(x_{C2}) = \Ptotal{T_2}
+		&= \sqrt{(-0.5 - x_{S2})^2 + y_{S2}^2}
+		+ \sqrt{(0.5 - x_{S2})^2 + y_{S2}^2} \\
+		&\quad + \sqrt{(x_{C2} - x_{S2})^2 + (k - y_{S2})^2}.
+	\end{align*}
+	
+	Dokaz konvexnosti ... 2 sposoby, neviem ktory je korektnejsi
+	\begin{proposition}	
+		Functions  \(f_1, f_2\) are convex functions.  
+	\end{proposition}
+	\begin{proof}
+		We show this property on general example, for Arbitrarily C and arbitrary axis that S lies on. 
+		\begin{align*}
+		f(x)&=\Ptotal{T}	\\
+		f(x)''&=\frac{\sqrt{(x_C-x_S)^2+(k-y_S)^2}-\dfrac{(x_C-x_S)^2}{\sqrt{(x_C-x_S)^2+(k-y_S)^2}}}{(x_C-x_S)^2+(k-y_S)^2}
+		\end{align*}
+		Denominator in \(f(x)''\) is always positive so we will further focus on numerator.
+		\begin{align*}
+			f(x) &> 0	\\
+			\sqrt{(x_C-x_S)^2+(k-y_S)^2}-\dfrac{(x_C-x_S)^2}{\sqrt{(x_C-x_S)^2+(k-y_S)^2}} &> 0 \\
+			(k-y_S)^2 &> 0			
+		\end{align*}
+		which is always true, except for \(k = y_s\) which would occur only if A = C, which would not be a triangle no more. 
+	$\square$
+	\end{proof}
+	\begin{proof}
+		The proof follows from the fact that the Euclidean norm is a convex function.
+		If \( |e| \) is convex and If \(e = s - x\), where s is a fixed point and x is variable, than function representing th euclidean distance from x to s is also convex. 
+		\(\Ptotal{T}\) is just sum of such euclidean distances and since sum of convex functions is convex, than \(\Ptotal{T}\) is convex. Hence  \(f_1, f_2 \) are just specific case of \(\Ptotal{T}\) they are convex as well.
+	$\square$
+	\end{proof}
+
+	\begin{proposition}	
+	The functions \(f_1, f_2\) are symmetric with respect to the y-axis and intersect at the point where x=0.
+	\end{proposition}
+	\begin{proof}
+		We show that
+		\[
+		f_1(x_{C1}) = f_2(-x_{C1}).
+		\]
+		By definition,
+		\begin{align*}
+			f_1(x_{C1})
+			&= \sqrt{(-0.5-x_{S1})^2+y_{S1}^2}
+			+ \sqrt{(0.5-x_{S1})^2+y_{S1}^2}
+			+ \sqrt{(x_{C1}-x_{S1})^2+(k-y_{S1})^2}, \\
+			f_2(-x_{C1})
+			&= \sqrt{(-0.5+x_{S1})^2+y_{S1}^2}
+			+ \sqrt{(0.5+x_{S1})^2+y_{S1}^2}
+			+ \sqrt{(-x_{C1}+x_{S1})^2+(k-y_{S1})^2}.
+		\end{align*}
+		Since
+		\[
+		(-0.5-x_{S1})^2 = (0.5+x_{S1})^2,\qquad
+		(0.5-x_{S1})^2 = (-0.5+x_{S1})^2,
+		\]
+		and
+		\[
+		(x_{C1}-x_{S1})^2 = (-x_{C1}+x_{S1})^2,
+		\]
+		the first term of $f_1$ equals the second term of $f_2$, the second term of $f_1$ equals the first term of $f_2$, and the third terms are equal. Therefore,
+		\[
+		f_1(x_{C1}) = f_2(-x_{C1}),
+		\]
+		so the functions are symmetric with respect to the y-axis.
+	\end{proof}
+	
+	
+
+
+	\end{proof}
+
 
 	
 \end{document}
