@@ -21,6 +21,14 @@ test_3d_strom: test_3d_strom.c
 #test_zlozitejsi_2d_strom:
 #	echo "nada"
 
+# ------------------------------------------------------------- experiments ---
+
+expr: expr_trgn_movement_of_c 
+
+expr_trgn_movement_of_c: expr_trgn_movement_of_c.c
+	gcc -c expr_trgn_movement_of_c.c -I$(LIBEUTREEPATH)
+	gcc -o expr_trgn_movement_of_c expr_trgn_movement_of_c.o -lm -L$(LIBEUTREEPATH) -leutree
+
 # ------------------------------------------------------------------ servis ---
 
 clean:
