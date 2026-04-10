@@ -1,5 +1,5 @@
 \documentclass[12pt]{book}
-\usepackage{amsmath}
+\usepackage{amsmath,amsthm}
 \usepackage{tikz}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -18,7 +18,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
-\newtheorem{proof}{Proof}
+%\newtheorem*{proof}{Proof}
 
 \title{Bachelor Thesis}
 \author{Alex Marek}
@@ -669,7 +669,7 @@
 		\end{align*}
 		Denominator in \(f(x)''\) is always positive so we will further focus on numerator.
 		\begin{align*}
-			f(x) &> 0	\\
+			f''(x) &> 0	\\
 			\sqrt{(x_C-x_S)^2+(k-y_S)^2}-\dfrac{(x_C-x_S)^2}{\sqrt{(x_C-x_S)^2+(k-y_S)^2}} &> 0 \\
 			(k-y_S)^2 &> 0			
 		\end{align*}
