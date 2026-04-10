@@ -1,0 +1,181 @@
+\documentclass[12pt]{book}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage{amssymb}
+
+
+\newcommand{\Price}[2]{P(#1,#2)}
+\newcommand{\Ptotal}[1]{P(#1)}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{ex}{Example}
+\newtheorem*{pf}{Proof}
+
+\begin{document}
+
+\section{Convex functions in general}
+
+\begin{definition}
+    We say that a function $f$ defined over a domain $D$ of a euclidean space
+        is \emph{convex} if for every two points $a,b\in D$ and every $0<
+        \alpha<1$ with $\alpha a + (1-\alpha) b \in D$ it satisfies the
+        inequality 
+        \begin{equation*}
+            f(\alpha a + (1-\alpha) b)
+            \le
+            \alpha f(a) + (1-\alpha) f(b)\,.
+        \end{equation*}
+    Moreover the function is said to be \emph{strictly} so if the inequality
+        is never tight.
+\end{definition}
+
+\begin{lemma}
+    Sum of two (strictly) convex function is (strictly) convex.
+\end{lemma}
+\begin{pf}
+    Direct consequence of the definition.
+    \qed
+\end{pf}
+
+\begin{lemma}
+    Let $f_{1},f_{2}\colon D\to\mathbb{R}$ be two (strictly) convex function
+        over a common euclidean domain $D$.
+    Their maximum, which is the function
+        \begin{equation*}
+            f_{1}\vee f_{2}
+            \colon
+            D\to\mathbb{R}
+            \colon
+            x\mapsto\max\{f_{1}(x),f_{2}(x)\}
+        \end{equation*}
+        is (strictly) convex as well.
+\end{lemma}
+\begin{pf}
+    For the sake of simplicity, within this proof, let us write $f$ in place
+        of $f_{1}\vee f_{2}$.
+    Let us consider $a,b\in D$ and $0<\alpha<1$ as in the definition of
+        convexity.
+    From the construction of $f$ it is clear that $f(\alpha a + (1-\alpha) b)$
+        is either $f_{1}(\alpha a + (1-\alpha) b)$ or
+        $f_{2}(\alpha a + (1-\alpha) b)$.
+    We can assume, without any loss of generality, the the former is the case
+        (were it the other way round, the proof can be carried out analogously
+        just by replacing $f_{1}$ for $f_{2}$).
+    Since, by assumption, $f_{1}$ is convex, we have 
+        \begin{equation*}
+            f_{1}(\alpha a + (1-\alpha) b)
+            \le
+            \alpha f_{1}(a) + (1-\alpha) f_{1}(b)\,.
+        \end{equation*}
+    From the construction of $f$ it is also clear that $f>f_{1}$ which, when
+        combined with the latter inequality, yields
+        \begin{equation*}
+            f_{1}(\alpha a + (1-\alpha) b)
+            \le
+            \alpha f(a) + (1-\alpha) f(b)\,.
+        \end{equation*}
+    Finally, the convexity of $f$ is concluded just byt remembering that the
+        left hand side is exactly $f(\alpha a + (1-\alpha) b)$.
+
+    Now, if the convexity of both functions happens to be trict, the convexity
+        inequality at the beginning of the consideratin becomes sharp and the
+        sharpness is preserved in the following steps which proves the strict
+        variant of the lemma.
+    \qed
+\end{pf}
+
+\begin{lemma}
+    Level cuts of (strictly) convex functions defined over convex domains are
+        (strictly) convex sets.
+\end{lemma}
+\begin{pf}
+    Let us omitt this for now.
+    \qed
+\end{pf}
+
+As an example, let us pick an arbitratry point $c$ from the euclidean plane and
+    consider the function
+    \begin{equation*}
+        d_{c}
+        \colon
+        \mathrm{R}^{2}\to\mathbb{R}
+        \colon
+        x\mapsto |x-c|
+    \end{equation*}
+    which measures the euclidean distance of its argument $x$ from the fixed
+    point $c$.
+This function is convex thanks to the fact that the euclidean distance is a
+    metric and, as such, satisfies the triangle inequality.
+However it is not convex strictly since whenever the points $a$ and $b$ lie
+    on a common line with the point $c$, the vectors $a-c$ and $b-c$ are
+    dependent which boils the term $|\alpha a + (1-\alpha) b - c|$ down into
+    an affine function of $\alpha$ as $x\mapsto |x|$ is a norm.
+
+On the other hand, the above mentioned situation which breaks down the
+    strict convexity of $d_{c}$ is the \emph{only} case when the function
+    exihibits affine behaviour.
+All other one dimmensional linear cuts of $d$ are strictly convex.
+Indeed, all such cuts are but affine transformations of the function
+    \begin{equation}
+        x
+        \mapsto
+        \sqrt{k+x^{2}}
+    \end{equation}
+    where $k>0$.
+Such functions are all clearly strictly convex as one can chech by tedious
+    computation, though I am pretty sure it can be done by pure thinking too.
+Now, as innocent this might seem it has an interesting consequence.
+
+\begin{proposition}
+    Let $c_{1},c_{2}$ and $c_{3}$ be three non colinear points in the plane.
+    The function
+        \begin{equation*}
+            d_{c_{1},c_{2},c_{3}}
+            \colon
+            \mathbb{R}^{2}\to\mathbb{R}
+            \colon
+            x\mapsto |x-c_{1}| + |x-c_{2}| + |x - c_{3}|
+        \end{equation*}
+        is strictly convex.
+\end{proposition}
+\begin{pf}
+    As a sum of three convex functions, this function is clearly convex too.
+    In order to conclude that the convexity is also strict let us consider two
+        points $a,b$.
+    Since the points $c_{i}$ are not colinear, the points $a$ and $b$ can be
+        colinear with at most two of the $c_{i}$ or, in other words, at least
+        one of the $c_{i}$ is not colinear with $a$ and $b$.
+    This means that the term $f(\alpha a + (1-\alpha)b)$ seen as a function
+        of $\alpha$ is a sum of three functions of which at most two are
+        affine in $\alpha$ while the third one is strictly convex.
+    Obviously, sum of an affine function with a strictly convex function is
+        a strictly convex function which concludes the proof.
+    \qed
+\end{pf}
+
+\section{Convex functions related to LED trees}
+
+\begin{proposition}
+    The function $f_{1}$ which measures the price of the shortest euclidean
+        tree vith leaves $(0,0)$, $(1,0)$ and $x$ and a steiner point $S$
+        located optimally (with respect to the total length of the tree) on
+        te axis of symmetry of the line segment connecting $(0,0)$ and $x$
+        is strictly convex.
+\end{proposition}
+\begin{pf}
+    Consider two points $a$ and $b$ in the plane and the corresponding optimal
+        positions of the steiner points $S_{a}$ and $S_{b}$
+\end{pf}
+
+\end{document}
