@@ -10,7 +10,7 @@
 \usepackage{amssymb}
 
 
-\newcommand{\Price}[2]{P(#1,#2)}
+\newco  mmand{\Price}[2]{P(#1,#2)}
 \newcommand{\Ptotal}[1]{P(#1)}
 
 
@@ -23,6 +23,139 @@
 \newtheorem*{pf}{Proof}
 
 \begin{document}
+
+\section{Obrys struktury dokazu v bodoch}
+
+Pre istotu zopakujme, ze 
+    \begin{itemize}
+        \item $f_{1}(C)$ je dlzka minimalneho LED stromu s topologiou
+            $A-S,C-S,S-R,R-B$, o takej topologii hovorme, ze ``steinerov
+            vrchol visi na kratkej strane''
+        \item $f_{1}(C)$ je dlzka minimalneho LED stromu s topologiou
+            $B-S,C-S,S-R,R-A$
+    \end{itemize}
+Prisne vzate je $f_{1},f_{2}\colon\mathbb{R}^{2}\to\mathbb{R}$ ale vacsina
+    hry sa odohrava na oblasti
+    \begin{equation*}
+        O
+        =
+        \{C\in\mathbb{R}\times\left[0,\infty\left[\,|\,|AC|\le|BC|\le|AB|\}
+    \end{equation*}
+    pricom $A=(-0.5,0)$ a $B=(+0.5.0)$.
+
+\emph{Krok I.}
+Najprv treba dokazat konvexnost $f_{1}$ a $f_{2}$.
+To uz mame.
+
+\emph{Krok II.}
+Dokazat, ze vrstevnica $f_{1}$ predchadzajuca cez $C$ je kolma na vektor
+    $CS$, konkretne ze jednotkovy vektor
+    \begin{equation*}
+        CS^{0}
+        =
+        \frac{CS}{|CS|}
+    \end{equation*}
+    je vnutornou normalou tejto vrstevnice.
+Zhruba takto.
+Dotykovym vektorom vrstevnice je kazdy taky vektor $v$, pre ktory plati
+    \begin{equation*}
+        \frac{\partial f_{1}}{\partial v}
+        =
+        0\,.
+    \end{equation*}
+Pretoze v optimalnom LED strome so steinerovym vrcholom visiacim na kratkej
+    strane je $|AS|=|CS|$, plati tam $f_{1}(C) = 2|AS| + |BS|$ pricom ovsem
+    $S$ tu zavisi od $C$.
+Z toho
+    \begin{equation*}
+        0
+        =
+        \frac{\partial f_{1}}{\partial v}
+        =
+        \left(2 AS^{0} + BS^{0}\right)\cdot\frac{\partial S}{\partial V}
+    \end{equation*}
+    co ovsem znamena, ze 
+    \begin{equation*}
+        \left(2 AS^{0} + BS^{0}\right)
+        \perp
+        \frac{\partial S}{\partial V}\,.
+    \end{equation*}
+Vieme vsak (uvahy o suvislosti so snellovym zakonom\footnote{Inak ta suvislost
+    so snellovym zakonom by sa v texte nemala zamlcat, to je dolezita vec.})
+    ze pre uhly, ktore zvieraju hrany $AS$ a $BS$ s osou usecky $AC$ (oznacme
+    ich $\alpha$ a $\beta$) musi platiti $2\cos(\alpha) = \cos(\beta)$ --
+    samozrejme toto plati v minimalnom LED strome, ale to je v poriadku,
+    pretoze jeho minimalitu predpokladame.
+Tieto goniometricke funkcie uhlov sa vsak daju vyjadrit ako skalarne suciny
+    hran $AS$ respektive $BS$ s normalou $n_{AC}$ na stranu $AC$.
+A preto tato snellovska identita vlastne znamena, ze
+    \begin{equation*}
+        \left(2 AS^{0} + BS^{0}\right)
+        \cdot
+        n_{AC}
+        =
+        0\,.
+    \end{equation*}
+To znamena, ze ak sa $C$ pohybuje po vrstevnici $f_{1}$, steinerov vrchol sa
+    pohybuje smerom rovnobeznym s $n_{AC}$.
+
+Sucasne mozno $f_{1}(C)$ vyjadrit aj ako $|AS|+|BS|+|CS|$ z coho
+    \begin{equation*}
+        0
+        =
+        \frac{\partial f_{1}}{\partial v}
+        =
+        \left(AS^{0} + BS^{0} + CS^{0}\right)\cdot \frac{\partial S}{\partial v} + CS^{0}\frac{\partial C}{\partial v}\,.
+    \end{equation*}
+Z jednej rovnic vyssie vieme, ze prvy term vyrazu na pravej strane je nulovy
+    a teda musi byt nulovy aj druhy term vyrazu na pravej strane.
+Ale to znamena, ze $CS^{0}$ je kolme na $v$, cize na vektory dotykove k
+    vrstevnici.
+Tym je dokazane, ze $CS^{0}$ je normala vrstevnice $f_{1}$, este treba ukazat,
+    ze je to vnutorna normala.
+
+Vrstevnice $f_{1}$ su konvexne.
+Bod $A$ je v jej vnutri a sice preto, lebo v $A$ ma $f_{1}$ globalne minimum,
+    co sa da lahko odargumentovat.
+Zo snellovskych uvah (inych, nez ktore sme pouzili vyssie) vieme, ze $CS^{0}$
+    zviera s $CA$ ostry uhol (dokonca mensi nez $\pi/6$) a teda musi smerovat
+    do vnutra vrstevnice.
+Je teda jej vnutornou normalou.
+
+Analogicke tvrdenie sa da dokazat pre funkciu $f_{2}$, ale netreba to robit,
+    kedze vieme, ze $f_{2}$ je zrkadlovym obrazom $f_{1}$ podla $y$-ovej osi
+    a navyse strom, cenu ktoreho $f_{2}$ meria je rovnakym zrkadlovym obrazom
+    stromu, ktoreho cenu meria $f_{1}$.
+
+\emph{Krok III.}
+Majme $C\in O$ (cize v plachetnici) a pohyubujme sa po vrstevnici $f_{1}$ v
+    smere takeho vektora $v$, ktory zviera tupy uhol s vektorom $CA$ a ostry
+    uhol s vektorom $CB$ -- to sa vzdy da, kedze smer $v$ je kolmy na $CS^{0}$.
+V smere takeho vektora dlzka $AC$ monotonne rastie a dlzka $BC$ monotonne
+    klesa.
+Takto mozeme postupovat az do bodu kde
+    \begin{itemize}
+        \item $|AC| + |BC| = |AB|$ alebo
+        \item $|AC| = |BC|$
+    \end{itemize}
+Prvy pripad nastava, ak $f_{1}(C)$ na zaciatku mala hodnotu mensiu nez
+    $f_{1}(0,0) = 5/4$, druhy pripad nastava v pripade opoacnom.
+Tak ci onak, kym jedna z tychto situacii nenastane, bod $C$ sa pohybuje v
+    oblasti $O$ (plachetnici).
+Pocas tohto pohybu ovsem zostava hodnota $f_{1}(C)$ konstantna, kedze je to
+    pohyb po vrstevnici $f_{1}$.
+
+Pretoze sme celu dobu v plachetnici, uhol $ACB$ je neustale prinajmensom
+    $\pi/3$. 
+Zarovnej, pretoze su stromy, ktorych cenu meraju $f_{1}$ a $f_{2}$ oba
+    minimalne, maju oba
+
+\emph{Krok IV.}
+Este treba ukazat, ze cena minimalneho led stromu s topologiou
+    $A-S,B-S,S-R,R-C$ je uplne mimo misu a zarucene nebude mensia, nez cena
+    ktorehokovel z vyssie diskutovanych stromov.
+To tusim mame vybavene uz davnejsie, ide to lahko, netreba za tym ucelom tasit
+    take zbrane, ako ked sa porovnava $f_{1}$ a $f_{2}$.
 
 \section{Convex functions in general}
 
