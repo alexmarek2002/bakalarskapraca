@@ -10,7 +10,7 @@
 \usepackage{amssymb}
 
 
-\newco  mmand{\Price}[2]{P(#1,#2)}
+\newcommand{\Price}[2]{P(#1,#2)}
 \newcommand{\Ptotal}[1]{P(#1)}
 
 
@@ -39,15 +39,15 @@ Prisne vzate je $f_{1},f_{2}\colon\mathbb{R}^{2}\to\mathbb{R}$ ale vacsina
     \begin{equation*}
         O
         =
-        \{C\in\mathbb{R}\times\left[0,\infty\left[\,|\,|AC|\le|BC|\le|AB|\}
+        \{C\in\mathbb{R}\times\left[0,\infty\right[\,|\,|AC|\le|BC|\le|AB|\}
     \end{equation*}
     pricom $A=(-0.5,0)$ a $B=(+0.5.0)$.
 
-\emph{Krok I.}
+{\bf Krok I.}
 Najprv treba dokazat konvexnost $f_{1}$ a $f_{2}$.
 To uz mame.
 
-\emph{Krok II.}
+{\bf Krok II.}
 Dokazat, ze vrstevnica $f_{1}$ predchadzajuca cez $C$ je kolma na vektor
     $CS$, konkretne ze jednotkovy vektor
     \begin{equation*}
@@ -127,10 +127,13 @@ Analogicke tvrdenie sa da dokazat pre funkciu $f_{2}$, ale netreba to robit,
     a navyse strom, cenu ktoreho $f_{2}$ meria je rovnakym zrkadlovym obrazom
     stromu, ktoreho cenu meria $f_{1}$.
 
-\emph{Krok III.}
+{\bf Krok III.}
+(Nova metoda, nebudeme dokazovat, ze vrstevnice $f_{1}$ a $f_{2}$ su
+    transverzalne, ale priamo to umlatime rukami na diferencialnej urovni.)
 Majme $C\in O$ (cize v plachetnici) a pohyubujme sa po vrstevnici $f_{1}$ v
-    smere takeho vektora $v$, ktory zviera tupy uhol s vektorom $CA$ a ostry
-    uhol s vektorom $CB$ -- to sa vzdy da, kedze smer $v$ je kolmy na $CS^{0}$.
+    smere toho vektora $v$, ktory zviera tupy uhol s vektorom $CA$ a ostry
+    uhol s vektorom $CB$ -- to sa vzdy da, kedze smer $v$ je kolmy na
+    $CS^{0}$.
 V smere takeho vektora dlzka $AC$ monotonne rastie a dlzka $BC$ monotonne
     klesa.
 Takto mozeme postupovat az do bodu kde
@@ -147,10 +150,19 @@ Pocas tohto pohybu ovsem zostava hodnota $f_{1}(C)$ konstantna, kedze je to
 
 Pretoze sme celu dobu v plachetnici, uhol $ACB$ je neustale prinajmensom
     $\pi/3$. 
-Zarovnej, pretoze su stromy, ktorych cenu meraju $f_{1}$ a $f_{2}$ oba
-    minimalne, maju oba
+Uvazujme teraz oba minimalne stromy (a ten, ktoreho cenu meria $f_{1}$ aj ten
+    ktoreho cenu meria $f_{2}$) sucasne.
+Aby sa nam nepoplietli, rozlisme ich steinerovske vrcholy ako $S_{1}$ a
+    $S_{2}$.
+A dalej, uhol ktory zviera strana $AC$ s hranou $S_{1}C$ v optimalnom LED
+    strome kde steinerov vrchol visi zo strany $AC$ oznacme $\alpha_{1}$
+    a, analogicky, uhol, ktory zviera strana $BC$ s hranou $S_{2}C$ v
+    optimalnom LED strome, kde steinerov vrchol visi zo strany $BC$ oznacme
+    $\alpha_{2}$.
+Pretoze su stromy, ktorych cenu meraju $f_{1}$ a $f_{2}$ oba minimalne, maju
+    ich uhly $\alpha_{1}$ a $\alpha_{2}$ hodnotu mensiu nez $\pi/6$.
 
-\emph{Krok IV.}
+{\bf Krok IV.}
 Este treba ukazat, ze cena minimalneho led stromu s topologiou
     $A-S,B-S,S-R,R-C$ je uplne mimo misu a zarucene nebude mensia, nez cena
     ktorehokovel z vyssie diskutovanych stromov.
