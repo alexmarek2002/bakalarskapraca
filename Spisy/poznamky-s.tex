@@ -131,15 +131,17 @@ Analogicke tvrdenie sa da dokazat pre funkciu $f_{2}$, ale netreba to robit,
 (Nova metoda, nebudeme dokazovat, ze vrstevnice $f_{1}$ a $f_{2}$ su
     transverzalne, ale priamo to umlatime rukami na diferencialnej urovni.)
 Majme $C\in O$ (cize v plachetnici) a pohyubujme sa po vrstevnici $f_{1}$ v
-    smere toho vektora $v$, ktory zviera tupy uhol s vektorom $CA$ a ostry
-    uhol s vektorom $CB$ -- to sa vzdy da, kedze smer $v$ je kolmy na
+    smere toho dotykoveho vektora $v$, ktory zviera tupy uhol s vektorom $CA$
+    a ostry uhol s vektorom $CB$ -- to sa vzdy da, kedze smer $v$ je kolmy na
     $CS^{0}$.
+Intuitivne, to je ten spomedzi dvoch dotykovych vektorov, ktory zhruba smeruje
+    k $y$-ovej osi.
 V smere takeho vektora dlzka $AC$ monotonne rastie a dlzka $BC$ monotonne
     klesa.
 Takto mozeme postupovat az do bodu kde
     \begin{itemize}
-        \item $|AC| + |BC| = |AB|$ alebo
-        \item $|AC| = |BC|$
+        \item[(i)] $|AC| + |BC| = |AB|$ alebo
+        \item[(ii)] $|AC| = |BC|$
     \end{itemize}
 Prvy pripad nastava, ak $f_{1}(C)$ na zaciatku mala hodnotu mensiu nez
     $f_{1}(0,0) = 5/4$, druhy pripad nastava v pripade opoacnom.
@@ -159,10 +161,29 @@ A dalej, uhol ktory zviera strana $AC$ s hranou $S_{1}C$ v optimalnom LED
     a, analogicky, uhol, ktory zviera strana $BC$ s hranou $S_{2}C$ v
     optimalnom LED strome, kde steinerov vrchol visi zo strany $BC$ oznacme
     $\alpha_{2}$.
-Pretoze su stromy, ktorych cenu meraju $f_{1}$ a $f_{2}$ oba minimalne, maju
-    ich uhly $\alpha_{1}$ a $\alpha_{2}$ hodnotu mensiu nez $\pi/6$.
+Pretoze su stromy, ktorych cenu meraju funkcie $f_{1}$ a $f_{2}$ oba minimalne,
+    maju ich uhly $\alpha_{1}$ a $\alpha_{2}$ hodnotu mensiu nez $\pi/6$.
+Ked sa to nakresli, vidno, ze vektor $CS_{2}$ smeruje do uhla urceneho vektormi
+    $CS_{1}$ a $v$ a teda, $CS_{2}$ zviera s $v$ ostry uhol.
+Pretoze vektor $CS_{2}$ je vnutornou normalou vrstevnice funkcie $f_{2}$, ktora
+    prechadza cez vrchol $C$ (z uplne rovnakych dovodov, ake zazneli v kroku
+    II, napokon mame tam o tom v zavere aj poznamku), musi v smere vektora $v$
+    hodnota $f_{2}$ klesat.
+A to az do bodu ked je splnene (i) alebo (ii), lenze tam je zretelne
+    $f_{1}\le f_{2}$ a kedze pozdlz vrstevnice sa $f_{1}$ nemeni a $f_{2}$
+    klesa, musi platit rovnake porovnanie aj v bode $C$.
 
 {\bf Krok IV.}
+Teraz, tato uvaha plati pre $f_{1}$ a $f_{2}$.
+Drobny problem je, ze $f_{2}$ na plachetnici meria cenu optimalneho stromu
+    so steinerovymi vrcholom visiacim nad stranou $BC$ iba podmienecne.
+V skutocnosti tam v istom regione pozicii vrcholu $C$ zacina takyto strom
+    degenerovat, prestava byt nasponovany a to znamena, ze cena optimalneho
+    stromu tohto typu sa tam pocita podla ineho vztahu.
+Ale to nevadi, pretoze to cenu stromu tohto typu este viac \emph{zdvihne}
+    a porovnanie cien zostava v platnosti, iba co sa este viac vyostri.
+
+{\bf Krok V.}
 Este treba ukazat, ze cena minimalneho led stromu s topologiou
     $A-S,B-S,S-R,R-C$ je uplne mimo misu a zarucene nebude mensia, nez cena
     ktorehokovel z vyssie diskutovanych stromov.
