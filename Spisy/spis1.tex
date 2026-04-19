@@ -378,7 +378,7 @@
 	This leads us to the question of how to place the root \( R \in \overline{CS} \) for given points \( A, B, C, S \), so that the total length of the LED tree is minimized.
 	
 
-	\begin{proposition}
+	\begin{proposition}\label{prop:R} 
 		To obtain the minimal total price \(P(T)\) of the tree for given points \(A, B, C, S\), the root \(R\) must satisfy the following conditions:
 		\begin{enumerate}
 			\item \(R\) lies on the longest edge among \( |AS|, |BS|, |CS| \). Without loss of generality, assume that \( |CS| \) is the longest, so \( R \in \overline{CS} \).
@@ -434,9 +434,12 @@
 		Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).\hfill $\square$
 	\end{proof}
 
-		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\).
+		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\) for fixed points \(A, B, C\).
 		
-		The point \(S\) is constrained to lie on the axis of symmetry of two leaves(Proposition~2). For the time being, we leave the choice of the particular axis open. The placement of \(S\) is then formulated as a minimization problem. 
+		The point \(S\) is constrained to lie on the axis of symmetry of two leaves(Proposition~2). For the time being, we leave the choice of the particular axis open. It is important to say that the selection of the axis matters If unsuitable axis is chose the tree can start to relax in order to satisfy \cref{def:led}. At this stage, we do not have the tools to provide a more detailed analysis of the problem. However, this will be addressed later. 
+		Let us assume that the following configuration, after computing the point S, satisfies the condition \label{prop:R} for point R, and is therefore fully stretched.
+		
+		 The placement of \(S\) is then formulated as a minimization problem. 
 		Let us fix a symmetry axis and consider the total price of the tree as a function of the position of \(S\) along this axis. 
 		
 		For the purpose of minimizing the total length of the relaxed LED tree with respect to the position of the point \(S\) on the symmetry axis, we work with the geometric configuration depicted in Figure~\ref{fig:Sopt}.
@@ -540,6 +543,11 @@
 			= 0 .
 		\end{equation*}
 	
+	
+	---------------------------------------NOVE
+	
+	With the axis chosen for the given side the computation of the minimal S depends on the position of the third point.
+	figure N describes how possition of C for fixed A, B and its axis affects determination of S for minimalization of the tree.   
 	
 	\section{minimal relaxed LED tree with 3  leaves}
 
