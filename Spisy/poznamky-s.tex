@@ -191,6 +191,212 @@ Este treba ukazat, ze cena minimalneho led stromu s topologiou
 To tusim mame vybavene uz davnejsie, ide to lahko, netreba za tym ucelom tasit
     take zbrane, ako ked sa porovnava $f_{1}$ a $f_{2}$.
 
+\section{Ako je to s cenou optimalneho LED stromu so zadanou topologiou}
+
+Zaver sekcie o cene optimalneho LED stromu s danou topologiou (cim sa mysli: s
+    predpisanou hranou na ktorej sa musi nachadzat koren) by mala byt veta,
+    ktora kombinuje vsetky zistenia tejto sekcie do jedneho grand tvrdenia.
+Veta ktora jasne ukazuje, podla akeho predpisu sa rata cena optimalneho LED
+    stromu s predpisanou topologiou a aku ma taky optimalny LED strom strukturu
+    v zavislosti od polohy jednotlivych vrcholov.
+Bez ujmy na vseobecnosti mozeme oznacit listy stromu tak, ze koren lezi na
+    hrane $SC$.
+A vzhladom k tomu, ze problem je invariantny voci posunutiam a rotaciam a 
+    ekvivarianty voci skalovaniu, mozeme dalej bez ujmy na vseobecnosti
+    predpokladat aj to, ze $A=(0,1)$ a $B=(0,-1)$.
+Za takychto okolnosti zavisi cena stromu vyhradne od pology vrchola $C$ v
+    rovine a teda je functiou typu $\mathbb{R}^{2}\to\mathbb{R}$.
+Pomerne lahko sa da nahliadnut, ze tato funkcia musi byt konvexna (ako sa ukaze
+    neskor, nie striktne, ale to nevadi) a teda spojita.
+Pozor na tejto detail, ochvilku zohra ulohu.
+
+Vsimnime si, ze ak mame body $A$ a $B$ ulozene tak, ako je napisane vyssie,
+    je tato funkcia symetricka ako podla $x$-ovej tak aj podla $y$-ovej osi.
+Tuto symetriu sme mlcky vyuzivali, ked sme uvazovali nad tym, ako funkcia
+    vyzera -- zvazovali sme situaciu, ze vrchol $C$ je na prvo od $y$-ovej
+    osi, co je uplne v poriakdu, kedze vdaka symetrii je situacia na lavo
+    od tejto osi zrkadlovo symetricka.
+
+No a ja som vtedy dospel k zaveru, ze polrovina napravo od $y$-ovej osi sa
+    rozpadne na tri oblasti v ktorych sa cena optimalneho stromu rata
+    podla roznych predpisov.
+Uplne najjednoduchsie sa cena stromu pocita v kruhu so stredom v boe $(0,0)$
+    a polomerom $1$, tam je to konstanta $3$ a je to dosledok toho, ze hrana
+    $SC$ je masivne relaxovana, co umoznuje bezplatne zosunut vrchol $S$ presne
+    do bodu $(0,0)$.
+Tento oblasti hovorme trebars $O_{1}$, len pre potreby tejto poznamky.
+
+No a dalej som dospel k zaveru, ze dalsia oblast je tvorena mnozinovym
+    rozdielom kruhu dvoch kruhov.
+Jeden z nich je ohraniceny kruznicou opisanou rovnostrannemu trojuholniku s
+    vrcholmi v listoch $A$ a $B$ s tretim vrcholom $C$ leziacim, ako inak,
+    na osi usecky $AB$ na pravo od $y$-ovej osi.
+Ak ma byt trojuholnik rovnostranny, inde tento vrchol lezat nemoze.
+Ak sa nemylim, tento treti vrchol musi mat suradnice $(\sqrt{3},0)$.
+Skonsolidujme znenie toho, co sa tu snazim povedat: tretia oblast vznikne tak,
+    ze sa vezme vnutro kruznice prechadzajucej bodmi $A,B$ a $(\sqrt{3},0)$
+    a odcita sa od neho oblast $O_{1}$.
+To co vnikne je mesiaciku podobna oblast, hovorme jej $O_{2}$.
+Vtedy sa nam zdalo, ze v tejto oblasti sa cena optimalneho stromu s korenom
+    v hrane $CS$ pocita ako trojnasobok polomeru kruznice prelozenej bodmi
+    $A$, $B$ a $C$.
+Ak by to bola pravda, vrstevnice cenovej funkcie v tejto oblasti by boli
+    kruznice prechadzajuce bodmi $A$ a $B$.
+
+No a tretia oblast, ako sa nam zdalo, bol zvysok polroviny, cize
+    $[0,\infty[\times\mathbb{R}\smallsetminus(O_{1}\cup O_{2})$.
+V nej sa mala cena stromu pocitat ako vysledok optimalizacneho problemu v
+    zmysle snellovho zakona.
+Sice nevieme vyjadrit hodnotu tejto funkcie epxlicitne, ale vdaka suvislosti
+    so snellovym zakonom vieme, ze optimalny strom tu ma strukturu vyhovujucu
+    podmienke $2\cos(\alpha)=\cos(\beta)$ kde $\alpha$ je uhol zovrety useckou
+    $AS$ a $x$-ovou osou a $\beta$ je unol zovrety $x$-ovou osou a useckou
+    $SC$.
+Ked sa najde poloha vrchola $S$ na osi usecky $AB$ tak, aby platila tato
+    podmienka cena stromu sa spocita jednoducho ako sucet dlzok hran
+    stromu, pretoze tu je strom nasponovany.
+
+Lenze takto to nemoze byt.
+Ak by to tak bolo, bola by totiz cenova funkcia nespojita v bodoch $A$ a $B$.
+Preco?
+Dovod je v strukture oblasti $O_{2}$ a je jednoduchy: este raz, na kazdej
+    kruznici prechadzajucej bodmi $A$ a $B$ a cez oblast $O_{2}$ musi byt
+    cenova funkcia konstantna a sucasne na dvoch roznych takych kruzniciach
+    musi byt rozna, kedze dve rozne take kruznice maju rozne polomery a cena
+    sa na kazdej z nich pocita ako trojnasobok jej polomeru.
+Lenze to znamena, ze v lubovolne malom okoli bodu $A$ cenova funkcia nadobuda
+    vsetky hodnoty z intervalu $[3,2\sqrt{3}]$, kedze cez oblast $O_{2}$ do
+    vrcholu $A$ prichadzaju vsetky vrstevnice polomerov od $[1,2/\sqrt{3}]$.
+No, a ako vieme, tato funkcia musi byt spojita.
+
+Kde je chyba?
+Chyba je v tom, ako som urcil hranicu oblasti $O_{2}$.
+Nie je to kruznica, ale elipsa, vsetko ostatne je inak zachovane, cize
+    struktura optimalneho stromu vyzera v kazdej oblasti tak, ako je napisane
+    vyssie, aj optimalna cena je taka, ako je napisane vyssie.
+Este raz, to jedine cim sa spravny popis situacie lisi od popisu vyssie je
+    hranica oblasti $O_{2}$.
+Tu sa pokusim zdovodnit preco.
+
+Napriek tomu, ze oblast $O_{2}$, a teda aj oblast $O_{3}$ maju ine struktury,
+    nez ako je uvedene vyssie, hovorme im aj nadalej rovnako, to znamena
+    $O_{2}$ a $O_{3}$.
+Vezmime si bod $C$ v oblasti $O_{3}$, cize dostatocne daleko od bodu $(0,0)$.
+Tu mame istotu, ze optimalny storm je nasponovany a ma snellovsku geometriu.
+Ak teraz zacneme posuvat list $C$ po usecke $SC$ smerom k vrcholu $S$,
+    snellovska geometria zostava zachovana, cize strom je nadalej optimalny,
+    ale jeho cena postupne klesa.
+Otazka je, ako az velmi mozeme takto priblizit list $C$ k vrcholu $S$ bez
+    toho, aby sme ovplyvnili sposob vypoctu ceny optimalneho stromu.
+Odpoved, dovtedy, kym je taky strom nasponovany.
+A nasponovany prestane byt presne v momente, ked je $|AS|=|SC|$.
+V tom momente opustame oblast $O_{3}$ a vstupujeme do oblasti $O_{2}$.
+Otazka znie, ako vyzera mnozina bodov $C$, pre ktore sucasne plati, ze
+    \begin{itemize}
+        \item $|AS|=|SC|$
+        \item geometria stromu je snellovska.
+    \end{itemize}
+Prva poziadavka vlastne hovori, ze sme akurat na hranici, kedy je strom
+    nasponovany, druha podmienka hovori, ze sme stale este v oblasti $O_{3}$.
+Dohromady to teda znamena, ze sme na hranici oblasti $O_{3}$ no a to je sucasne
+    hranica oblasti $O_{2}$.
+
+To, ze je geomtria stromu snellovska znamena, ze $2\cos(\alpha) = \cos(\beta)$.
+Symbolom $t$ si oznacme dlzku usecky spajajucej bod $(0,0)$ a bod $S$.
+Ked sme v oblasti $O_{2}$ (a my sme na jej hranici), toto $t$ moze nadobudat
+    hodnoty v rozmedzi od $0$ po $1/\sqrt{3}$.
+Vidno, ze pre rozne polohy bodu $C$ na hranici oblasti $O_{2}$ su geometria
+    optimalneho stromu rozne, rozne su aj uhly $\alpha$ a $\beta$ a rozne su
+    aj hodnoty $t$.
+Podme zistit, ako presne zavisi poloha listu $C$ od hodnoty $t$ -- inak
+    povedane podme hranicu oblasti $O_{3}$ (cize aj oblasti $O_{2}$) vyjadrit
+    parametricky s pouzitim parametra $t$.
+Je zjavne, ze
+    \begin{eqnarray*}
+         t &=& |AS|\cos(\alpha) = \sqrt{1+t^{2}}\cos(\alpha) \\
+         1 &=& |AS|\sin(\alpha)
+    \end{eqnarray*}
+    a sucasne pre $x$-ovu suradnicu bodu $C$ plati
+    \begin{equation*}
+        C_{x}
+        =
+        t + |SC|\cos(\beta)
+        =
+        t + |AS|\cos(\beta)
+        =
+        t + |AS|2\cos(\alpha)
+        =
+        3t
+    \end{equation*}
+    a pre $y$-ovu suradnicu bodu $C$
+    \begin{align*}
+        C_{y} & = |SC|\sin(\beta) = |AS|\sqrt{1-4\cos^{2}(\alpha)} = \sqrt{1+t^{2}}\sqrt{1-4\tfrac{t^{2}}{1+t^{2}}} \\
+              & = \sqrt{1+t^{2}-4t^{2}} = \sqrt{1-3t^{2}}\,.
+    \end{align*}
+Aha, cize hranica, ktoru hladame je krivka s parametrizaciou
+    $t\mapsto(3t,\sqrt{1-3t^{2}})$, kde $t$ bez cez interval $[0,1/\sqrt{3}]$.
+No a to je elipsa, prechadzajuca cez body $A$, $B$ a $(\sqrt{3},0)$, ktorej
+    hlavne polosi su $x$-ova a $y$-ova os.
+Presnejsie stvrtina takej elipsy, vsetko to, co sa z nej ocitne v prvom
+    kvadrante, ale to je detail, lebo, kedze je cenova funkcia zrkadlovo
+    symetricka okolo suradnicovych osi, tato stvrtina sa symetriami roznesie
+    po celej elipse.
+
+K celej tejto uvahe by sa velmi hodil obrazok, ale ten nestiham nakreslit.
+
+\subsubsection{Aplikacia pre najlacnejsi LED strom}
+
+Aby to bolo uplne, este si ujasnime, ako z toho vyplyva, ze strom, ktoreho
+    steinerov vrchol visi nad najdlsou stranou trojuholnika nemoze byt lacnejsi
+    nez strom, ktoreho steinerov vrchol visi nad najkratsou stranou
+    trojuholnika.
+Ked si obrazok zon, podla ktorych sa rata cenova funkcia polozime do naseho
+    notoricky znameho obrazka s plachetnicou (ale pootocime a zoskalujeme ho
+    tak, aby zodpovedal topologii, kedy steinerov vrchol visi zo strany $AB$)
+    okamzite vidno, ze cela plachetnica je v zjednoteni oblasti $O_{2}$ a
+    $O_{1}$ (patricne zoskalovanom).
+Uvahu rozdelime na dva pripady, podla toho, ci vrchol $C$ pada do oblasti
+    $O_{2}$ alebo do oblasti $O_{1}$.
+A opat, ak tu piseme $O_{1}$ alebo $O_{2}$ nemyslime presne oblasti $O_{1}$
+    a $O_{2}$ z predchadzajucej sekcie, ale ich patricne pootocen a zoskalovane
+    obrazy tak, aby zodpovedali situacii, v ktorej uvazujeme plachetnicu.
+
+Ak je $C\in O_{2}$, znaemna to, ze optimalny strom so steinerovym vrcholom
+    visiacim na strane $AB$ ma vsetky tri hrany rovnako dlhe.
+To znamena, ze steinerov vrchol lezi na osiach vsetkych stran trojuholnika
+    $ABC$ sucasne.
+Tym skor lezi na osi strany $AC$.
+Ale pretoze je strana $AC$ najkratsou stranou trojuholnika $ABC$, musi platit
+    ze uhol $ASC$ nie je vacsi nez $60^{\circ}$, ergo takyto strom nemoze
+    byt lacnejsi nez optimalny strom, ktoreho steinerov vrchol visi zo strany
+    $AC$.
+Tym je dokazane, ze ak je $C\in O_{2}$ optimalny LED strom so steinerovym
+    vrcholom visiaci zo strany $AC$ nie je drahsi nez optimalny LED strom so
+    steinerovym vrcholom visiacim zo strany $AB$.
+
+Teraz uvazujme, ze $C\in O_{1}$.
+To znamena, ze optimalny strom so steinerovym vrcholom visacim zostrany $AB$
+    je masivne relaxovany a jeho cena je $3/2$ bez ohladu na detaily toho, kam
+    presne do oblasti $O_{1}$ vrchol $C$ padne.
+Kazdym bodom v tejto oblasti prechadza vrstevnica cenovej funkcie $f_{1}$.
+Pretoze je tato funkcia konvexna a ma globalne minimum v bode $A$, jej
+    vrstevnice musia pretinat hranicu oblasti $O_{1}$.
+Kazdy bod na hranici oblasti $O_{1}$ je sucasne bodom na hranici oblasti
+    $O_{2}$ co znamena, ze sa v takom bode da cena optimalneho stromu ratat
+    dvoma roznymi sposobmi.
+Lenze na zaklade uvahy z predchadzajuceho odstavca uz vieme, ze v takomto bode
+    cena optimalneho stromu so steinerovym vrcholom visiacim na strane $AC$
+    urcite nepresiahne cenu optimalnehos tromu so steinerovym vrcholom visiacim
+    zo strany $AB$.
+No ale pretoze je cena optimalneho stromu so steinerovym vrcholom visiacim z
+    $AB$ v tejto oblasti konstantna a cena stromu so steinerovym vrcholom
+    visiacim z $AC$ konstantna na vrstevnici funkcie $f_{1}$ plati toto
+    porovnanie cien na celom prieniku vrstevnice funkcie $f_{1}$ a oblasti
+    $O_{1}$.
+Pretoze je oblast $O_{1}$ takymito vrstevnicami cela pokryta, je vec dokazane
+    pre celu oblast $O_{1}$.
+Tym je vec vybavena cela.
+
 \section{Convex functions in general}
 
 \begin{definition}
