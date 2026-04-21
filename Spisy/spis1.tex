@@ -6,6 +6,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cleveref}
 \usepackage{amssymb}
+\usepackage{float}
 
 
 \newcommand{\Price}[2]{P(#1,#2)}
@@ -437,7 +438,7 @@
 		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\) for fixed points \(A, B, C\).
 		
 		The point \(S\) is constrained to lie on the axis of symmetry of two leaves(Proposition~2). For the time being, we leave the choice of the particular axis open. It is important to say that the selection of the axis matters If unsuitable axis is chose the tree can start to relax in order to satisfy \cref{def:led}. At this stage, we do not have the tools to provide a more detailed analysis of the problem. However, this will be addressed later. 
-		Let us assume that the following configuration, after computing the point S, satisfies the condition \label{prop:R} for point R, and is therefore fully stretched.
+		Let us assume that the following configuration, after computing the point S, satisfies the condition from Figure~\ref{prop:R} for point R, and is therefore fully stretched.
 		
 		 The placement of \(S\) is then formulated as a minimization problem. 
 		Let us fix a symmetry axis and consider the total price of the tree as a function of the position of \(S\) along this axis. 
@@ -545,10 +546,230 @@
 	
 	
 	---------------------------------------NOVE
+
+	With the axis chosen for the given side, the computation of the minimal S depends on the position of the third point.
+	figure N describes how possition of C for fixed A, B and its axis affects determination of S for minimalization of the tree. Only the upper half of the diagram is shown, due to symmetry with respect to AB. 
 	
-	With the axis chosen for the given side the computation of the minimal S depends on the position of the third point.
-	figure N describes how possition of C for fixed A, B and its axis affects determination of S for minimalization of the tree.   
 	
+	\begin{figure}[ht]
+		\centering
+		\begin{tikzpicture}[
+			x=5cm,y=5cm, % <-- zväčšenie
+			>=stealth,
+			point/.style={circle,fill=black,inner sep=1.5pt},
+			axis/.style={black, line width=1.2pt},
+			pathred/.style={red!75!black, line width=1.2pt}
+			]
+			
+			\coordinate (A) at (0,0);
+			\coordinate (B) at (1,0);
+			\coordinate (M) at (0.5,0);
+			\coordinate (p) at (0.5,{1/(2*sqrt(3))});
+			
+			% okolie
+			\fill[blue!8] (-0.3,0) rectangle (1.3,2);
+			
+			% vacsi polkruh
+			\fill[green!18] (A) arc[start angle=210,end angle=-30,radius={1/sqrt(3)}] -- cycle;
+			
+			% mensi polkruh
+			\fill[red!18] (A) arc[start angle=180,end angle=0,radius=0.5] -- cycle;
+			
+			\node[point, label=below:$A$] at (A) {};
+			\node[point, label=below:$B$] at (B) {};
+			\node[point,label=above right:$M$] at (M) {};
+			\node[point,label=above right:$p$] at (p) {};
+
+			\node[text=red!70!black] at (0.2,0.33) {$r_1$};
+			\node[text=green!30!black] at (0.3,0.77) {$r_2$};
+			
+			\node[text=red!40!black] at (0.75,0.18) {$R_1$};
+			\node[text=green!40!black] at (0.75,0.6) {$R_2$};
+			\node[text=blue!40!black] at (0.75,1.1) {$R_3$};
+						
+			\node[label=above left:{$o$}] at (0.5,1.7) {};			
+			% úsečka AB
+			\draw (A) -- (B) node[pos=0.25, below] {$a$};
+			
+			% kolmica cez M
+			\draw[dashed] (M) -- (0.5,2);
+			
+			\draw[red!70!black] (A) arc[start angle=180, end angle=0, radius=0.5];
+			\draw[green!60!black] (A) arc[start angle=210, end angle=-30, radius=1/sqrt(3)];
+			
+			%\draw (p) circle ({1/sqrt(3)}); FOR SANITY
+			
+			
+			
+		\end{tikzpicture}
+		\caption{}
+		\label{fig:Careas}
+	\end{figure}
+	
+	
+	In this figure, we can distinguish three distinct regions R1, R2, R3. We now describe the nature of each region in turn.
+		
+%------------------------------------------------------------------------------------------------------------------------------		
+	TOTO TREBA OPRAVIT tu oblast
+	\begin{proposition}
+		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
+		
+		Define the region
+		\[
+		R_3 = \left\{ (x,y) \in \mathbb{R}^2 \;\middle|\; 
+		\frac{x^2}{a^2} + \frac{y^2}{3a^2} \geq 1 \right\}.
+		\]
+		
+		Then, for every point \( C \in R_3 \), the Steiner point \( S \) is determined as in Figure~\ref{fig:Sopt}, and the root \( R \) as in Proposition~\ref{prop:R}.
+		The Total Price of such three is than \(\Ptotal{T} = 2|SA| + |SC| \). Every tree in this area is stretched. R!=S except for points that lies on the boundary.  
+	\end{proposition}
+	
+	We start by analyzing the special case of the configuration where the point \( C \) lies on the axis of symmetry of \( AB \), as illustrated in Figure~\ref{fig:Soptspec}.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[
+			>=stealth,
+			point/.style={circle,fill=black,inner sep=1.5pt},
+			axis/.style={black, line width=1.2pt},
+			pathred/.style={red!75!black, line width=1.2pt}
+			]
+			
+			% --- body ---
+			\coordinate (S) at (0,0);
+			\coordinate (A) at (-3,3);
+			\coordinate (C) at (6,0);
+			\coordinate (B) at (-3,-3);
+			
+			% --- vodorovné osi ---
+			\draw[axis,dash dot,blue] (-5,0) -- (8,0);
+			
+			
+			% --- zvislá os cez O ---
+			\draw[dashed] (0,0) -- (0,4);
+			\draw[dashed] (6,0) -- (6,4.2);
+			
+			% --- červená trajektória ---
+			\draw[pathred] (A) -- (S) -- (C);
+			\draw[pathred] (S) -- (B);
+			
+			% --- body ---
+			\node[point,label=above right:$S$] at (S) {};
+			\node[point,label=right:$A$] at (A) {};
+			\node[point,label=right:$C$] at (C) {};
+			\node[point,label=right:$B$] at (B) {};
+			\node[text=blue!40!black] at (7.8,0.2) {$o$};
+			% --- vertikálne vzdialenosti ---
+			\draw[<->] (-3,0) -- (-3,3)
+			node[midway,fill=white,inner sep=1pt] {$a$};
+			
+			% --- horizontálne vzdialenosti ---
+			\draw[<->] (-3,3.6) -- (0,3.6)
+			node[midway,fill=white,inner sep=1pt] {$x$};
+			
+			\draw[<->] (-3,4.2) -- (6,4.2)
+			node[midway,fill=white,inner sep=1pt] {$\ell$};
+			
+		\end{tikzpicture}
+		\caption{Geometric configuration used for the optimization of point S, where \(C \in o\) }
+		\label{fig:Soptspec}
+	\end{figure}
+
+	Let  us express \(L(T)\) using Pythagoras theorem and analyze for which x is \(L(T)\) minimal. 
+	\begin{align*}
+		L(T)
+		&= 2|AS| + |CS| \\
+		&= 2\sqrt{a^{2}+ x^{2}} + \ell - x ,
+	\end{align*}
+	
+	\begin{align*}
+		\frac{\mathrm{d}L}{\mathrm{d}x}
+		&= \frac{2x}{\sqrt{a^{2} + x^{2}}} - 1
+	\end{align*}
+	
+	From the derivative of \( L(T) \), it follows that the minimum is independent of \( \ell \), since \( \ell \) does not appear in the expression for the derivative.
+		
+	\begin{align*}
+		\frac{\mathrm{d}L}{\mathrm{d}x}
+		= \frac{2x}{\sqrt{a^{2} + x^{2}}} - 1 &= 0 \\
+		x &= \frac{a}{\sqrt{3}}
+	\end{align*}
+	
+	This implies that, regardless of the position of \( C \) on the axis \( o \), the position of \( S \) remains fixed.
+	We now continue with set of statements we leave without proof, as their proofs are straightforward.
+	The issue arises when we attempt to place the root point. For LED tree, such in Figure~\ref{fig:Soptspec}, to be fully stretched we need to satisfy \(|AS|+|SR|=|CR|\). This is not exactly possible if \(|AS|>|CS|\). If we are left with such a tree we know that the tree will must be relaxed to satisfy LED tree definition. In this scenario to minimize the  \Ptotal{T} of tree, root R lies in point S. That way the minimal amount relaxation is acquired.
+	
+	Using computation from above, the boundary point \( C \) that lies on axis \(o\) for which no relaxation is required is the one for which all edges have equal length, and hence \( R = S \).
+	A straightforward computation shows that the distance of such a point C from the segment \( AB \) is
+	\[ \frac{3 a}{\sqrt{3}} \]
+	
+	To analyze how would the boundary looks like outside of axis o, we have to bring back ("general" Formula to compute S):
+	\begin{align*}
+		\frac{\mathrm{d}L}{\mathrm{d}x}
+		= \frac{2x}{\sqrt{a^{2} + x^{2}}}
+		- \frac{\ell - x}{\sqrt{c^{2} + (\ell - x)^{2}}} &=0
+	\end{align*}
+	Let us remind that we are looking for set of points in plane that satisfy condition mentioned in Proposition~\ref{prop:R}, again since we want to avoid relaxing, such LED tree is one where \(R\) collapses into \(S\). This leaves us with condition \(|AS|=|CS|\). Let denote this distance \(d\).
+		\[
+		|AS| = |CS| = d, \quad
+		|AS| = \sqrt{a^{2} + x^{2}}, \quad
+		|CS| = \sqrt{c^{2} + (\ell - x)^{2}}.
+		\]
+	Therefore
+	\begin{align*}
+		0 &= \frac{2x}{d} - \frac{\ell - x}{d} \\
+		0 &= 3x - \ell \\
+		x &= \frac{\ell}{3} 
+	\end{align*}
+	Furthermore
+	\begin{align*}
+		|AS| &= |CS| \\
+		\sqrt{a^{2} + x^{2}} &= \sqrt{c^{2} + (\ell - x)^{2}} \\
+		a^2 &= c^2 + \frac{\ell^2}{3} 
+	\end{align*} 
+	From which we obtain the standard form of the equation of an ellipse.
+	\begin{align*}
+		1 &= \frac{c^2}{a^2} + \frac{\ell^2}{3 a^2} 
+	\end{align*} 
+
+	centered at \( M \), with semi-axes of lengths \( a \) in the horizontal direction and \( \sqrt{3}\,a \) in the vertical direction.
+	
+	This also confirms the boundary point computed on the axis, since the vertical coordinate of \( C \) is equivalent with vertical length of semi-axis the ellipse.
+
+	\begin{proposition}
+		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
+		
+		Define the region
+		\[
+		R_2 = \left\{ (x,y) \in \mathbb{R}^2 \;\middle|\;
+		\frac{a^2}{4} \le x^2 + y^2 \;\text{and}\;
+		\frac{x^2}{a^2} + \frac{y^2}{3a^2} \le 1
+		\right\}.
+		\]
+		
+		Then, for every point \( C \in R_2 \),S satisfies \(|SA|=|SB|=|SC|\) root point \(R, R \in S\) and total price of the tree is \(\Ptotal{T} = 3|SA| \).  The tree is fully stretched.
+	\end{proposition}
+
+	Let us remind that Proposition~\ref{prop:R} implies that In order to ensure that the tree is not relaxed, we must satisfy \(|AS|=|CS|\)  ...tuto neviem ako pokracovat 
+	
+	
+
+	\begin{proposition}
+		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
+		
+		Define the region
+		\[
+		R_1 = \left\{ (x,y) \in \mathbb{R}^2 \;\middle|\; x^2 + y^2 < (\frac{a}{2})^2 \right\}.
+		\]
+		
+		Then, for every point \( C \in R_1 \), the point \(S, S \in M\), root point \(R, R \in S\) and total price of the tree is \(\Ptotal{T} = 3|SA| \). 
+		Every tree in this area is relaxed.  
+	\end{proposition}
+	
+	----------------
+	----------------
+	----------------
+		
 	\section{minimal relaxed LED tree with 3  leaves}
 
 	(We now know how to compute where on the axis of 2 points S lies, we still not know which axis to choose for the S)
