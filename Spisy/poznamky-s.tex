@@ -25,6 +25,97 @@
 
 \begin{document}
 
+\section{Spet k zakalom, optimanla struktura LED stromu s predpisanou konektivitou}
+
+Prešiel som si to, ``prolezl sem nizke ďury se zbijakem na hřbetě'' a pochopil
+    som, preco sme to pred rokom robili tak, ako sme to robili.
+Poradie dǒkazov je správne.
+Popravde, je to asi najelegantnejšie poradie krokov, ku ktorému sa da dôjsť.
+Len samotné kroky nie sú v poriadku.
+Takže tu je kostra opravy.
+
+\subsection{Krok prvy -- poloha steinerovho vrcholu}
+
+Tu nam pojde o tvrdenie:
+V minimalnom LED strome s konektivitou $S-R-C$ lezi vrchol $S$ na osi symetrie
+    usecky $AB$.
+
+Dokaz sa opiera vlastnost, ktorou je bezne definovana elipsa.
+Uvazujme lubovolny LED strom $T$ s danou konektivitou korena a optimalnymi
+    cenami hran.
+Predpokladajme situaciu $|AS|\not=|BS|$, v opacnom pripade totiz niet co
+    dokazovat.
+Bez ujmy na vseobecnosti mozeme predpokladat, ze $|AS|>|BS|$ -- ak by to tak
+    nebolo, staci vymenit mena listov $A$ a $B$.
+Os usecky $AB$, oznacme ju $o$, tne rovinu na dve polroviny a z predpokladu
+    $|AS|>|BS|$ vyplyva, ze list $A$ a vrchol $S$ jednu z tychto polrovin
+    zdielaju.
+To znamena, ze os $o$ pretina vnutro usecky $AS$.
+
+Uvazujme elipsu $E$ s ohniskami v bodoch $A$ a $R$, ktora prechadza bodom $S$.
+V specialnom pripade, ak vrchol $S$ lezi na usecke $AR$ skolabuje tato elipsa
+    priamo na usecku $AR$ ale vsetky nasledne uvahy funguju aj napriek tomuto
+    kolapsu a to dokonca z trivialnejsich dovodov, nez vo vseobecnom pripade,
+    ale to prediskutujeme na zaver.
+Pretoze elipsa je mnozina bodov, pre ktore je sucet vzialenosti od ohnisk
+    konstantny, kazda usecka spajajuca ohnisko s lubovolnym bodom elipsy lezi
+    v jej vnutri.
+Tym skor lezi vo vnutri elipsy usecka $AS$ a kedze os $o$ vnutro tejto usecky
+    pretina musi pretinat aj samotnu elipsu $E$ a to v dvoch roznych bodoch,
+    oddelenych od seba priamkou $AS$.
+Jeden z tychto priesecnikov, oznacme ho $Q$, sa nachadza na rovnakej strane
+    priamky $AS$ ako list $B$.
+Tento bod $Q$ sa sucasne musi nachadzat na tej strane priamky $RS$, na ktorej
+    sa nachadza list $A$, opacna moznost je v spore s konvexnostou elipsy
+    (velmi technicka argumentacia, ale nic lepsie ma zatial nenapadlo).
+Toto vsetko znamena, ze $Q$ sa nachadza v uhle $ARS$ ale nie na priamke $RS$.
+To dalej znamena, ze usecka $RQ$ zviera s useckou $AR$ ostrejsi uhol ako usecka
+    $RS$ co, kedze $Q$ lezi na elipse s ohniskami $A$ a $R$ znamena, ze
+    $|AQ|<|AR|$.
+Z toho, ze $Q$ lezi na elipse $E$ vyplyva aj
+    \begin{equation}\label{eq:elipsova_rovnost}
+        |AQ| + |QR|
+        =
+        |AS| + |SR|\,.
+    \end{equation}
+A teda, ak by sa vrchol $S$ presunul do pozicie $Q$, podla propozicie 1 by
+    sa cena stromu stale ratala podla rovnakeho vypoctoveho pravidla ako pred
+    presunom.
+Lenze bez ohladu na to, ktore spomedzi vypoctovych pravidiel by to bolo, cena
+    stromu by urcite klesla, kedze v novej pozicii je vzdialenost od $A$
+    mensia nez v povodnej pozicii a tato vzdialenost vstupuje do vypoctu
+    ceny v oboch pripadoch, pricom v oboch pripadoch zostava zvysok vypoctoveho
+    vztahu konstantny, i ked v kazdom pripade z ineho dovodu.
+Napokon, kedze $Q\in o$, presun $S$ do tejto novej pozicie ma za nasledok
+    $|AS|=|BS|$.
+
+Na zaver este prediskutujme pripad, ked elipsa skolabuje.
+V takom pripade lezi $Q$ priamo na usecke $AS$ a teda automaticky blizsie
+    k listu $A$ nez vrchol $S$.
+Navyse, rovnica \eqref{eq:elipsova_rovnost} tu plati z trivialnych dovodov.
+Cize cela argumentacia sa iba zjednodusi.
+
+\subsection{Krok druhy -- narovnanie sledu $S-R-C$}
+
+Tu nam pojde o toto tvrdenie:
+V minimalnom LED strome s konektivitou $S-R-C$ lezi vrchol $R$ na priamke $SC$.
+
+Dokaz je jednoduchy.
+Uvazujme lubovolny minimalny LED strom $T$ s danou konektivitou korena,
+    optimalnymi cenami hran a predpisanymi poziciami listov a korena.
+Uz vieme, ze $|AS| = |BS|$.
+Podla propozicie 1 zavisi sposob vypoctu optimalnej ceny stromu (a teda aj
+    optimalneho ohodnotenia hran) od platnosti nerovnosti
+
+Uvazujme mnozinu bodov v rovine
+    \begin{equation*}
+        M
+        =
+        \{X\,|\,|XC|-|SX|=|RX|-|SR|\}\,.
+    \end{equation*}
+Vsimnime si, ze kedykolvek posunieme vrchol $R$ do lubovolneho bodu mnoziny
+    $M$ zachova sa hodnota rozdielu $|XC|-|SX|$ a teda aj povaha nerovnosti
+
 \section{Obrys struktury dokazu v bodoch}
 
 Pre istotu zopakujme, ze 
