@@ -544,6 +544,113 @@
 			= 0 .
 		\end{equation*}
 	
+	We would to use the opportunity of relation expressed above to point out analogy to physics, namely with Snell's law from geometrical optics. Snell's law describes the path of light passing through two different media. A classical illustration is the problem of a lifeguard trying to reach a drowning person as quickly as possible: since the speed of motion on the beach differs from the speed in water, the time-minimizing path is not a straight line, but a broken one.
+	
+	Snell's law is given by
+	\[
+	\frac{\sin \theta_1}{v_1}=\frac{\sin \theta_2}{v_2},
+	\]
+	or equivalently,
+	\[
+	n_1 \sin \theta_1 = n_2 \sin \theta_2,
+	\]
+	where \(v_1, v_2\) denote the propagation speeds in the two media, \(n_1, n_2\) are the corresponding refractive indices, and \(\theta_1, \theta_2\) between normal and light.
+	
+	The geometric configuration of Snell's law is similar to that shown in Figure~\ref{fig:Sopt}. 
+	
+	\begin{figure}[ht]
+		\centering
+		\begin{tikzpicture}[
+			>=stealth,
+			point/.style={circle,fill=black,inner sep=1.5pt},
+			axis/.style={black, line width=1.2pt},
+			pathred/.style={red!75!black, line width=1.2pt}
+			]
+			
+			% --- body ---
+			\coordinate (S) at (0,0);
+			\coordinate (A) at (-3,3);
+			\coordinate (C) at (6,-2);
+			\coordinate (N1) at (0,3);
+			\coordinate (N2) at (0,-3);
+			
+			% --- interface ---
+			\draw[axis,dash dot,blue] (-5,0) -- (7,0)
+			node[pos=0.9, above] {interface};
+			
+			% --- normal ---
+			\draw[dashed] (S) -- (N1)
+			node[pos=0.8, right] {normal};
+			\draw[dashed] (S) -- (N2);
+			
+			% --- path ---
+			\draw[pathred] (A) -- (S) -- (C);
+			
+			% --- points ---
+			\node[point,label=above right:$S$] at (S) {};
+			\node[point,label=above left:$A$] at (A) {};
+			\node[point,label=below right:$C$] at (C) {};
+			
+			% --- distances ---
+			\draw[<->] (-3,0) -- (-3,3)
+			node[midway,fill=white,inner sep=1pt] {$a$};
+			
+			\draw[<->] (6,0) -- (6,-2)
+			node[midway,fill=white,inner sep=1pt] {$c$};
+			
+			\draw[<->] (-3,3.6) -- (0,3.6)
+			node[midway,fill=white,inner sep=1pt] {$x$};
+			
+			\draw[<->] (-3,4.2) -- (6,4.2)
+			node[midway,fill=white,inner sep=1pt] {$\ell$};
+			
+			% --- angles ---
+			\draw (0,1.0) arc[start angle=90,end angle=135,radius=1.0];
+			\node at (-0.55,1.05) {$\theta_1$};
+			
+			\draw (0,-0.9) arc[start angle=270,end angle=341.6,radius=0.9];
+			\node at (0.7,-0.55) {$\theta_2$};
+			
+		\end{tikzpicture}
+		\caption{configuration used for the optimization of point \(S\), with angles analogous to those appearing in Snell's law.}
+		\label{fig:Snell}
+	\end{figure}
+		
+		snell law can be derived in various ways. We find particulary similar Derivation from Fermat's principle. Which states that light travels the path which takes the least time.
+		It consist of taking the derivative of the optical path length. Found stacionary point defines the path:
+		\[
+		T(x)=\frac{\sqrt{x^2+a^2}}{v_1}+\frac{\sqrt{b^2+(\ell-x)^2}}{v_2}.
+		\]
+		\[
+		\frac{\mathrm d T}{\mathrm d x}
+		=
+		\frac{x}{v_1\sqrt{x^2+a^2}}
+		-
+		\frac{\ell-x}{v_2\sqrt{(\ell-x)^2+b^2}}.
+		\]
+		At a stationary point, we therefore obtain
+		\[
+		\frac{x}{v_1\sqrt{x^2+a^2}}
+		=
+		\frac{\ell-x}{v_2\sqrt{(\ell-x)^2+b^2}}.
+		\]
+		Since
+		\[
+		\sin\theta_1=\frac{x}{\sqrt{x^2+a^2}},
+		\qquad
+		\sin\theta_2=\frac{\ell-x}{\sqrt{(\ell-x)^2+b^2}},
+		\]
+		it follows that
+		\[
+		\frac{\sin\theta_1}{v_1}=\frac{\sin\theta_2}{v_2},
+		\]
+		In our setting of finding minimal S for configuration of tree points, this relation takes the form
+		\[
+		2 \sin \theta_1 = \sin \theta_2.
+		\]
+		which represents a weighted analogue of Snell's law. Where the weights reflect the fact that the contribution of the branch \(AS\) appears twice in function \(L(T)=2|AS|+|CS|\).
+	
+	
 	
 	---------------------------------------NOVE
 
