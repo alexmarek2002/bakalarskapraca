@@ -37,8 +37,9 @@ Takže tu je kostra opravy.
 \subsection{Krok prvy -- poloha steinerovho vrcholu}
 
 Tu nam pojde o tvrdenie:
-V minimalnom LED strome s konektivitou $S-R-C$ lezi vrchol $S$ na osi symetrie
-    usecky $AB$.
+Ak v LED strome s konektivitou korena $S-R-C$ a minimalnymi cenami hran
+    lezi vrchol $S$ mimo os symetrie usecky $AB$, mozno jeho cenu vhodnym
+    posunutim vrchola $S$ zmensit.
 
 Dokaz sa opiera vlastnost, ktorou je bezne definovana elipsa.
 Uvazujme lubovolny LED strom $T$ s danou konektivitou korena a optimalnymi
@@ -95,26 +96,127 @@ V takom pripade lezi $Q$ priamo na usecke $AS$ a teda automaticky blizsie
 Navyse, rovnica \eqref{eq:elipsova_rovnost} tu plati z trivialnych dovodov.
 Cize cela argumentacia sa iba zjednodusi.
 
+Dosledok:
+V minimalnom LED strome s predpisanymi poziciami listov $A,B$ a $C$ a
+    predpisanou konektivitou korena $S-R-C$ lezi vrchol $S$ na osi symetrie
+    usecky $AB$.
+
 \subsection{Krok druhy -- narovnanie sledu $S-R-C$}
 
 Tu nam pojde o toto tvrdenie:
-V minimalnom LED strome s konektivitou $S-R-C$ lezi vrchol $R$ na priamke $SC$.
+Ak v LED strome s konektivitou korena $S-R-C$ a minimalnymi cenami hran
+    lezi vrchol $R$ mimo priamku $SC$, mozno jeho cenu vhodnym posunutim
+    vrchola $R$ zmensit.
 
 Dokaz je jednoduchy.
 Uvazujme lubovolny minimalny LED strom $T$ s danou konektivitou korena,
-    optimalnymi cenami hran a predpisanymi poziciami listov a korena.
-Uz vieme, ze $|AS| = |BS|$.
-Podla propozicie 1 zavisi sposob vypoctu optimalnej ceny stromu (a teda aj
-    optimalneho ohodnotenia hran) od platnosti nerovnosti
+    optimalnymi cenami hran a predpisanymi poziciami vrcholov $A,B,C$ a $S$.
+Bez ujmy na vseobecnosti uvazujme $|AS|\ge|BS|$, v opacnom pripade staci
+    premenovat listy $A$ a $B$.
+Prepokladajme tiez, ze vrchol $R$ nelezi na priamke $SC$, v opacnom pripade
+    totiz niet co dokazovat.
+Nech $H$ je vetva hyerboly s ohniskami $S$ a $C$, ktora prechadza vrcholom $R$.
+Kazda vetva hyperboly pretina usecku spajajucu jej ohniska, a teda aj $H$
+    pretina usecku $SC$, oznacme ich presecnik symbolom $Q$.
 
-Uvazujme mnozinu bodov v rovine
-    \begin{equation*}
-        M
-        =
-        \{X\,|\,|XC|-|SX|=|RX|-|SR|\}\,.
-    \end{equation*}
-Vsimnime si, ze kedykolvek posunieme vrchol $R$ do lubovolneho bodu mnoziny
-    $M$ zachova sa hodnota rozdielu $|XC|-|SX|$ a teda aj povaha nerovnosti
+Podla propozicie 1 zavisi sposob vypoctu optimalnej ceny stromu (a teda aj
+    optimalneho ohodnotenia hran) od porovnania vyrazov $|AS|+|SR|$ a $|CR|$
+    alebo, ekvivalentne, od porovnania vyrazov $|AS|$ a $|CR|-|SR|$.
+Lenze $H$ je vetva hyperboly a teda vo vsetkych jej bodoch je vyraz $|RC|-|SR|$
+    konstantny.
+Ak by sme teda presunuli vrchol $R$ do lubovolneho bodu $H$, sposob vypoctu
+    ceny stromu sa nezmeni.
+Specificky to znamena, ze sa sposob vypoctu nezmeni po presunuti vrchola $R$
+    do bodu $Q$.
+Lenze, ci uz sa cena stromu pocita podla vetvy 1 alebo vetvy 3 propozicie 1, po
+    presunuti vrcholu $R$ do pozicie $Q$ sa tato cena musi zmensit a sice
+    preto oba vztahy na vypocet ceny stromu su pozitivnou linearnou kombinaciou
+    dlzky $AS$, ktora je konstantna, a vzdialenosti $R$ od niektoreho z ohnisk
+    hyperboly, ktora je spomedzi vsetkych bodov prislusnej vetvy hyperboly
+    najnizsia prave v priesecniku prislusnej vetvy hyperbody a usecky $SC$ a
+    to bez ohladu na to, o ktore ohnisko ide a o ktoru vetvu ide.
+
+Dosledok:
+V minimalnom LED strome s predpisanymi poziciami listov $A,B$ a $C$ a
+    predpisanou konektivitou korena $S-R-C$ lezi vrchol $R$ na priamke $SC$.
+
+\subsection{Krok treti -- solichanie $R$ po priamke $SC$}
+
+Rozmyslam, ze sa to da cele formulovat ako trosku kosatejsi dosledok:
+Nech $T$ je LED strom s konektivitou korena $S-R-C$, s predpisanou polohou
+    vrcholov $A,B,C$ v rovine a predpisanou polohou vrchola $S$ na osi symetrie
+    usecky $AB$ a s vrcholom $R$ na priamke $SC$.
+Volbou presnej polohy vrchola $R$ na priamke $SC$ mozno cenu stromu $T$
+    optimalizovat takto:
+    \begin{itemize}
+        \item[(A)] Ak $|AS|<|SC|$ minimalna cena stromu sa dosiahne vtedy,
+                ked plati $|AS|+|SR|=|RC|$.
+            Dosiahnuta minimalna cena stromu je $|AS|+|BS|+|CS|=2|AS|+|BS|$ a
+                strom je nasponovany.
+        \item[(B)] V opacnom pripade sa minimalna cena stromu dosiahne vtedy,
+                ked $S=R$.
+            Dosiahnuta minimalna cena stromu je $2|AS|+|BS|=3|AS|$ a strom
+                nie je nasponovany.
+    \end{itemize}
+
+Dokaz:
+Studujme, ako sa sprava funkcia $V\colon R\mapsto|AS|+|SR|-|RC|$ ked sa bod
+    $R$ posuva po priamke $SC$.
+Funkcia $V$ je spojita, kedze je suctom troch spojitych funkcii.
+Ak lezi vrchol $R$ mimo usecky $SC$, menia sa jeho vzdialenosti od oboch
+    vrcholov $S$ aj $C$ rovnako a teda hodnota $V(R)$ sa mimo usecky $SC$
+    nemeni.
+Ak lezi vrchol $R$ v usecke $SC$ a pohybuje sa smerom k listu $C$, clen $|SR|$
+    rastie a clen $|RC|$ klesa.
+To znamena, ze $V(R)$ monotonne rastie.
+Beruc vsetko toto do uvahy vidno, ze vo vrchole $S$ nadobuda $V$ svoju
+    najmensiu a vo vrchole $C$ svoju najvacsiu hodnotu.
+Dosadenim sa lahko nahliadne, ze najmensia hodnota $V$ je $V(S)=|AS|-|SC|$ a
+    najvacsia jej hodnota je $V(C)=|AS|+|SC|$.
+
+Podla propozicie 1 zavisi sposob vypoctu najnizsej ceny LED stromu od znamienka
+    $V$.
+Naozaj, ak je studovany $V(R)$ nezaporne, plati $|AS|+|SR|\ge|RC|$ a cena
+    stromu sa da pocitat podla vetvy 1 alebo 2.
+V opacnom pripade sa cena stromu pocita podla vetvy 3 alebo 4.
+Vsimnime si, ze v liste $C$ je hodnota $V$ vzdy nezaporna.
+Vo vrchole $S$ je vsak situacia komplikovanejsia a zavisi od geometrie stromu.
+
+Ak je $|AS|\ge|SC|$, hodnota $V$ je aj vo vrchole $S$ nezaporna a teda je
+    nezaporna na celej priamke $SC$.
+To znemena, ze bez ohladu na to, kde na priamke $SC$ vrchol $R$ lezi, cena
+    stromu sa pocita ako $3|SA|+2|SR|$.
+Je zrejme, ze tento vyraz je minimalny vo vrchole $S$.
+Cena stromu sa tam pocita ako $3|SA|$ co, vzhladom na predpoklad $S\in o_{AB}$
+    je sucasne rovne $2|AS|+|BS|$ a hrana $RC$ je relaxovana, kedze
+    $|RC|=|SC|$.
+Tym je dokazany bod (B) tohto tvrdenia.
+
+Uvazujme teraz $|AS|<|SC|$.
+V tomto pripade je funkcia $V$ v bode $S$ zaporna.
+Kdedze je $V$ spojita a monotonna, rozpada sa priamka $SC$ podla znamienka $V$
+    na dve suvisle oblasti.
+Tieto suvisle oblasti musia byt polpriamky a musia zdielat nulovy bod $Q$
+    funkcie $V$.
+Tento nulovy bod musi lezat vo vnutri usecky $SC$, kedze na jej koncoch su
+    znamienka $V$ odlisne.
+Je jasne, ze polpriamka $QS$ je tou oblastou, na ktorej je $V$ zaporne a
+    cena stromu sa na nej teda pocita $|SA|+2|RC|$.
+Ak sa bod $R$ po tejto polpriamke priblizuje k bodu $Q$, priblizuje sa aj k
+    listu $C$ (kedze $C$ v tejto polpriamke nelezi) a teda cena stromu
+    monotonne klesa.
+Dalej vidno, ze polpriamka $QC$ je tou bolastou, na ktorej je $V$ kladne a cena
+    stromu sa na nej teda pocita ako $3|SA|+2|SR|$.
+Ak sa bod $R$ po tejto polpriamke priblizuje k bodu $Q$, priblizuje sa aj k
+    vrcholu $S$ (kedze $S$ v tejto polpriamke nelezi) a teda cena stromu
+    monotonne klesa.
+Cize, nech uz sa vrchol $R$ nachadza na priamke $SC$ v oblasti, kde je $V$
+    nezaporne, alebo v oblasti kde je $V$ klasne, cena stromu monotonne klesa
+    ak sa $V$ priblizuje ku $Q$.
+To znamena, ze minimalna cena stromu je nadobudnuta pre $R=Q$.
+Kedze bod $Q$ je nulovym bodom $V$, musi tu platit $|AS|+|SR|=|RC|$.
+A kedze sa cena stromu pocita ako sucet euklidovskych dlzok jeho hran, strom
+    je nasponovany.
 
 \section{Obrys struktury dokazu v bodoch}
 
