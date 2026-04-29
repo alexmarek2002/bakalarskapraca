@@ -7,7 +7,7 @@
 \usepackage{cleveref}
 \usepackage{amssymb}
 \usepackage{float}
-
+\usetikzlibrary{calc,angles,quotes}
 
 \newcommand{\Price}[2]{P(#1,#2)}
 \newcommand{\Ptotal}[1]{P(#1)}
@@ -28,8 +28,6 @@
 \begin{document}
 	
 	\maketitle
-	
-    \section{Co tu este chyba}
 
 	\chapter{Basic notions}
 	
@@ -84,9 +82,319 @@
 	\\- alg
 	\\After doing so, for each tree, we are let with list of edges, so we just sum all the weights of edges, (Euclidean Distances if Euclidean graph), and only thing remaining is to compare the total lengths of trees and choose one that is minimal. To sum up, when obtaining the minimal spanning tree on a given graph, we first generate all prufer seqences, then convert them to trees, compute the total length, choose minimal. This approach gives bulletproof recipe, that we will find useful later.   
 	
-	\section{The Euclidean Steiner Problem}
-	Euclidean steiner problem is a modification to euclidean minimum spanning tree, which goal is to find even shorter total connecting leght of edges. In order to do so, in steiner problem there can be included vertices %nedopisane
-	% OBRAZOK GRAFOV 
+	\section{Euclidean Steiner Problem}
+	If we would continue with our example about railway connection, it would naturally appear that a more effective option is possible, to connect cities with less amount of rails. If we ought add transport hubs between cities in favorable positions, we would might be able to lower construction costs but still connect all cities. This is where Steiner trees emerge. They are consequence of efforts to even lower the length of (euclidean) minimal spanning tree, by allowing to add additional points, to the set of current points. We call this task Euclidean Steiner problem. 
+	Euclidean Steiner problem, in form that it is now, was first introduced by Courant and Robbins in 1941, in treir book What is Mathematics?. In 1968 Gilbert and Pollak named sollution for this problem, Steiner minimal trees, in their paper Steiner minimal trees. These terms were called after Jacob Steiner (1796-1863), who was profesor specializing in geometry, at University of Berlin. Steiner has contibution in this area geometry, he worked on problems similar to this one but it in not clear if he was was avare of this exact version of the problem.
+	Euclidean steiner problem is a modification to euclidean minimum spanning tree problem. In Euclidean minimal spanning three problem on graph \( G = (V, E, \mu, w) \), every point \(v_i\) must be contained in the subgraph of solution of the problem. On the other hand in Euclidean Steiner problem we can add to the set \(V\) additional points. To distinguish points given and added, we call the given set of points terminals \(t_i\) and added points Steiner points \(s_i\).
+	\[
+	\begin{aligned}
+		T &= \{t_1, \dots, t_n\}, \\
+		S &= \{s_1, \dots, s_m\}
+	\end{aligned}
+	\]
+	
+	An Euclidean Steiner tree for a set of terminals \( T \) is a Euclidean tree
+	\[
+	G = (V, E, \mu, w),
+	\]
+	where
+	\[
+	\begin{aligned}
+	V &= T \cup S \\
+	 \mu &: V \to \mathbb{E}^d  
+	\end{aligned}
+	\]
+	and the weight function
+	\[ w : E \to \mathbb{R} \]
+	 is Euclidean distance
+	 
+	 The Euclidean Steiner tree problem consists of finding a set \( S \subset \mathbb{E}^d \) and a tree \( G = (T \cup S, E,\mu, w) \) such that the total length
+	 \[
+	 \sum_{e \in E} w(e)
+	 \]
+	 is minimal.
+	 
+	 We have settled terms: Euclidean Steiner problem, Steiner tree, minimal Steiner tree. We will spend few following lines describing properties of Steiner trees and it's nature. This should be understood as insight to the topic rather than rigorous mathematical text. We briefly present the theory from The Euclidean (Steiner Problem
+	 Germander Soothill 2010) and state established observations without proving them. Our main focus will than be on Steiner tree with tree terminals.
+	 
+	\section{Steiner Trees}
+	In this section we will in an intuitive manner present the essential notions and properties related to Steiner trees. To effectively describe the nature of Steiner trees we will rely on planar drawings. Euclidean Steiner problem is not restricted to any dimension, it is a N-dimensional problem. To keep thing intuitive we will consider the planar case. In 1-dimension is Euclidean Steiner problem degenerated and in higher dimensions the problem exhibits properties analogous to those of the two-dimensional case. 
+	
+	The following properties should be understood in the context of minimization. Although a Steiner tree may in general have an arbitrary structure, Steiner minimal trees exhibit specific characteristic properties arising from minimization efforts.
+	
+	First we would like to show visual difference between spanning tree and Steiner tree for set of terminals. 
+	\begin{figure}[H]
+	\centering
+	
+	\begin{tikzpicture}[scale=1.05]
+		
+		% =================================================
+		% (a) SPANNING TREE
+		% =================================================
+		\begin{scope}[xshift=0cm]
+			
+			\coordinate (a1) at (0,0);
+			\coordinate (a2) at (0.8,1.0);
+			\coordinate (a3) at (1.8,0.4);
+			\coordinate (a4) at (2.7,1.2);
+			\coordinate (a5) at (3.4,0.2);
+			\coordinate (a6) at (1.2,-0.9);
+			\coordinate (a7) at (2.8,-0.8);
+			\coordinate (a8) at (4.0,-0.7);
+			
+			\draw[thick] (a1)--(a2);
+			\draw[thick] (a2)--(a3);
+			\draw[thick] (a3)--(a4);
+			\draw[thick] (a4)--(a5);
+			\draw[thick] (a3)--(a6);
+			\draw[thick] (a6)--(a7);
+			\draw[thick] (a7)--(a8);
+			
+			\foreach \p/\name in {
+				a1/t_1,a2/t_2,a3/t_3,a4/t_4,
+				a5/t_5,a6/t_6,a7/t_7,a8/t_8}
+			{
+				\fill[black] (\p) circle (2pt);
+				\node[font=\scriptsize,above right] at (\p) {$\name$};
+			}
+			
+			\node at (2,-1.55) {(a) Spanning tree};
+			
+		\end{scope}
+		
+		% =================================================
+		% (b) STEINER TREE
+		% =================================================
+		\begin{scope}[xshift=6.5cm]
+			
+			\coordinate (b1) at (0,0);
+			\coordinate (b2) at (0.8,1.0);
+			\coordinate (b3) at (1.8,0.4);
+			\coordinate (b4) at (2.7,1.2);
+			\coordinate (b5) at (3.4,0.2);
+			\coordinate (b6) at (1.2,-0.9);
+			\coordinate (b7) at (2.8,-0.8);
+			\coordinate (b8) at (4.0,-0.7);
+			
+			\coordinate (s1) at (1.2,0.15);
+			\coordinate (s2) at (2.2,-0.05);
+			\coordinate (s3) at (3.1,0.0);
+			
+			\draw[thick] (b1)--(s1);
+			\draw[thick] (b2)--(s1);
+			\draw[thick] (b3)--(s1);
+			
+			\draw[thick] (s1)--(s2);
+			\draw[thick] (b6)--(s2);
+			\draw[thick] (b7)--(s2);
+			
+			\draw[thick] (s2)--(s3);
+			\draw[thick] (b4)--(s3);
+			\draw[thick] (b5)--(s3);
+			\draw[thick] (b8)--(s3);
+			
+			\foreach \p/\name in {
+				b1/t_1,b2/t_2,b3/t_3,b4/t_4,
+				b5/t_5,b6/t_6,b7/t_7,b8/t_8}
+			{
+				\fill[black] (\p) circle (2pt);
+				\node[font=\scriptsize,above right] at (\p) {$\name$};
+			}
+			
+			\foreach \p/\name in {s1/s_1,s2/s_2,s3/s_3}
+			{
+				\fill[red] (\p) circle (2pt);
+				\node[font=\scriptsize,below] at (\p) {$\name$};
+			}
+			
+			\node at (2,-1.55) {(b) Steiner tree};
+			
+		\end{scope}
+		
+	\end{tikzpicture}
+	
+	\caption{Comparison of a spanning tree and a Steiner tree}
+	\label{fig:spanning_vs_steiner}
+	
+\end{figure}
+	
+	In every tree there are two main characteristics. Which vertices are connected and what their position is. Topology of a Steiner tree describes the combinatorial structure of the tree, that is, the way in which the vertices are interconnected independently of their geometric positions. In following figure are shown two equivalent topologies for same set of terminals, it emphasizes that topology does not contain any information about the geometric positions of the vertices.  
+	\begin{figure}[H]
+	\centering
+	
+		\begin{tikzpicture}[scale=1.2]
+			
+			% ---------------- LEFT ----------------
+			\begin{scope}[xshift=0cm]
+				
+				\coordinate (t1) at (0,1);
+				\coordinate (t2) at (2,1);
+				\coordinate (t3) at (0,-1);
+				\coordinate (t4) at (2,-1);
+				
+				\coordinate (s1) at (1,0.3);
+				\coordinate (s2) at (1,-0.3);
+				
+				\draw (t1)--(s1);
+				\draw (t2)--(s1);
+				\draw (s1)--(s2);
+				\draw (s2)--(t3);
+				\draw (s2)--(t4);
+				
+				\foreach \p/\name in {
+					t1/t_1,t2/t_2,t3/t_3,t4/t_4}
+				{
+					\fill (\p) circle (2pt);
+					\node[above] at (\p) {$\name$};
+				}
+				
+				\draw[fill=white] (s1) circle (0.06);
+				\draw[fill=white] (s2) circle (0.06);
+				\node[ above] at (s1) {$s_1$};
+				\node[ below] at (s2) {$s_2$};
+				\node at (1,-1.6) {(a)};
+				
+			\end{scope}
+			
+			% ---------------- RIGHT ----------------
+			\begin{scope}[xshift=5cm]
+				
+				\coordinate (t1) at (0,1);
+				\coordinate (t2) at (2,1);
+				\coordinate (t3) at (0,-1);
+				\coordinate (t4) at (2,-1);
+				
+				\coordinate (s2) at (0.5,0.4);
+				\coordinate (s1) at (1.5,-0.2);
+				
+				\draw (t1)--(s2);
+				\draw (t2)--(s2);
+				\draw (s2)--(s1);
+				\draw (s1)--(t3);
+				\draw (s1)--(t4);
+				
+				\foreach \p/\name in {
+					t1/t_1,t2/t_2,t3/t_3,t4/t_4}
+				{
+					\fill (\p) circle (2pt);
+					\node[above] at (\p) {$\name$};
+				}
+				
+				\draw[fill=white] (s1) circle (0.06);
+				\draw[fill=white] (s2) circle (0.06);
+				\node[ above] at (s1) {$s_1$};
+				\node[ below] at (s2) {$s_2$};
+				\node at (1,-1.6) {(b)};
+				
+			\end{scope}
+			
+		\end{tikzpicture}
+		
+		\caption{Equivalent topologies}
+		\label{fig:equivalent_topologies}
+		
+	\end{figure}
+	
+	On the other hand next figure shows different topologies of Steiner tree.
+	\begin{figure}[H]
+		\centering
+		
+		\begin{tikzpicture}[scale=1.2]
+			
+			% ---------------- LEFT ----------------
+			\begin{scope}[xshift=0cm]
+				
+				\coordinate (t1) at (0,1);
+				\coordinate (t2) at (2,1);
+				\coordinate (t3) at (0,-1);
+				\coordinate (t4) at (2,-1);
+				
+				\coordinate (s1) at (1,0.3);
+				\coordinate (s2) at (1,-0.3);
+				
+				\draw (t1)--(s1);
+				\draw (t2)--(s1);
+				\draw (s1)--(s2);
+				\draw (s2)--(t3);
+				\draw (s2)--(t4);
+				
+				\foreach \p/\name in {
+					t1/t_1,t2/t_2,t3/t_3,t4/t_4}
+				{
+					\fill (\p) circle (2pt);
+					\node[above] at (\p) {$\name$};
+				}
+				
+				\draw[fill=white] (s1) circle (0.06);
+				\draw[fill=white] (s2) circle (0.06);
+				\node[ above] at (s1) {$s_1$};
+				\node[ below] at (s2) {$s_2$};
+				\node at (1,-1.6) {(a)};
+				
+			\end{scope}
+			
+			% ---------------- RIGHT ----------------
+			\begin{scope}[xshift=5cm]
+				
+				\coordinate (t1) at (0,1);
+				\coordinate (t2) at (2,1);
+				\coordinate (t3) at (0,-1);
+				\coordinate (t4) at (2,-1);
+				
+				\coordinate (s1) at (0.8,0);
+				\coordinate (s2) at (1.2,0);
+				
+				\draw (t1)--(s1);
+				\draw (t3)--(s1);
+				\draw (s1)--(s2);
+				\draw (s2)--(t2);
+				\draw (s2)--(t4);
+				
+				\foreach \p/\name in {
+					t1/t_1,t2/t_2,t3/t_3,t4/t_4}
+				{
+					\fill (\p) circle (2pt);
+					\node[above] at (\p) {$\name$};
+				}
+				
+				\draw[fill=white] (s1) circle (0.06);
+				\draw[fill=white] (s2) circle (0.06);
+				\node[ left] at (s1) {$s_1$};
+				\node[ right] at (s2) {$s_2$};
+				\node at (1,-1.6) {(b)};
+				
+			\end{scope}
+			
+		\end{tikzpicture}
+		
+		\caption{Different topologies}
+		\label{fig:different_topologies}
+		
+		
+		
+		
+	\end{figure}
+	
+	Relatively minimal tree for a topology is a tree that is the shortest among the trees with equivalent topology.
+	
+	Number of Steiner points is next important structural property. If we consider our efforts of minimizing tree, it occurs that there is upper limit on how many Steiner points we can add. The reason why this is the case will be partially clarified later. tu daj to o degree
+	A Steiner tree has at most \(m\) Steiner points
+	\[
+	m \le n-2.
+	\]
+	,where n is the number of terminals.
+	
+	Also there is name for the case when
+	\[
+	m = n-2
+	\]
+	such tree is called a full Steiner tree.
+	Moreover, in such topology every Steiner point has degree three and every terminal has degree one, or in other words, every terminal is a leaf.
+	
+	In the Euclidean Steiner problem, terminals are usually understood as the input, while Steiner points are treated as variables. On behalf of the Steiner points there is enormous variability in how the final tree can be constructed. The first source of variability is the number of Steiner points introduced, the second is the way in which they are connected within the tree, and the third is their placement in the Euclidean plane. As a consequence, the number of possible Steiner tree configurations grows superexponentially with the number of terminals. 
+	
+	
+	
 	\begin{figure}[h!]
 		\centering
 		\begin{subfigure}[b]{0.4\textwidth}
@@ -214,10 +522,33 @@
 	
 	\section{Fermat problem}
 	
+	Historically speaking, in section about Steiner Trees, we were getting ahead of ourself. Respecting the historical chronology, it must be noted that Fermat's problem was studied long before Steiner tree problem. Fermat problem was called after Pierre de Fermat (1601-1655), French mathematician. Unlike Euclidean Steiner problem, Fermat problem was formulated by Fermat. This is the proposed form: Given three points in a plane, find a fourth point such
+	that the sum of its distances to the three given points is a minimum.
+	In this form it's a case of Euclidean Steiner problem where:
+	\[
+	\begin{aligned}
+		T &= \{t_1, \dots, t_n\}, n=3 \\
+		S &= \{s_1\}
+	\end{aligned}
+	\]
+	and
+	\[
+	\begin{aligned}
+		V &= T \cup S \\
+		\mu &: V \to \mathbb{E}^2  
+	\end{aligned}
+	\]
+	
+	In section about Steiner Trees we have already mentioned some properties about them not only that they aply for fermat problem as well, but proportion of them were obtained from case with tree terminals. Since komplex structure of thee with many terminals, can be aranged as simple triangles with steiner point inside. In fact minimal steiner trees behave this way and we will later show this. We have introduced the definition and would like to now discuss fermat problem further. Whenever the discussed results apply to the general case as well, we will point them out.  
+	
+	
+
+
+	
     \section{Price of a 3-leaved led tree}	
 	
 	
-	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behaviour and properties of this structure. The structure of our relaxed LED tree is as follows:
+	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behavior and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
 	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two (i.e., the root). Vertex \( S \) is adjacent to two leaves and to the root \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has price value \(\Price{u}{v}; |uv| \leq \Price{u}{v} \) and according to \cref{def:led}: 
 	\[
@@ -225,21 +556,9 @@
 	\] 
 	%obrazok
 	
-	In the following steps, we will focus on minimizing the total prize \(\Ptotal{T}\).
-	
-	
-	% 0. -------------------------------------------------------------------------------
-	
-	since we want to minimize then tree the R must lie on one of the edges AS, BS, CS 
-	
-	
-	
-	% 1. -------------------------------------------------------------------------------
-	
-	
-	First, given the full geometry of the LED tree, we will analyze which price function \Price{}{}, minimize its price.
-	First we will analyze which edges of the tree we can tighten:
-	
+	First, given the full geometry and topography of the LED tree, we will analyze how to compute minimal price.
+	We know that we can relax edges to achieve \cref{lem:led}, even if euclidean distances from root to leafs are not equal, the first proposition is about how to compute \(\Ptotal{T}\) with minimal amount of relaxation for fixed \(A,B,C,S,R\). 
+
 	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to. Without loss of generality, assume that \(R\) is adjacent to \(C\). Which means that edges for this particular tree T are \((A,S),(B,S),(R,S),(R,C)\). According to  \cref{cor:led} for this topology the total price would be:
 	\begin{align*}
 		\Ptotal{T} = \Price{A}{S} + \Price{B}{S} + \Price{C}{R} + \Price{R}{S}
@@ -298,46 +617,39 @@
 	% 2. -------------------------------------------------------------------------------	 
 	
 	
-	
-	
-	We have not yet considered the case where \( |AS| = |BS| \). Let us take a closer look at it. 
+	We will now analyze the relation between point S and axis of the \(AB\), we preserve the connectivity from previous example.
 	\begin{proposition}
-		If the total price \(P(T)\) of the tree is to be minimized, then the point \(S\) must lie on the axis of symmetry of the points \(A\) and \(B\).
+		Let connectivity be as in ~\ref{prop:tp} and let points \(A,B,C,R\) be fixed. Let \(o\) be a perpendicular bisector of the segment \(AB\). 
+		If the total price \(P(T)\) of the tree is minimal, then the point \(S\) lies on axis \(o\)
 	\end{proposition}	
 	\begin{proof}
-		We distinguish two cases according to proposition 1.\\
+		Suppose, that \(S\) does not lie on \(o\)) \(|AS|\neq |BS|\). Without loss of generality, we may assume that
+		\[
+		|AS|>|BS|.
+		\]
+		this means that axis \(o\) intersect segment \(AS\). 
+		Now Consider the ellipse
+		\[
+		E=\{X\in\mathbb{R}^2:\ |AX|+|XR|=|AS|+|SR|\}.
+		\]
+		This ellipse has foci \(A\) and \(R\), and it passes through the point \(S\).
+		Since the segment \(AS\) lies inside the region bounded by \(E\), and since
+		\(o\) intersects the segment \(AS\), the axis \(o\) also intersects the
+		interior of the region bounded by \(E\). Furthermore, \(o\) intersects the
+		ellipse \(E\) in two points.
+		We choose the point for which \(|AQ|<|AS|.\)
 		
-		\noindent\textbf{Case 1.} 
-		First, we assume that \( |AS| + |SR| > |CR| \) and \( |BS| + |SR| > |CR| \), and let \( |SR| \) be a fixed distance.
-		\begin{align*}
-			|AS| = |BS| = d, \quad d \in R \\
-			\Ptotal{T_1} = 2|SR| + 3|SA| = 2|SR| + 3|BS| = 2|SR| + 3d
-		\end{align*}
-		Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total prize becomes:
+		Since \(Q\in E\), by the definition of the ellipse we have
 		\[
-		\Ptotal{T_2} = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > \Ptotal{T_1}
+		|AQ|+|QR|=|AS|+|SR|.
 		\]
-		Similarly, if \( |BS| = d + k \), we have:
+		Moreover, since \(Q\in o\), we have
 		\[
-		\Ptotal{T_3} = 2|SR| + 3(d + k) = 2|SR| + 3d + 3k > \Ptotal{T_1}
+		|AQ|=|BQ|.
 		\]
-		In both cases, when either \( |AS| \) or \( |BS| \) deviates from \( d \), the total length of the tree increases compared to the symmetric case. It follows that the minimal total length is achieved when \( |AS| = |BS| \).\\
-
-		\noindent\textbf{Case 2.} 
-		Now consider the second case, where \( |AS| + |SR| \leq |CR| \) and \( |BS| + |SR| \leq |CR| \), and let \( |CR| \) be fixed:
-		\begin{align*}
-			|AS| = |BS| = d, \quad d \in R \\
-			L(T_1) = 2|CR| + |SA| = 2|CR| + |SB| = 2|CR| + d
-		\end{align*}
-		Now suppose that \( |AS| = d + k \), where \( k > 0 \). Then the total length becomes:
-		\[
-		L(T_2) = 2|CR| + d + k > L(T_1)
-		\]
-		If \( |BS| = d + k \), we have:
-		\[
-		L(T_3) = 2|CR| + d + k > L(T_1)
-		\]
-		Again, it is clear that the minimal total length is achieved when \( |AS| = |BS| \).\hfill $\square$\\
+		
+		....(work in progress)
+		
 	\end{proof}	 
 
 	The last case from proposition 1. that need to be studied is the case when \(|AS|+|SR| = |CR| \).
@@ -544,6 +856,8 @@
 			= 0 .
 		\end{equation*}
 	
+	\section{Snell's law}
+	
 	We would to use the opportunity of relation expressed above to point out analogy to physics, namely with Snell's law from geometrical optics. Snell's law describes the path of light passing through two different media. A classical illustration is the problem of a lifeguard trying to reach a drowning person as quickly as possible: since the speed of motion on the beach differs from the speed in water, the time-minimizing path is not a straight line, but a broken one.
 	
 	Snell's law is given by
@@ -650,7 +964,9 @@
 		\]
 		which represents a weighted analogue of Snell's law. Where the weights reflect the fact that the contribution of the branch \(AS\) appears twice in function \(L(T)=2|AS|+|CS|\).
 	
-	
+		In the end of this section we would like to devote a few words to the history of Snell's law. It is meant to provide a brief pause in this otherwise mathematically dense text.  about Willebrord Snellius (1580–1626) - Snell and 
+		
+		
 	
 	---------------------------------------NOVE
 
@@ -877,16 +1193,16 @@
 	----------------
 	----------------
 		
-	\section{minimal relaxed LED tree with 3  leaves}
+	\section{rozuzlenie osi}
 
-	(We now know how to compute where on the axis of 2 points S lies, we still not know which axis to choose for the S)
+	Sekcie su pracovne
 	
 	
-	(We will approach this problem numerically)
 	
-	(We will compute the optimal S for all tree axes, compare them and find the lowest \(L(T)\))
+	We have not yet resolved on axis of which side of triangle should lie the point S. To address this question in a universal way, we reformulate the problem on a representative domain that encodes all possible triangles up to similarity.
 	
-	We would like to approach this task universally for all possible triangles. To describe all triangles up to similarity transformations, we construct a representative domain in the plane such that each similarity class of triangles corresponds to exactly one point in this domain.
+	\section{representative domain}
+	We start by introducing the representative domain. To describe all triangles up to similarity transformations, we construct a representative domain in the plane such that each similarity class of triangles corresponds to exactly one point in this domain.
 	Let $\mathcal{T}$ denote the set of all non-degenerate triangles in the plane. 
 	Two triangles $T_1, T_2 \in \mathcal{T}$ are said to be similar if their corresponding 
 	side lengths are proportional. That is, if $a_i \le b_i \le c_i$ are the ordered 
@@ -949,7 +1265,8 @@
 	Therefore, the domain $\Omega$ provides a complete and non-redundant 
 	parametrization of all triangle shapes.
 	
-	"finding the minimizing axis that S lies on"
+	
+	\section{zmena oblasti}
 	
 	We have previously stated in proposition 2 that to minimize P(T), the point S has to lie on axis of symmetry of two points of triangle. We have not yet specified which two points it should be. 
 	
@@ -995,8 +1312,9 @@
 		+ \sqrt{(0.5 - x_{S2})^2 + y_{S2}^2} \\
 		&\quad + \sqrt{(x_{C2} - x_{S2})^2 + (k - y_{S2})^2}.
 	\end{align*}
-	
-	Dokaz konvexnosti ... 2 sposoby, neviem ktory je korektnejsi
+
+\section{convexity of f}	
+	Dokaz konvexnosti ... 2 sposoby, neviem ktory je korektnejsi - treba prerobit
 	\begin{proposition}	
 		Functions  \(f_1, f_2\) are convex functions.  
 	\end{proposition}
@@ -1056,12 +1374,99 @@
 		\]
 		so the functions are symmetric with respect to the y-axis.
 	\end{proof}
-	
-	
+	\end{proof}
 
+	\section{krok 2. f1 je kolma na CS}
+	\begin{proposition}
+		Let \(C \in \Omega\), and let
+		\[
+		L_C := \{X \in \Omega : f_1(X)=f_1(C)\}
+		\]
+		denote the level curve of \(f_1\) passing through the point \(C\).
+		Furthermore, let \(S = S(C)\) be the Steiner point corresponding
+		to \(f_1(C)\).
+		Then the vector
+		\[
+		CS^0 := \frac{CS}{|CS|}
+		\]
+		is the inward normal vector to the level curve \(L_C\).
+	\end{proposition}
+	\begin{proof}
+		Let \(v\) be a tangent vector to the level curve \(L_C\).
+		This by definition means that directional derivative of \(f_1\) in direction of vector \(v\),
+		\[
+		D_v f_1(C)=0.
+		\]
+		
+		Also since we assume that point \(S\) lies on axis of AC, it follows that
+		\[
+		f_1(C)=2|AS|+|BS|,
+		\]   
+		where the Steiner point \(S=S(C)\) depends on the position of \(C\).
+		
+		Differentiating in the direction \(v\), we obtain
+		\[
+		0 = D_v f_1(C) = (2AS^0+BS^0)\cdot \frac{dS}{dv}.
+		\]
+		Hence,
+		\[
+		2AS^0+BS^0 \perp \frac{dS}{dv}.
+		\]
+		We have previously mentioned analogy to Snell's law  in form:	
+		\[
+		2 \sin \theta_1 = \sin \theta_2.
+		\] 
+		where \(\theta_1\) denotes the angle between the segment \(AS\) and the normal to \(AC\) axis (interface in Figure~\ref{fig:Snell}), and \(\theta_2\) denotes the angle between the segment \(BS\) and the same normal to \(AC\) axis. 
+		
+		Now let \(n_{AC}\) denote a unit normal vector to the side \(AC\). Furthermore, let \(\alpha\) be the angle between \(n_{AC}\) and the segment \(AS\), and let \(\beta\) be the angle between the segment \(BS\) and \(n_{AC}\). Since  \(\alpha\), \(\beta\) are complementary to \(\theta_1\),\(\theta_2\) 
+		\[
+		\alpha=\frac{\pi}{2}-\theta_1
+		\qquad
+		\beta=\frac{\pi}{2}-\theta_2
+		\]
+		therefore
+		\[
+		2\cos\alpha=\cos\beta
+		\]
+		Furthermore, since for two vectors \(u,v \in \mathbb{R}^2\),
+		the angle \(\theta\) between them satisfies
+		\[
+		u\cdot v = |u|\,|v|\,\cos\theta
+		\]
+		where both \(AS^0\) and \(n_{AC}\) are unit vectors, we obtain
+		\[
+		AS^0 \cdot n_{AC} = \cos\alpha
+		\]
+		Similarly,
+		\[
+		BS^0 \cdot n_{AC} = -\cos\beta
+		\]
+		than
+		\begin{align*}
+		2\cos\alpha&=\cos\beta \\
+		2(AS^0\cdot n_{AC}) &=- BS^0\cdot n_{AC} \\
+		(2AS^0+BS^0)\cdot n_{AC} &=0 \\
+		\end{align*}
+	
+	Consequently, if the point \(C\) moves along the level curve of \(f_1\),
+	the Steiner point \(S\) moves in a direction parallel to \(n_{AC}\).
+		
+		Function \(f_1(C)\) can also be written as
+		\[
+		f_1(C)=|AS|+|BS|+|CS|.
+		\]
+		Differentiating in the direction \(v\), we obtain
+		\[
+		0
+		=
+		D_v f_1(C)
+		=
+		(AS^0+BS^0+CS^0)\cdot\frac{dS}{dv}
+		+
+		CS^0\cdot v.
+		\]
+		
 
 	\end{proof}
 
-
-	
 \end{document}
