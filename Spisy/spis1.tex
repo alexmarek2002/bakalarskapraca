@@ -7,6 +7,9 @@
 \usepackage{cleveref}
 \usepackage{amssymb}
 \usepackage{float}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usetikzlibrary{calc,angles,quotes}
 
 \newcommand{\Price}[2]{P(#1,#2)}
@@ -848,13 +851,13 @@
 			&= \frac{2x}{\sqrt{a^{2} + x^{2}}}
 			- \frac{\ell - x}{\sqrt{c^{2} + (\ell - x)^{2}}} =0 
 		\end{align*}
-		\begin{equation*}
+		\begin{equation}\label{eq:xSpos}
 			3x^{4} - 6\ell x^{3}
 			+ \left(4c^{2} + 3\ell^{2} - a^{2}\right)x^{2}
 			+ 2\ell a^{2}x
 			- \ell^{2}a^{2}
 			= 0 .
-		\end{equation*}
+		\end{equation}
 	
 	\section{Snell's law}
 	
@@ -1034,7 +1037,7 @@
 		
 %------------------------------------------------------------------------------------------------------------------------------		
 	TOTO TREBA OPRAVIT tu oblast
-	\begin{proposition}
+	\begin{proposition}\label{prop:R3}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
 		Define the region
@@ -1266,7 +1269,7 @@
 	parametrization of all triangle shapes.
 	
 	
-	\section{zmena oblasti}
+	\section{zmena oblasti}\label{prop:axis}
 	
 	We have previously stated in proposition 2 that to minimize P(T), the point S has to lie on axis of symmetry of two points of triangle. We have not yet specified which two points it should be. 
 	
@@ -1468,5 +1471,321 @@
 		
 
 	\end{proof}
+	
+	\chapter{Case of 3 leaves, Steiner vs relaxed LED tree}
+	From previous chapters we know how to construct minimal Steiner tree and minimal relaxed LED tree for prescribed 3 terminals/leaves. Roughly speaking, in case of three leafs, we have the same input structures and the only difference is in rules of optimization. Since we have for both, Steiner tree with three terminals and for relaxed LED tree with three leafs, extensive theory. We would like to in this chapter, mostly visually demostrate the difference between two and also to reinforce the reader’s understanding.  
+	
+	
+	For clarification, We used to use term terminal in context of Steiner trees and term leaf in context of LED trees. These two term are definitely not the same but in case when we only work with 3 terminals/leafs, it refers in most cases to the same thing, we will later state when they are not the same thing.
+	
+	In following text we will be computing minimal Steiner and minimal LED tree for the set of leafs \(A,B,C\). In first case we will be computing Steiner point \(S\) and in second case we will be computing points \(S,R\). Since for both cases we have 3 fixed vertices, we will be working with triangles, assuming the point of triangle are non degenerative. Since we work with triangles and aim to understand how the situation appears in each triangle, we will continue with triangles in our representative domain. This way we approach the task more universally.
+	Let us recall that, representative domain
+	\[
+	\Omega =
+	\left\{
+	(x,y) \in \mathbb{R}^2 :
+	y > 0,\;
+	x^2 + y^2 \le 1,\;
+	(x-1)^2 + y^2 \le 1,\;
+	x \le \tfrac{1}{2}
+	\right\}.
+	\]
+	Where each point $C \in \Omega$ uniquely determines a triangle
+	\[
+	T(C) = \{(0,0), (1,0), (x,y)\},
+	\]
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.75\textwidth]
+		{figures/vypoctova_oblast.pdf}
+		
+		\caption{Computational domain with discretization points}
+		\label{fig:vypoctova_oblast}
+	\end{figure}
+	
+	\section{Minimal lenght of Steiner tree}
+	
+	Let us distinguish, that for Steiner tree with \(C\) from domain \(\Omega\), there are two cases when \(S\neq R\) and \(S = R\). This follows from the angle condition for triangles in the Fermat point problem. If on of the interior angles is greater than 120 then Steiner point coincides with the terminal where angle is greater than 120. In our representative domain the only possible angle that can be greater than 120 is angle \(\angle ACB\). Therefore we distinguish these two cases.  
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/steiner_less120.pdf}
+			\caption{Case $\angle ACB < 120^\circ$.}
+			\label{fig:steiner_less120}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/steiner_more120.pdf}
+			\caption{Case $\angle ACB \geq 120^\circ$.}
+			\label{fig:steiner_more120}
+		\end{subfigure}
+		\caption{Illustration of Steiner trees for two different angle cases.}
+		\label{fig:steiner_angle_cases}
+	\end{figure}
+	
+	Given this information, we now examine for which locations of the point C in the representative domain each case arises. We especially focus on position of border, it is then straightforward to determine which region corresponds to which case. 
+	
+	The angle $\angle ACB$ is the angle between the vectors
+	\[
+	A - C = (-x,-y), \qquad B - C = (1-x,-y)
+	\]
+	The norms of these vectors are
+	\[
+	|A - C| = \sqrt{x^2 + y^2}, \qquad |B - C| = \sqrt{(1-x)^2 + y^2}
+	\]
+	We also know that
+	\begin{align*}
+		\cos(\angle ACB) &= \frac{AC \cdot BC}{|AC||BC|}\\
+		\cos(120^\circ) &=	\frac{x^2 - x + y^2}{\sqrt{x^2 + y^2}\,\sqrt{(1-x)^2 + y^2}}\\
+		-\frac{1}{2} &= \frac{x^2 - x + y^2}{\sqrt{x^2 + y^2}\,\sqrt{(1-x)^2 + y^2}}
+	\end{align*}
+	This equation implicitly defines a circular arc, which can be derived more conveniently using geometric arguments. 
+	
+	We use a geometric argument about chord of a circle. For the set of points on the arc subtended by a chord, it holds that the angle formed with the endpoints of the chord is constant. In our scenario, set of points $C$ from which the segment $AB$ is seen under a constant angle $120^\circ$ forms an arc of a circle.
+	The length of the segment is $|AB| = 1$, and using the chord formula,
+	\[
+	|AB| = 2r \sin(120^\circ),
+	\]
+	where \(r\) is radius of the circle, we obtain 
+	\[
+	1 = 2r \frac{\sqrt{3}}{2},
+	\]
+	which gives
+	\[
+	r = \frac{1}{\sqrt{3}}.
+	\]
+	
+	We also know that the center of the circle lies on the axis of $AB$, i.e., on the line \(x = \frac{1}{2}\), therefore let the center be
+	\[
+	O = \left(\frac{1}{2}, k\right)
+	\]
+	Since the distance from $O$ to $A$ equals \(r = \frac{1}{\sqrt{3}}.\), we obtain \(k\) using Pythagoras's theorem
+	\begin{align*}
+	\left(\frac{1}{2}\right)^2 + k^2 &= \left(\frac{1}{\sqrt{3}}\right)^2\\
+	k &= \pm \frac{1}{2\sqrt{3}}
+	\end{align*}
+	For the upper arc corresponding to the $120^\circ$ condition, the center lies below the $x$-axis, hence
+	\[
+	k = -\frac{1}{2\sqrt{3}}.
+	\]
+	Therefore, the center is
+	\[
+	O = \left(\frac{1}{2}, -\frac{1}{2\sqrt{3}}\right),
+	\]
+	From which we obtain the equation of the circle
+	\[
+	\left(x - \frac{1}{2}\right)^2 + \left(y + \frac{1}{2\sqrt{3}}\right)^2 = \frac{1}{3}.
+	\]
+	Solving for $y$, we obtain explicit equation of the boundary curve
+	\[
+	y = \sqrt{\frac{1}{3} - \left(x - \frac{1}{2}\right)^2} - \frac{1}{2\sqrt{3}}.
+	\]
+	
+	This curve separates the domain into two regions:
+	\begin{itemize}
+		\item below the curve, where $\angle ACB \geq 120^\circ$ and the Steiner point coincides with $C$, (red region) 
+		\item above the curve, where $\angle ACB < 120^\circ$ and a nontrivial Steiner point exists inside the  triangle (blue region)
+	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.45\textwidth]{figures/boundary120_region.pdf}
+		\caption{Subdivision of the computational domain according to the angle condition.}
+		\label{fig:boundary120_region}
+	\end{figure}
+	We will use this separation when computing minimal Steiner point, tree length. 
+	Let us define a function $P(C)$, which assigns to each point $C$ in the domain the total length of the minimal Steiner tree. It is defined as the sum of Euclidean lengths of all edges in the tree.
+	More precisely, we define
+	\[
+	P(C) =
+	\begin{cases}
+		|AC| + |BC|, & \text{if } \angle ACB \geq 120^\circ, \\[0.5em]
+		|AS| + |BS| + |CS|, & \text{if } \angle ACB < 120^\circ,
+	\end{cases}
+	\]
+	For second case, the solution is straight forward but in order to evaluate the function $P(C)$, in first case. it is necessary to determine the position of the minimal Steiner point $S$
+	
+	For this purpose, we use an iterative numerical method proposed by mathematician called Smith. It provides algorithm for computing minimal Steiner points in a given topology. This algorithm has it's importance and it is worth mentioning, because it provides numerical solution for arbitrary configuration.  
+	
+	The algorithm constructs a sequence of approximations of the minimal Steiner point, which converges to the optimal solution. We do not reproduce the proof of convergence here, as it can be found in the referenced literature.
+	\begin{algorithm}[H]
+		\caption{Smith's Numerical Method}
+		\label{alg:smith}
+		Let $T$ be a Steiner topology with $n$ terminals and $k$ Steiner points.  
+		Let $s_k = (x_k, y_k)$ denote the $k$-th Steiner point.  
+		Let the coordinates of points adjacent to $s_k$ be denoted by $w_j = (u_j, v_j)$, where $j$ ranges over all vertices such that $[w_j, s_k]$ is an edge of the tree $T$.
+		
+		At iteration step $i = 0,1,2,\dots$, the coordinates of each Steiner point are updated by solving the system of linear equations
+		\begin{align}
+			x_k^{(i+1)} &= 
+			\frac{\displaystyle \sum_j \frac{u^{i+1}_j}{\sqrt{(u^{i}_j - x_k^{i})^2 + (v^{i}_j - y_k^{i})^2}}}
+			{\displaystyle \sum_j \frac{1}{\sqrt{(u^{i}_j - x_k^{i})^2 + (v^{i}_j - y_k^{i})^2}}}, \\[0.8em]
+			y_k^{(i+1)} &= 
+			\frac{\displaystyle \sum_j \frac{v^{i+1}_j}{\sqrt{(u^{i}_j - x_k^{i})^2 + (v^{i}_j - y_k^{i})^2}}}
+			{\displaystyle \sum_j \frac{1}{\sqrt{(u^{i}_j - x_k^{i})^2 + (v^{i}_j - y_k^{i})^2}}}.
+		\end{align}
+	\end{algorithm}
+
+	In our case, we consider a tree with three terminals $A$, $B$, and $C$, and a single Steiner point $S = (S_1, S_2)$. The iterative scheme simplifies to the following:
+	\begin{align}
+		S^{i+1}_1 &=
+		\frac{
+			\frac{1}{\sqrt{(1 - S^{i}_1)^2 + (S^{i}_2)^2}}
+			+
+			\frac{C_x}{\sqrt{(C_x - S^{i}_1)^2 + (C_y - S^{i}_2)^2}}
+		}{
+			\frac{1}{\sqrt{(S^{i}_1)^2 + (S^{i}_2)^2}}
+			+
+			\frac{1}{\sqrt{(1 - S^{i}_1)^2 + (S^{i}_2)^2}}
+			+
+			\frac{1}{\sqrt{(C_x - S^{i}_1)^2 + (C_y - S^{i}_2)^2}}
+		}, \\[0.7em]
+		S^{i+1}_2 &=
+		\frac{
+			\frac{C_y}{\sqrt{(C_x - S^{i}_1)^2 + (C_y - S^{i}_2)^2}}
+		}{
+			\frac{1}{\sqrt{(S^{i}_1)^2 + (S^{i}_2)^2}}
+			+
+			\frac{1}{\sqrt{(1 - S^{i}_1)^2 + (S^{i}_2)^2}}
+			+
+			\frac{1}{\sqrt{(C_x - S^{i}_1)^2 + (C_y - S^{i}_2)^2}}
+		}.
+	\end{align}
+		Therefore, in each iteration, only two equations need to be solved.	In practice, the iteration converges rapidly and only a small number of steps is required to achieve sufficient accuracy.
+		
+		Using the methodology described above, we now evaluate the function $P(C)$ over the computational domain $\Omega$.
+		
+		A three-dimensional visualization of the function $P(C)$ over $\Omega$ is shown in Figure~\ref{fig:steiner_3d}.
+		
+		\begin{figure}[H]
+			\centering
+			\begin{subfigure}{0.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/gS3_surface.pdf}
+				\caption{Surface plot.}
+				\label{fig:gs3_surface}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}{0.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/gS4_points3D.pdf}
+				\caption{Point plot.}
+				\label{fig:gs4_points3d}
+			\end{subfigure}
+			\caption{Three-dimensional visualization of $P(C)$}
+			\label{fig:steiner_3d}
+		\end{figure}
+		
+		We also presented results in Figure~\ref{fig:steiner_2d} in the form of a density plot and contour lines. This representation provides additional insight into the solution. The density plot provides a global view of the variation of $P(C)$, while the contour plot highlights level sets of equal tree length.
+
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gS1_density.pdf}
+			\caption{Density plot.}
+			\label{fig:gs1_density}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gS2_contours.pdf}
+			\caption{Contour plot.}
+			\label{fig:gs2_contours}
+		\end{subfigure}
+		\caption{Minimal \(P(C)\) over the computational domain.}
+		\label{fig:steiner_2d}
+	\end{figure}
+	
+	\section{Minimal lenght of LED tree}
+	In chapter 2. we have formulated many relations, conditions and rules what holds in minimal relaxed LED tree. 
+	To compute $P(C)$ of minimal relaxes LED tree with 3 leaves we will use all these observations and rules.
+	
+	So let Suppose that \(A=(0,0), B=(1,0), C=(x,y)\) where \(C\in \Omega \)
+	In order, for relaxe LED tree with leafs \(A,B,C\), to be minimal.
+	
+	First, we need to determine on which axis, of side of the triangle, the point S lies. Based on Proposition~\ref{prop:axis}, we know that point S lies on the axis of the shortest side of the triangle. For configuration with \(c\) in region \(\Omega \), the shortest side is always \(AC\). Therfore, to minimize tree lenght, \(S\) lie on perpendicular bisector of\(AC\).  
+	
+	We know based on Figure~\ref{fig:Careas} that for each axis there are three possible formulas how the total price of tree can be obtained, which depends on the possition of the remaining point. Let us propose that the point \(C\),\(C\in \Omega \) will always be in area \(R_3\) of diagram in Figure~\ref{fig:Careas} and therefore, based on Figure~\ref{prop:R3},  \(P(C)\) is obtained as \(P(C)=2|AS|+|BS|\). We note that the configuration is oriented differently, although the relation is correct.
+	
+	What remains to determine, on order to express \(P(C)=2|AS|+|BS|\), position of point \(S\). So far , we know that \(S\) lies on axis of \(AC\). To clearly determine the position, we need to identify where on the axis the point. Let \(x\) be the distance between \(S\) and side \(AC\). The distance \(x\) is than obtained as Equation~\ref{eq:xSpos}. 
+	In our computations particularly, the equation was solved numerically using Newton's method.
+	This is all necessary to obtain total price \(P(C)\) of the tree.
+	
+	To obtain a clearer picture, we proceed. From Figure~\ref{prop:R3} we know that is fully stretched. From figure(este neni) that in minimal LED tree \(R\) lies on edge \(SB\). Furthermore from prop(este neni dooncena) we know that possition of \(R\) satisfies ref(vzorec na vypocet R)
+	
+	The following figure provides a visual representation of the mathematical structure described above.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\textwidth]{figures/led_tree.pdf}
+		\caption{Illustration of the LED tree construction.}
+		\label{fig:led_tree}
+	\end{figure}
+
+	
+	Using the formulation described above, we now evaluate the function $P(C)$ for the minimal relaxed LED tree over the computational domain $\Omega$.
+	
+	A three-dimensional visualization of the function $P(C)$ over $\Omega$ is shown in Figure~\ref{fig:led_3d}.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gLED3_surface.pdf}
+			\caption{Surface plot.}
+			\label{fig:gled3_surface}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gLED4_points3D.pdf}
+			\caption{Point plot.}
+			\label{fig:gled4_points3d}
+		\end{subfigure}
+		\caption{Three-dimensional visualization of $P(C)$}
+		\label{fig:led_3d}
+	\end{figure}
+	
+	We also present the results in Figure~\ref{fig:led_2d} in the form of a density plot and contour lines. This representation provides additional insight into the solution. The density plot provides a global view of the variation of $P(C)$, while the contour plot highlights level sets of equal tree length.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gLED1_density.pdf}
+			\caption{Density plot.}
+			\label{fig:gled1_density}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.4\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/gLED2_contours.pdf}
+			\caption{Contour plot.}
+			\label{fig:gled2_contours}
+		\end{subfigure}
+		\caption{Minimal $P(C)$ over the computational domain.}
+		\label{fig:led_2d}
+	\end{figure} 
+		\begin{figure}[H]
+			\centering
+			\begin{subfigure}{0.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/gCompare3D1.pdf}
+				\caption{First view.}
+				\label{fig:gcompare3d1}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}{0.48\textwidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/gCompare3D2.pdf}
+				\caption{Second view.}
+				\label{fig:gcompare3d2}
+			\end{subfigure}
+			\caption{Three-dimensional comparison of the Steiner and LED solutions.}
+			\label{fig:compare_3d}
+		\end{figure}
+
 
 \end{document}
