@@ -22,6 +22,8 @@
 \newtheorem{definition}{Definition}
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
 %\newtheorem*{proof}{Proof}
 
 \title{Bachelor Thesis}
@@ -548,27 +550,72 @@
 
 
 	
-    \section{Price of a 3-leaved led tree}	
+    \section{relaxed LED tree with three leaves}	
+
+	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this and following sections is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behavior and properties of this structure. The structure of our relaxed LED tree is as follows:
 	
-	
-	Analyzing the Fermat problem provides a glimpse into the world of Steiner trees and helps us better understand the behavior of more complex Steiner trees through trivial case. Our motivation in this section is the same. We will compose a relaxed LED tree that is the most similar to one in Fermat problem and will in detail look at behavior and properties of this structure. The structure of our relaxed LED tree is as follows:
-	
-	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two (i.e., the root). Vertex \( S \) is adjacent to two leaves and to the root \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has price value \(\Price{u}{v}; |uv| \leq \Price{u}{v} \) and according to \cref{def:led}: 
+	\begin{definition}\label{def:LED3} 
+	Let \( T \) be a relaxed LED tree that contains exactly three vertices \( A \), \( B \), and \( C \) of degree one (i.e., leaves), exactly one vertex \( S \) of degree three, and one vertex \( R \) of degree two. Vertex \( S \) is adjacent to two leaves and to the \( R \), while the remaining leaf is adjacent directly to the root \( R \). Every edge has price value \(\Price{u}{v}; |uv| \leq \Price{u}{v} \) and according to \cref{def:led}: 
 	\[
 	\Price{R}{A} = \Price{R}{B} = \Price{R}{C}
 	\] 
-	%obrazok
+	We call the vertex \(R\) Root. 
+ 	\end{definition}
+ 		
+ 	\section{Optimal position of R, S}	
+ 	
+	Throughout this section, we work with the tree \(T\) as defined in \cref{def:LED3} our purpose will be, to analyze how to optimize positions of points \(S, R\), in order to achieve minimal total price \(\Ptotal{T}\) of three leaved tree, in particular topology. we assume the tree as defined in \cref{def:LED3}. The approach in this section is to start from a given geometry and derive the geometric properties of individual points. By the end of this section, we will know, for given topology and fixed terminal points \(A,B,C\), how to determine position of \(S, R\), in order to minimize  total price \(\Ptotal{T}\). 
 	
-	First, given the full geometry and topography of the LED tree, we will analyze how to compute minimal price.
-	We know that we can relax edges to achieve \cref{lem:led}, even if euclidean distances from root to leafs are not equal, the first proposition is about how to compute \(\Ptotal{T}\) with minimal amount of relaxation for fixed \(A,B,C,S,R\). 
-
-	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to. Without loss of generality, assume that \(R\) is adjacent to \(C\). Which means that edges for this particular tree T are \((A,S),(B,S),(R,S),(R,C)\). According to  \cref{cor:led} for this topology the total price would be:
-	\begin{align*}
+	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to.
+	Throughout this section, the topology of the tree is assumed to be fixed and specified as follows.
+	\begin{assumption}\label{ass:3topology}
+	Let \(R\) be adjacent to \(C\). Which means that edges for this particular tree T are \((A,S),(B,S),(R,S),(R,C)\).
+	\end{assumption}
+	The general topology specified in \cref{ass:3topology} is illustrated in Figure~\ref{fig:topology}.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=1.1, thick]
+			
+			% --- definícia bodov ---
+			\coordinate (A) at (0,0);
+			\coordinate (S) at (2.8,-0.35);
+			\coordinate (B) at (5.0,1.1);
+			\coordinate (R) at (2.4,-2.1);
+			\coordinate (C) at (0.2,-2.8);
+			
+			% --- hrany ---
+			\draw (A) -- (S);
+			\draw (S) -- (B);
+			\draw (S) -- (R);
+			\draw (R) -- (C);
+			
+			% --- body ---
+			\fill[black] (A) circle (2.3pt);
+			\fill[red] (S) circle (3pt);
+			\fill[black] (B) circle (2.3pt);
+			\fill[green!60!black] (R) circle (3pt);
+			\fill[black] (C) circle (2.3pt);
+			
+			% --- popisy ---
+			\node[left] at (A) {$A$};
+			\node[right] at (B) {$B$};
+			\node[below left] at (C) {$C$};
+			\node[right] at (R) {$R$};
+			\node[right] at (S) {$S$};
+			
+		\end{tikzpicture}
+		\caption{topology with edges \((A,S),(B,S),(R,S),(R,C)\)}
+		\label{fig:topology}
+	\end{figure}
+	
+	According to  definition \ref{def:led}, for this topology the total price would be:
+	\begin{align}
 		\Ptotal{T} = \Price{A}{S} + \Price{B}{S} + \Price{C}{R} + \Price{R}{S}
-	\end{align*}
-	
+	\end{align}
+
+	We know that we can relax edges to achieve \cref{lem:led}, even if euclidean distances from root to leafs are not equal, the first proposition is about how to compute \(\Ptotal{T}\) with minimal amount of relaxation. 
 	\begin{proposition}\label{prop:tp} 
-		Let us distinguish four mutually exclusive case, depending on lengths of edges. Minimal prices of tree \(\Ptotal{T}\), for these cases are:
+		Let us distinguish four mutually exclusive cases for fixed \(A,B,C,S,R\), depending on lengths of edges. Minimal prices of tree \(\Ptotal{T}\), for these cases are:
 		\begin{enumerate}
 			\item if \( |AS| > |BS|, |AS|+|SR| \geq |CR| \); then \(\Ptotal{T} = 2 |SR| + 3 |SA|\)
 			\item if \( |AS| < |BS|, |BS|+|SR| \geq |CR| \); then \(\Ptotal{T} = 2 |SR| + 3 |SB|\)
@@ -621,12 +668,12 @@
 	
 	
 	We will now analyze the relation between point S and axis of the \(AB\), we preserve the connectivity from previous example.
-	\begin{proposition}
-		Let connectivity be as in ~\ref{prop:tp} and let points \(A,B,C,R\) be fixed. Let \(o\) be a perpendicular bisector of the segment \(AB\). 
-		If the total price \(P(T)\) of the tree is minimal, then the point \(S\) lies on axis \(o\)
+	\begin{proposition}\label{prop:Sino}
+		Let points \(A,B,C,R\) be fixed. Let \(o\) be a perpendicular bisector of the segment \(AB\). 
+		If the total price \(P(T)\) of the tree is minimal, then the point \(S\) lies on axis \(o\).
 	\end{proposition}	
 	\begin{proof}
-		Suppose, that \(S\) does not lie on \(o\)) \(|AS|\neq |BS|\). Without loss of generality, we may assume that
+		Suppose, that \(S\) does not lie on \(o\) \(|AS|\neq |BS|\). Without loss of generality, we may assume that
 		\[
 		|AS|>|BS|.
 		\]
@@ -646,88 +693,182 @@
 		\[
 		|AQ|+|QR|=|AS|+|SR|.
 		\]
-		Moreover, since \(Q\in o\), we have
+		So total price of the tree is still computed according to the same pricing rule from proposition\ref{prop:tp} as before. Regardless of which of the possible pricing rules applies, the total price decreases after replacing \(S\) by \(Q\).
+		Since \(Q\in o\), we have
 		\[
 		|AQ|=|BQ|.
 		\]
-		
-		....(work in progress)
-		
+		Thus, moving \(S\) to the new position \(Q\) gives a tree with a smaller total price. Therefore, \(S\) must lie on the perpendicular bisector \(o\) of the segment \(AB\).
 	\end{proof}	 
-
-	The last case from proposition 1. that need to be studied is the case when \(|AS|+|SR| = |CR| \).
-	\begin{proposition}
-		The minimal total length of the tree is achieved exactly when
-		\[
-		|AS| + |SR| = |CR|
-		\]
-	\end{proposition}	
+	
+	Knowing that in a minimal tree the vertex \(S\) lies on the perpendicular
+	bisector \(o\) of the segment \(AB\), we now analyze how the root \(R\) should
+	be positioned in order to minimize the total price.
+	
+	For simplicity, we will occasionally use the term \emph{axis} instead of
+	\emph{perpendicular bisector}; both terms will refer to the same object.
+	
+	\begin{proposition}\label{prop:R_on_SC}
+		Let points \(A,B,C,S\) be fixed. If the total price \(\Ptotal{T}\) is minimal, then the vertex \(R\)
+		lies on the edge \(SC\).
+	\end{proposition}
+	
 	\begin{proof}
-		Let \(|AS|+|SR| = |CR| \). The total length would be \[ L(T) = |SA| + 2 |CR| = L(T) = |AS| + 2|AS| + 2|SR| = 3|AS| + 2|SR|  )\]
-		Let \( d > 0 \) and suppose we fix \( |CR| \) and \( |SR| \), and increase \( |AS| \) by \( d \):
-		\[
-		|AS|^* = |AS| + d \quad \Rightarrow \quad L(T_1) = 2|SR| + 3|AS|^* = 2|SR| + 3(|AS| + d) = L(T) + 3d > L(T)
-		\]
+		Without loss of generality, assume that \(|AS|\geq |BS|\) ans Suppose that
+		\(R\) does not lie on the line \(SC\).
 		
-		Now fix \( |CR| \) and \( |AS| \), and increase \( |SR| \) by \( d \):
+		Let \(H\) be the branch of the hyperbola with foci \(S\) and \(C\) passing
+		through \(R\). Thus, for every point \(X\in H\), the value
 		\[
-		|SR|^* = |SR| + d \quad \Rightarrow \quad L(T_2) = 2|SR|^* + 3|AS| = 2(|SR| + d) + 3|AS| = L(T) + 2d > L(T)
+		|XC|-|XS|
 		\]
+		is constant. Since every brach of hyperbola intersects segment between it's foci, the branch \(H\) intersects the segment
+		\(SC\), We denote this point \(Q\).
 		
-		Now fix \( |SR| \) and \( |AS| \), and increase \( |CR| \) by \( d \):
+		By the definition of \(H\), we have
 		\[
-		|CR|^* = |CR| + d \quad \Rightarrow \quad L(T_3) = |AS| + 2|CR|^* = |AS| + 2(|CR| + d) = L(T) + 2d > L(T)
+		|QC|-|QS| = |RC|-|RS|
 		\]
+		According to \cref{prop:tp}, the rule determining the optimal total
+		price depends only on the comparison between \(|AS|+|SR|\) and \(|CR|\),
+		equivalently on comparison of \(|CR|-|SR|\) and \(|AS|\). Since this value is constant on
+		the hyperbola branch \(H\), replacing \(R\) by \(Q\) does not change the pricing rule.
 		
-		In all cases, any deviation from the equality \( |AS| + |SR| = |CR| \) leads to an increase in the total length.  
-		\hfill $\square$\\
+		Moreover, since \(Q\in SC\), it follows that
+		\[
+		|QC|+|QS| = |SC|
+		\]
+		and, because \(R\notin SC\), the triangle inequality gives
+		\[
+		|RC|+|RS| > |SC|
+		\]
+		Combining these relations with the equality of the differences, we obtain
+		\[
+		|QC|<|RC|
+		\qquad\text{and}\qquad
+		|QS|<|RS|.
+		\]	
+		However, in both possible pricing cases, the total price is a positive linear
+		combination of the distances from \(R\) to the foci \(S\)
+		and \(C\). After replacing \(R\) by \(Q\), both relevant distances decrease.
+		Hence \(R\) must lie on edge \(SC\).
 	\end{proof}
-	A completely analogous argument applies when \( |BS| + |SR| = |CR| \).  
-	Again, increasing \( |BS| \), \( |SR| \), or \( |CR| \) individually while keeping the others fixed leads to an increase in the total length.  
-	Hence, the minimal total length is achieved exactly when:
-	\[
-	|BS| + |SR| = |CR|
-	\]
 
-	
-	
-	This leads us to the question of how to place the root \( R \in \overline{CS} \) for given points \( A, B, C, S \), so that the total length of the LED tree is minimized.
-	
-
-	\begin{proposition}\label{prop:R} 
-		To obtain the minimal total price \(P(T)\) of the tree for given points \(A, B, C, S\), the root \(R\) must satisfy the following conditions:
+	The following proposition is established under the assumptions of \cref{prop:R_on_SC,prop:Sino}.
+	\begin{proposition}\label{PbasedonR}
+		Let points \(A,B,C,S\) be fixed. If the total price \(\Ptotal{T}\) is minimal, then we have two cases regarding the position of vertex \(R\):
 		\begin{enumerate}
-			\item \(R\) lies on the longest edge among \( |AS|, |BS|, |CS| \). Without loss of generality, assume that \( |CS| \) is the longest, so \( R \in \overline{CS} \).
-			\item The distance from \(S\) to \(R\) is 
-			\[
-			|SR| = \frac{|CS| - |AS|}{2}.
-			\]
+			\item If \(|AS| \geq |CS|\), then the minimal total price \(\Ptotal{T}\) is attained when \(S = R\) and it is \(\Ptotal{T} = 3|AS|.\)
+			\item If \(|AS| < |CS|\), then the minimal total price \(\Ptotal{T}\) is attained when \(|AS| + |SR| = |RC|\) and it is \(\Ptotal{T} = 2|AS| + |CS|.\)
 		\end{enumerate}
 	\end{proposition}
-
-
 	\begin{proof}
-		We begin by proving the second statement.
+		Let \(V(R)\) be a function derived from Proposition\ref{prop:tp}, from comparison of the expressions \(|AS|+|SR|\) and \(|CR|\) in second term. 
+		We study the behavior of the function
+		\[
+		V(R) := |AS| + |SR| - |RC|
+		\]
+		as the point \(R\) moves along the line \(SC\).
+		The function \(V\) is continuous, since it is a sum of three continuous
+		functions. If the point \(R\) lies outside the segment \(SC\), then its
+		distances to both \(S\) and \(C\) change equally, and hence the value
+		of \(V(R)\) remains constant outside the segment \(SC\).
+		If \(R\) lies on the segment \(SC\) and moves towards the leaf \(C\),
+		the term \(|SR|\) increases while the term \(|RC|\) decreases. Therefore,
+		\(V(R)\) increases monotonically along the segment \(SC\) in the direction
+		from \(S\) to \(C\).
+		we conclude that \(V\) attains its
+		minimum at the point \(S\): \(V(S) = |AS| - |SC|\) and its maximum at the point \(C\): \(V(C) = |AS| + |SC|\).
+		According to \cref{prop:price-rule}, the rule for computing the minimal
+		total price of the LED tree depends on the sign of \(V(R)\).
+		Indeed, if \(V(R) \geq 0\), then
+		\[
+		|AS| + |SR| \geq |RC|,
+		\]
+		and the total price is computed according to cases (1) or (2).
+		Otherwise, the total price is computed according to cases (3) or (4).
+		Note that at the point \(C\), the value \(V(C)\) is always nonnegative.
+		However, at the point \(S\), the sign of \(V(S)\) depends on the geometry
+		of the tree.
 		
-		From the constraint \( |AS|+|SR| = |CR|  \), we derive:
+		For \(|AS| \geq |CS|\) the minimal possible value of \(V\) is in \(S\) and it is always nonnegative, hence it is nonnegative on entire segment \(SC\).
+		Therefore, regardless of the position of \(R\) on the line \(SC\), the total
+		price of the tree is computed as \(\Ptotal{T} = 3|SA| + 2|SR|\). This expression is minimized when \(R=S\). Therefore the total price is
+		\[
+		\Ptotal{T} = 3|SA|.
+		\]
+		The edge \(RC\) is relaxed, except for \(|AS| = |CS|\). 
 		
+		Now consider case \(|AS| < |CS|\). In this case value of \(V\) in \(S\) is:
+		\[
+		V(S)=|AS|-|SC|<0,
+		\] and in \(C\) is \[
+		V(C)=|AS|+|SC|>0.
+		\] 
+		Since \(V\) is continuous and monotone on the segment \(SC\), it follows that there exists a unique point \(Q\in SC\) such that
+		\[
+		V(Q)=0.
+		\]
+		It is clear that the segment \(QS\) is the region on which \(V\) is negative, therefore in this region the total price is 
+		\[
+		\Ptotal{T} = |SA| + 2|RC|.
+		\]
+		If the point \(R\) moves along this segment towards the point \(Q\), it also
+		approaches the leaf \(C\), and thus	the total price decreases monotonically.
+		
+		Similarly, the segment \(QC\) is the region on which \(V\) is positive. Hence, in this region  the total price is 
+		\[
+		\Ptotal{T} = 3|SA| + 2|SR|.
+		\]
+		If the point \(R\) moves along this ray towards \(Q\), it also approaches
+		the vertex \(S\), and therefore the	total price again decreases monotonically.
+		
+		Consequently, regardless of whether \(R\) lies in the region where \(V\) is
+		nonnegative or negative, the total price decreases as \(R\) approaches \(Q\).
+		It follows that the minimal total price is attained at \(R = Q\).
+		
+		Since \(Q\) is the zero of \(V\), we have
+		\[
+		V(R) = 0
+		|AS| + |SR| - |RC| = 0.
+		|AS| + |SR| = |RC|
+		\]
+		Now we show that, under the condition \(|AS| + |SR| = |RC|\), the pricing rule corresponding to both cases (1), (2) and cases (3), (4)
+		coincides. Moreover, if \(|AS| = |BS|\), then the total price of the tree is given simply by the sum of the Euclidean lengths of its edges. In the computation, we also use \cref{cor:sr}.
 		\begin{align*}
-			|AS| + |CS| &= |AS| + |SR| + |RC| \\
-			|AS|+|CS| &= |AS|+|SR|+|AS|+|SR| \\ 
-			|CS| &= |AS|+2|SR| \\
+			\Ptotal{T} &= |AS| + 2|RC| \\
+			 &= |AS| + 2 (|AS| + |SR|) \\
+			 &= 3|AS| + 2|SR| \\ 
+			 &= 3|AS| + 2\frac{|CS| - |AS|}{2} \\
+			 &= 2|AS| + |CS|\\
+			 &= |AS| + |BS| + |CS| \\
+		\end{align*}
+	\end{proof}
+	
+	
+	\begin{corollary}\label{cor:sr}
+	If \(|AS| < |CS|\), to minimize the total length of the LED tree, the root \( R \) should be placed on edge \(CS\) such that:
+	  \[
+	  |SR| = \frac{|CS| - |AS|}{2}.
+	  \]
+	\end{corollary}
+	\begin{proof}
+		We know that \(|CS| = |SR| + |RC|\).
+		From the \( |AS|+|SR| = |CR|  \), we derive:
+		\begin{align*}
+			|AS| + |SR| &= |CS| - |SR| \\
 			|SR| &= \frac{|CS| - |AS|}{2} \\
 			\Rightarrow \quad |RC| &= |CS| - |SR| = |CS| - \frac{|CS| + |AS|}{2}
 		\end{align*}
-		Therefore, to minimize the total length of the LED tree, the root \( R \) should be placed on edge \( \overline{CS} \) such that its distance from \( S, C\) is:
-		\[
-		|SR| = \frac{|CS| - |AS|}{2},  |RC| = |CS| - \frac{|CS| + |AS|}{2}
-		\]
-		\hfill $\square$
 	\end{proof}
 
+	
+ 	TOTO som tu este nechal, to je pozostatok z mojich predoslich zly dokazov. Usek nad tymto je uz hotovy podla dobruch dokazov. neverthless, neviem usudit ci je toto tvrdenie spravne a ci je dokaz pravny. prosim posudte a podla toho to necham alebo zmazem.
+	\begin{proposition}\label{prop:R} 
+		To obtain the minimal total price \(P(T)\) of the tree for given points \(A, B, C, S\), the root \(R\) must lie on the longest edge among \( |AS|, |BS|, |CS| \). Without loss of generality, assume that \( |CS| \) is the longest, so \( R \in \overline{CS} \).
+	\end{proposition}
+
 	\begin{proof}
-		We now prove the first statement.
-		
 		Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( \overline{BS} \).  
 		Let us assume that the minimal LED tree satisfies:
 		\[
@@ -747,21 +888,23 @@
 		which is a contradiction.  
 		The same argument applies if \( R \in \overline{AS} \).  
 		Therefore, the only edge that avoids contradiction is the longest one, i.e. \( \overline{CS} \).  
-		Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).\hfill $\square$
+		Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).
 	\end{proof}
 
 		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\) for fixed points \(A, B, C\).
 		
-		The point \(S\) is constrained to lie on the axis of symmetry of two leaves(Proposition~2). For the time being, we leave the choice of the particular axis open. It is important to say that the selection of the axis matters If unsuitable axis is chose the tree can start to relax in order to satisfy \cref{def:led}. At this stage, we do not have the tools to provide a more detailed analysis of the problem. However, this will be addressed later. 
-		Let us assume that the following configuration, after computing the point S, satisfies the condition from Figure~\ref{prop:R} for point R, and is therefore fully stretched.
+		The point \(S\) is constrained to lie on the axis of symmetry of two leaves. For the time being, we leave the choice of the particular axis open. It is important to say that the selection of the axis matters If unsuitable axis is chose the tree can start to relax in order to satisfy \cref{def:led}. At this stage, we do not have the tools to provide a more detailed analysis of the problem. However, this will be addressed in next section. 
+		Let us assume that the following configuration, after computing the point S, satisfies second case from Figure~\ref{PbasedonR}, therefore is fully stretched.
+
+		The placement of \(S\) is then formulated as a minimization problem of \Ptotal{T}. 
+		Let us fix a symmetry axis \(AB\) and consider the total price of the tree as a function of the position of \(S\) along this axis. 
+		For the purpose of minimization of such tree, with stretched edges. We denote the total length of the tree \(f\)
 		
-		 The placement of \(S\) is then formulated as a minimization problem. 
-		Let us fix a symmetry axis and consider the total price of the tree as a function of the position of \(S\) along this axis. 
-		
-		For the purpose of minimizing the total length of the relaxed LED tree with respect to the position of the point \(S\) on the symmetry axis, we work with the geometric configuration depicted in Figure~\ref{fig:Sopt}.
-		Points \(A,B,C\) are the leaves of the relaxed LED tree, and \(S\) denotes the Steiner point. 
-		The point \(S\) lies on the symmetry axis of the leaves \(A\) and \(B\), indicated by the dashed blue line, and therefore satisfies \( |SA| = |SB| \).
-		The quantities \(a\), \(c\), \(x\), and \(\ell\) denote the distances indicated in the figure.
+		The placement of \(S\) can now be formulated as a one-dimensional minimization problem. We use the geometric configuration depicted in Figure~\ref{fig:Sopt}.
+		Points \(A,B,C\) are the leaves of the relaxed LED tree, and \(S\) denotes the unknown point. 
+		Point \(S\) lies on the symmetry axis of the leaves \(A\) and \(B\), indicated by the dashed blue line, and therefore satisfies \( |SA| = |SB| \).
+		The quantities \(a\), \(c\), \(x\), and \(\ell\) denote the distances indicated	in the figure. In particular, \(x\) determines the position of \(S\) along the
+		axis.
 		
 		\begin{figure}[ht]
 			\centering
@@ -818,26 +961,37 @@
 			
 		\end{figure}
 		 
-		 
-		 We will now spend the following lines to construct the minimization problem.
-		 
-		 Let us first rewrite the \(L(T)\) function to more helpful form. Since we are minimizing, In line 3 we assume that we put \(R\) to optimal possition as well, in accordance with Proposition 4.
-		 
-		 
-		\begin{align*}
-			L(T)
-			&= |AS| + 2|CR| \\
-			&= 3|AS| + 2|SR| \\
-			&= 3|AS| + 2 \cdot \frac{|CS| - |AS|}{2} \\
-			&= 3|AS| + |CS| - |AS| \\
-			&= \boldsymbol{2|AS| + |CS|} \\
-			&= |AS|+|AS|+|CS| \\
-			&= |AS| + |BS| + |CS|
-		\end{align*}
+		\begin{proposition}\label{prop:xSopt}
+			Let \(a,c,\ell>0\) be fixed. Let us define the function
+			\[
+			f(x) := 2\sqrt{a^{2}+x^{2}}+\sqrt{c^{2}+(\ell-x)^{2}} .
+			\]
+			Then the optimal position of the point \(S\) along the axis is obtained by
+			minimizing \(f\). Moreover, every interior minimizer \(x\) satisfies
+			\begin{equation}\label{eq:xSpos}
+				3x^{4} - 6\ell x^{3}
+				+ \left(4c^{2} + 3\ell^{2} - a^{2}\right)x^{2}
+				+ 2\ell a^{2}x
+				- \ell^{2}a^{2}
+				= 0 .
+			\end{equation}
+		\end{proposition}
+	 	\begin{proof}
+		 By the previous results, in the optimal configuration of \(R\) the total price
+		 of the tree reduces to the sum of the Euclidean lengths
+		 \[
+		 |AS|+|BS|+|CS|.
+		 \]
+		 Since \(S\) lies on the perpendicular bisector of \(AB\), we have
+		 \[
+		 |AS|=|BS|.
+		 \]
+		 Hence the total price can be written as
+		 \[
+		 2|AS|+|CS|.
+		 \]
 		
-		We do the last two lines so we can notice that if \(|AS|=|BS|, |AS|+|SR|=|CR|\) is satisfied then minimal \(P(T)\) is just sum of all euclidean lengths of the edges. 
-		
-		We now express \(L(T)\) according to Figure~\ref{fig:Sopt}, using Pythagoras theorem. 
+		We now express \(f\) according to Figure~\ref{fig:Sopt}, using Pythagoras theorem. 
 		\begin{align*}
 			L(T)
 			&= 2|AS| + |CS| \\
@@ -845,7 +999,7 @@
 		\end{align*}
 		
 		where \(a\), \(c\), and \(\ell\) are fixed, and variable \(x\) represents the position of the Steiner point \(S\) along the symmetry axis.
-		Since the total length \(L(T)\) is expressed as a differentiable function of the variable \(x\), its minimum is attained at a critical point. We therefore compute the derivative of \(L(T)\) with respect to \(x\) and set it equal to zero.
+		Since the length tree \(f(x)\) is expressed as a differentiable function of the variable \(x\), its minimum is attained at a critical point. We therefore compute the derivative of \(f(x)\) and set it equal to zero.
 		\begin{align*}
 			\frac{\mathrm{d}L}{\mathrm{d}x}
 			&= \frac{2x}{\sqrt{a^{2} + x^{2}}}
@@ -858,9 +1012,13 @@
 			- \ell^{2}a^{2}
 			= 0 .
 		\end{equation}
+		To justify that the critical point corresponds to a minimum, we note that the function \(f\) is convex, since each term is a convex function of \(x\).
+		Therefore, any critical point of \(f\) is a global minimizer.
+ 		\end{proof}
+ 
+ 	
 	
-	\section{Snell's law}
-	
+	\begin{remark}\label{Snell}
 	We would to use the opportunity of relation expressed above to point out analogy to physics, namely with Snell's law from geometrical optics. Snell's law describes the path of light passing through two different media. A classical illustration is the problem of a lifeguard trying to reach a drowning person as quickly as possible: since the speed of motion on the beach differs from the speed in water, the time-minimizing path is not a straight line, but a broken one.
 	
 	Snell's law is given by
@@ -933,8 +1091,8 @@
 		\label{fig:Snell}
 	\end{figure}
 		
-		snell law can be derived in various ways. We find particulary similar Derivation from Fermat's principle. Which states that light travels the path which takes the least time.
-		It consist of taking the derivative of the optical path length. Found stacionary point defines the path:
+		Snell law can be derived in various ways. We find particularly similar Derivation from Fermat's principle. Which states that light travels the path which takes the least time.
+		It consist of taking the derivative of the optical path length. Found stationary point defines the path:
 		\[
 		T(x)=\frac{\sqrt{x^2+a^2}}{v_1}+\frac{\sqrt{b^2+(\ell-x)^2}}{v_2}.
 		\]
@@ -968,7 +1126,7 @@
 		which represents a weighted analogue of Snell's law. Where the weights reflect the fact that the contribution of the branch \(AS\) appears twice in function \(L(T)=2|AS|+|CS|\).
 	
 		In the end of this section we would like to devote a few words to the history of Snell's law. It is meant to provide a brief pause in this otherwise mathematically dense text.  about Willebrord Snellius (1580–1626) - Snell and 
-		
+	\end{remark}	
 		
 	
 	---------------------------------------NOVE
@@ -994,9 +1152,18 @@
 			
 			% okolie
 			\fill[blue!8] (-0.3,0) rectangle (1.3,2);
+			% vacsia elipsa (vyplnenie)
 			
-			% vacsi polkruh
-			\fill[green!18] (A) arc[start angle=210,end angle=-30,radius={1/sqrt(3)}] -- cycle;
+			\fill[green!18] 
+			(A) arc[start angle=180,end angle=0,
+			x radius=0.5,
+			y radius={sqrt(3)/2}] 
+			-- (B) -- cycle;
+			
+			\draw[green!60!black] 
+			(A) arc[start angle=180,end angle=0,
+			x radius=0.5,
+			y radius={sqrt(3)/2}];
 			
 			% mensi polkruh
 			\fill[red!18] (A) arc[start angle=180,end angle=0,radius=0.5] -- cycle;
@@ -1007,7 +1174,7 @@
 			\node[point,label=above right:$p$] at (p) {};
 
 			\node[text=red!70!black] at (0.2,0.33) {$r_1$};
-			\node[text=green!30!black] at (0.3,0.77) {$r_2$};
+			\node[text=green!30!black] at (0.2,0.77) {$r_2$};
 			
 			\node[text=red!40!black] at (0.75,0.18) {$R_1$};
 			\node[text=green!40!black] at (0.75,0.6) {$R_2$};
@@ -1021,7 +1188,7 @@
 			\draw[dashed] (M) -- (0.5,2);
 			
 			\draw[red!70!black] (A) arc[start angle=180, end angle=0, radius=0.5];
-			\draw[green!60!black] (A) arc[start angle=210, end angle=-30, radius=1/sqrt(3)];
+
 			
 			%\draw (p) circle ({1/sqrt(3)}); FOR SANITY
 			
@@ -1036,7 +1203,6 @@
 	In this figure, we can distinguish three distinct regions R1, R2, R3. We now describe the nature of each region in turn.
 		
 %------------------------------------------------------------------------------------------------------------------------------		
-	TOTO TREBA OPRAVIT tu oblast
 	\begin{proposition}\label{prop:R3}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
@@ -1046,10 +1212,11 @@
 		\frac{x^2}{a^2} + \frac{y^2}{3a^2} \geq 1 \right\}.
 		\]
 		
-		Then, for every point \( C \in R_3 \), the Steiner point \( S \) is determined as in Figure~\ref{fig:Sopt}, and the root \( R \) as in Proposition~\ref{prop:R}.
-		The Total Price of such three is than \(\Ptotal{T} = 2|SA| + |SC| \). Every tree in this area is stretched. R!=S except for points that lies on the boundary.  
+		Then, for every point \( C \in R_3 \), the Steiner point \( S \) is determined as in Figure~\ref{fig:Sopt}, and the root \(R\) as in Proposition~\ref{prop:R}.
+		The Total Price \(\Ptotal{T}\) of such three is equal to \( f = 2|SA| + |SC| \). Every tree in this area is stretched. \(R \neq S\) except for points that lies on the boundary.  
 	\end{proposition}
 	
+	\begin{proof}
 	We start by analyzing the special case of the configuration where the point \( C \) lies on the axis of symmetry of \( AB \), as illustrated in Figure~\ref{fig:Soptspec}.
 	
 	\begin{figure}[H]
@@ -1126,7 +1293,7 @@
 	The issue arises when we attempt to place the root point. For LED tree, such in Figure~\ref{fig:Soptspec}, to be fully stretched we need to satisfy \(|AS|+|SR|=|CR|\). This is not exactly possible if \(|AS|>|CS|\). If we are left with such a tree we know that the tree will must be relaxed to satisfy LED tree definition. In this scenario to minimize the  \Ptotal{T} of tree, root R lies in point S. That way the minimal amount relaxation is acquired.
 	
 	Using computation from above, the boundary point \( C \) that lies on axis \(o\) for which no relaxation is required is the one for which all edges have equal length, and hence \( R = S \).
-	A straightforward computation shows that the distance of such a point C from the segment \( AB \) is
+	A straightforward computation shows that the distance of such a point \(C \in o\), from the segment \( AB \) is
 	\[ \frac{3 a}{\sqrt{3}} \]
 	
 	To analyze how would the boundary looks like outside of axis o, we have to bring back ("general" Formula to compute S):
@@ -1161,7 +1328,8 @@
 	centered at \( M \), with semi-axes of lengths \( a \) in the horizontal direction and \( \sqrt{3}\,a \) in the vertical direction.
 	
 	This also confirms the boundary point computed on the axis, since the vertical coordinate of \( C \) is equivalent with vertical length of semi-axis the ellipse.
-
+	\end{proof}
+	
 	\begin{proposition}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
@@ -1173,13 +1341,15 @@
 		\right\}.
 		\]
 		
-		Then, for every point \( C \in R_2 \),S satisfies \(|SA|=|SB|=|SC|\) root point \(R, R \in S\) and total price of the tree is \(\Ptotal{T} = 3|SA| \).  The tree is fully stretched.
+		Then, for every point \( C \in R_2 \),S satisfies \(|SA|=|SB|=|SC|\) root point \(R, R = S\) and total price \(\Ptotal{T}\) of the tree is equal to \(g = 3|SA|\).  The tree is fully stretched.
 	\end{proposition}
-
-	Let us remind that Proposition~\ref{prop:R} implies that In order to ensure that the tree is not relaxed, we must satisfy \(|AS|=|CS|\)  ...tuto neviem ako pokracovat 
 	
+	\begin{proof}
+		This is the case when function \(f\) no longer provides the shortest total price of tree \(P(T)\). We have already obtained the upper boundary of \(R_2\) in previous proof. In this proof we will analyze the region \(R_2\). And in next proof we will focus on lower boudary. In order to obtain minimal \(\Ptotal{T}\), let consider expressing the function, such that it is not relaxed.    
+		Recall from previous proof that \(|AS|=|BS|\), \(f = 2|AS| + |CS|\). Because we are in region \(R_2\), minimization of function \(f\) obtained point \(S\), leave us with case where \(|SA|\geq|SC|\). Consequently, \(R=S\). And in respect to \ref{prop:R} about minimal \(R\), \(R\) can only lie on \(SA\). 
+		If \(|SA|\leq|CS|\) than \(\Ptotal{T}\) is equal to \(g = 3|SA|\). Under such a condition \(|SA|\) in minimal when \(|AS| = |CS|\). From this condition, it follows that \(S\) is the circumcenter of the points \(A, B, C\). 	
+	\end{proof}
 	
-
 	\begin{proposition}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
@@ -1188,14 +1358,19 @@
 		R_1 = \left\{ (x,y) \in \mathbb{R}^2 \;\middle|\; x^2 + y^2 < (\frac{a}{2})^2 \right\}.
 		\]
 		
-		Then, for every point \( C \in R_1 \), the point \(S, S \in M\), root point \(R, R \in S\) and total price of the tree is \(\Ptotal{T} = 3|SA| \). 
+		Then, for every point \( C \in R_1 \), the point \(S, S \in M\), root point \(R, R \in S\) and total price \(\Ptotal{T}\) of the tree is equal to \(g = 3|SA| \). 
 		Every tree in this area is relaxed.  
 	\end{proposition}
+
+
+	\begin{proof}
+	From the results of the previous proofs, we can conclude that the only way to construct a non-relaxed tree for \( C \in R_1 \) is to impose the condition \(|SA| = |SB| = |SC|.\) Consequently, the point \( S \) is the circumcenter of triangle \( ABC \). It is clear that this circumcenter lies below the segment \( AB \). We denote its vertical distance by \( d \). pre takuto formaciu by sa P(T) pocitalo ako g=3|SA|. mozeme si vsimnut ze ak s klesajucou vziadlenostou h, klesa aj g. To mimochodom znamena to ze hrana CS bute relaxovana. kedze g zavysi iba on |SA| a |SA| je je najkratsie z definicie vzialenosti boda a priamky prave v vtedy ked je SA kolme na o, tak minimalna g bude pre bod S = M. Z dovodu rozlisenia kedy je strom relaxovany a kedy nie oznacime funciu pocitajucu \(\Ptotal{T}\) ako h = 3|SA|, ak ked je zhodna s g   
+	For this configuration, the total tree length \(P(T)\) can be expressed as \(g=3|SA|\). Observe that as the distance \(d\) decreases, the value of \(g\) also decreases. This implies that \(|SA|>|SC|\),therefore the edge \(CS\) becomes relaxed.
+	Since \(g\) depends only on \(|SA|\), and the distance \(|SA|\) is minimized precisely when the segment \(SA\) is perpendicular to the line \(AB\), it follows that the minimal value of \(g\) is attained at the point \(S=M\).
 	
-	----------------
-	----------------
-	----------------
-		
+	For the reason to distinguish the relaxed and non-relaxed configurations functions, we denote that \(\Ptotal{T}\) is equal to function \(h=3|SA|\). Even though \(h\)and\(g\) coincides.
+	\end{proof}
+	
 	\section{rozuzlenie osi}
 
 	Sekcie su pracovne
