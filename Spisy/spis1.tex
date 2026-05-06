@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[openany]{book}
 \usepackage{amsmath,amsthm}
 \usepackage{tikz}
 \usepackage{caption}
@@ -10,12 +10,21 @@
 \usepackage{graphicx}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{pdfpages}
+\usepackage{etoolbox}
+\newbool{printVersion}
+\boolfalse{printVersion}
 \usetikzlibrary{calc,angles,quotes}
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=nyt
+]{biblatex}
+
+\addbibresource{references.bib}
 
 \newcommand{\Price}[2]{P(#1,#2)}
 \newcommand{\Ptotal}[1]{P(#1)}
-
-
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
@@ -26,14 +35,88 @@
 \newtheorem{remark}{Remark}
 %\newtheorem*{proof}{Proof}
 
-\title{Bachelor Thesis}
-\author{Alex Marek}
-\date{\today}
-
 \begin{document}
+	% Official title page from AIS
+	\includepdf[
+	pages=-,
+	pagecommand={\thispagestyle{empty}}
+	]{figures/frontpage.pdf}
 	
-	\maketitle
+	% Pages before contents are not numbered
+	\pagenumbering{gobble}
+% empty page
+\clearpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+\clearpage
 
+\vfill
+
+\subsection*{Declaration}
+
+I declare that this thesis was written by myself under the supervision of my supervisor and using the references listed in the bibliography.
+
+\vspace{10pt}
+
+\noindent Bratislava 2026
+\newline
+
+\begin{flushright}
+	Alex Marek
+\end{flushright}
+	\section*{Abstract}
+	\noindent \textbf{Title:} Shortest Euclidean LED-tree Problem as a Variant of the Shortest Euclidean Steiner Tree Problem\\
+	\textbf{Abstract:} 
+	This thesis studies minimal relaxed LED trees with three leaves and compares them with minimal Steiner trees on three terminals. The work first introduces basic notions from graph theory, Euclidean geometry, and optimization. It then summarizes the classical theory of Steiner trees, including their topology, geometric properties, and the Fermat's problem. The main part of the thesis focuses on relaxed LED trees and describes their behavior in the case of three leaves. A constructive procedure for obtaining a minimal relaxed LED tree is presented. The final part compares the obtained properties with the corresponding properties of Steiner minimal trees and shows the main geometric differences between these two optimization problems.
+	
+	\vspace{5pt}
+	
+	\noindent \textbf{Keywords:} Steiner tree, LED tree, relaxed LED tree, Fermat's problem
+	
+	\vspace{+20pt}
+	
+	\section*{Abstrakt}
+	
+	\noindent \textbf{Názov práce:} Problém najkratšieho euklidovského LED stromu ako variant problému najkratšieho euklidovského Steinerovho stromu\\
+	\textbf{Abstrakt:} 
+	Táto bakalárska práca sa zaoberá minimálnymi relaxovanými LED stromami s tromi listami a ich porovnaním s minimálnymi Steinerovými stromami na troch termináloch. Práca najskôr zavádza základné pojmy z teórie grafov, euklidovskej geometrie a optimalizácie. Následne sumarizuje klasickú teóriu Steinerových stromov vrátane ich topológie, geometrických vlastností a Fermatovho problému. Hlavná časť práce sa venuje relaxovaným LED stromom a opisuje ich správanie v prípade troch listov. V práci je uvedený konštrukčný postup na získanie minimálneho relaxovaného LED stromu. Záverečná časť porovnáva získané vlastnosti s príslušnými vlastnosťami Steinerových minimálnych stromov a ukazuje hlavné geometrické rozdiely medzi týmito dvoma optimalizačnými problémami.
+	
+	\vspace{5pt}
+	
+	\noindent \textbf{Kľúčové slová:} Steinerov strom, LED strom, relaxovaný LED strom, Fermatov problém, euklidovská optimalizácia
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+
+
+	\vfill
+	
+	\subsection*{Acknowledgement}
+	
+	I would like to thank my supervisor Ing. Peter Sarkoci, PhD. especially for his time that he spend with me and for the wisdom and insight he shared with me during the preparation of this thesis.
+	
+	\vspace{10pt}
+	
+	\noindent Bratislava 2026 \hfill
+	\newline
+	
+	\begin{flushright}
+		Alex Marek \qquad
+	\end{flushright}
+	
+		\tableofcontents
+	
+	\pagenumbering{arabic}
+	\setcounter{page}{5}
+	\chapter{Introduction}
+	Optimization problems on graphs and geometric networks arise naturally in many areas of mathematics, computer science, engineering. One classical example is the Euclidean Steiner problem, whose objective is to connect a given set of terminals by a network of minimal total length while allowing the introduction of additional points, called Steiner points. Although the problem has a simple geometric formulation, it possesses a rich mathematical structure and has been studied extensively for many years.
+	
+	Recently, new optimization models similar to Steiner trees have been introduced. One such model is given by LED trees, which have a combinatorial structure similar to Steiner minimal trees but differ in several geometric properties. Since the theory of LED trees is relatively new, many of their structural and geometric properties are still not fully studied.
+	
+	The main focus of this thesis is the study of minimal relaxed LED trees in the case of three leaves and their comparison with minimal Steiner trees on three terminals. To provide the necessary background, the thesis first introduces basic notions from graph theory and Euclidean geometry. The work also summarizes the classical theory of Steiner trees, including their topology, geometric properties, and the special case of Fermat's problem.
+	
+	The central part of the thesis is devoted to the geometric analysis of relaxed LED trees with three leaves. We investigate the structure of minimal configurations and present a constructive procedure for obtaining minimal relaxed LED trees in this setting. The final part of the thesis compares the obtained results with the corresponding properties of Steiner minimal trees. Although both optimization problems are structurally similar, their geometric behavior differs in several important aspects.
 	\chapter{Basic notions}
 	
 	\section{Introduction to graph theory}
@@ -73,24 +156,17 @@
 	\section{Trees}
 	In this thesis we will particularly focus on a special type of graph, a tree.
 	Tree is a connected graph with no cycle.
-	The term "tree" was first used by the English mathematician Arthur Cayley, who applied it to count the number of different types of alkanes. The fusion of mathematical and chemical research later led to the establishment of standard terminology in graph theory.
+	Term tree was first used by the English mathematician Arthur Cayley, who applied it to count the number of different types of alkanes. The fusion of mathematical and chemical research later led to the establishment of standard terminology in graph theory.
 	
 	Consider we have finite connected graph G(V, E), then a subgraph of G(V, E) which contains all the vertices of G and is a tree, this subgraph is called a spanning tree. If additionally each edge of G has a known weight(length) \(w(e)>0\), than the spanning tree of G with the minimal sum of the weights of the edges, is called minimum spanning tree. The importance of minimum spanning trees is evident. For example, if we aim to build railway connections between a set of cities at minimal cost. We can model the cities and all possible connections as a graph, and then find a minimum spanning tree of this graph to determine the most efficient network. 
 	The minimal spanning tree problem is formulated as follows: Find the spanning tree, G'(V,E'), for which the sum of the weights of the edges \( \sum_{e \in E'} w(e)\) is a minimum. Two most common algorithms used to solve the minimum spanning tree problem are Prim's algorithm and Kruskal's algorithm.
 	
-	An analogy to a spanning tree in the Euclidean setting is the Euclidean spanning tree. A Euclidean tree is a Euclidean graph that is a tree, hence is connected and has no cycle. The term spanning indicates that the tree includes all the vertices of the original graph. Minimum spanning tree problem becomes Euclidean minimum spanning tree problem and is: Find the Euclidean spanning tree for which the sum of the Euclidean distances between n points connected by edges is a minimum(sem mozem dat korektnejsiu definicu problemu, ktora bude viac korespondovat s mojou def. euclidean graph). 
-	
-	Let us now consider the problem of finding a minimum spanning tree in a given graph. One straightforward, though computationally expensive, approach would be to generate all possible spanning trees and select the one with the smallest total weight. Since all spanning trees has to contain all vertices the total number of such trees is given by Cayley’s formula: For every positive integer \(n\) the number of trees on \(n\) labeled vertices is \(n^{n-2}\). Many proofs of Cayley's formula are known; one that will be particularly useful for us is based on Prüfer sequences.  
-	Since the correspondence is bijective, it provides a constructive method for generating all labeled trees. A Prüfer sequence is a unique sequence corresponding to every labeled tree, for a tree on \( n \) vertices, the associated Prüfer sequence has length \( n - 2 \). All Prüfer sequences can be generated simply by enumerating all \( (n - 2) \)-tuples with repetition from the set \( \{1, 2, \dots, n\} \), resulting in \( n^{n-2} \) possible sequences. Each such sequence can then be converted into a tree, using algorithm. We will first, for better grasping the whole idea, briefly explain the algorithm for converting tree to Prüfer sequence:
-	\\- alg
-	\\and algorithm for converting Prüfer sequence to tree is:
-	\\- alg
-	\\After doing so, for each tree, we are let with list of edges, so we just sum all the weights of edges, (Euclidean Distances if Euclidean graph), and only thing remaining is to compare the total lengths of trees and choose one that is minimal. To sum up, when obtaining the minimal spanning tree on a given graph, we first generate all prufer seqences, then convert them to trees, compute the total length, choose minimal. This approach gives bulletproof recipe, that we will find useful later.   
+	An analogy to a spanning tree in the Euclidean setting is the Euclidean spanning tree. A Euclidean tree is a Euclidean graph that is a tree, hence is connected and has no cycle. The term spanning indicates that the tree includes all the vertices of the original graph. Minimum spanning tree problem becomes Euclidean minimum spanning tree problem and is: Find the Euclidean spanning tree for which the sum of the Euclidean distances between n points connected by edges is a minimum.   
 	
 	\section{Euclidean Steiner Problem}
 	If we would continue with our example about railway connection, it would naturally appear that a more effective option is possible, to connect cities with less amount of rails. If we ought add transport hubs between cities in favorable positions, we would might be able to lower construction costs but still connect all cities. This is where Steiner trees emerge. They are consequence of efforts to even lower the length of (euclidean) minimal spanning tree, by allowing to add additional points, to the set of current points. We call this task Euclidean Steiner problem. 
-	Euclidean Steiner problem, in form that it is now, was first introduced by Courant and Robbins in 1941, in treir book What is Mathematics?. In 1968 Gilbert and Pollak named sollution for this problem, Steiner minimal trees, in their paper Steiner minimal trees. These terms were called after Jacob Steiner (1796-1863), who was profesor specializing in geometry, at University of Berlin. Steiner has contibution in this area geometry, he worked on problems similar to this one but it in not clear if he was was avare of this exact version of the problem.
-	Euclidean steiner problem is a modification to euclidean minimum spanning tree problem. In Euclidean minimal spanning three problem on graph \( G = (V, E, \mu, w) \), every point \(v_i\) must be contained in the subgraph of solution of the problem. On the other hand in Euclidean Steiner problem we can add to the set \(V\) additional points. To distinguish points given and added, we call the given set of points terminals \(t_i\) and added points Steiner points \(s_i\).
+	Euclidean Steiner problem, in form that it is now, was first introduced by Courant and Robbins in 1941, in their book What is Mathematics?. In 1968 Gilbert and Pollak named solution for this problem, Steiner minimal trees, in their paper Steiner minimal trees. These terms were called after Jacob Steiner (1796-1863), who was professor specializing in geometry, at University of Berlin. Steiner has contibution in this area geometry, he worked on problems similar to this one but it in not clear if he was aware of this exact version of the problem.
+	Euclidean Steiner problem is a modification to euclidean minimum spanning tree problem. In Euclidean minimal spanning tree problem on graph \( G = (V, E, \mu, w) \), every point \(v_i\) must be contained in the subgraph of solution of the problem. On the other hand in Euclidean Steiner problem we can add to the set \(V\) additional points. To distinguish points given and added, we call the given set of points terminals \(t_i\) and added points Steiner points \(s_i\).
 	\[
 	\begin{aligned}
 		T &= \{t_1, \dots, t_n\}, \\
@@ -111,19 +187,18 @@
 	\]
 	and the weight function
 	\[ w : E \to \mathbb{R} \]
-	 is Euclidean distance
+	 is Euclidean distance. Also since the Euclidean metric is used, every edge of a Steiner minimal tree is represented by a straight line segment.
 	 
-	 The Euclidean Steiner tree problem consists of finding a set \( S \subset \mathbb{E}^d \) and a tree \( G = (T \cup S, E,\mu, w) \) such that the total length
+	 The Euclidean Steiner tree problem consists of finding a set of \(S\) in Euclidean space, and a tree \( G = (T \cup S, E,\mu, w) \) such that the total length
 	 \[
 	 \sum_{e \in E} w(e)
 	 \]
 	 is minimal.
 	 
-	 We have settled terms: Euclidean Steiner problem, Steiner tree, minimal Steiner tree. We will spend few following lines describing properties of Steiner trees and it's nature. This should be understood as insight to the topic rather than rigorous mathematical text. We briefly present the theory from The Euclidean (Steiner Problem
-	 Germander Soothill 2010) and state established observations without proving them. Our main focus will than be on Steiner tree with tree terminals.
+	 We have settled terms: Euclidean Steiner problem, Steiner tree, minimal Steiner tree. We will spend few following lines describing properties of Steiner trees and it's nature. This should be understood as insight to the topic rather than rigorous mathematical text. We briefly present the theory from \cite{soothill2010} and state established observations without proving them. Our main focus will than be on Steiner tree with three terminals.
 	 
-	\section{Steiner Trees}
-	In this section we will in an intuitive manner present the essential notions and properties related to Steiner trees. To effectively describe the nature of Steiner trees we will rely on planar drawings. Euclidean Steiner problem is not restricted to any dimension, it is a N-dimensional problem. To keep thing intuitive we will consider the planar case. In 1-dimension is Euclidean Steiner problem degenerated and in higher dimensions the problem exhibits properties analogous to those of the two-dimensional case. 
+	\section{Steiner Trees}\label{sec:steiner_trees}
+	In this section we will in an intuitive manner present the essential notions and properties related to Steiner trees. To effectively describe the nature of Steiner trees we will rely on planar drawings. Euclidean Steiner problem is not restricted to any dimension, it is a N-dimensional problem. To keep things intuitive we will consider the planar case. In 1-dimension is Euclidean Steiner problem degenerated and in higher dimensions the problem exhibits properties analogous to those of the two-dimensional case. 
 	
 	The following properties should be understood in the context of minimization. Although a Steiner tree may in general have an arbitrary structure, Steiner minimal trees exhibit specific characteristic properties arising from minimization efforts.
 	
@@ -382,7 +457,7 @@
 	
 	Relatively minimal tree for a topology is a tree that is the shortest among the trees with equivalent topology.
 	
-	Number of Steiner points is next important structural property. If we consider our efforts of minimizing tree, it occurs that there is upper limit on how many Steiner points we can add. The reason why this is the case will be partially clarified later. tu daj to o degree
+	Number of Steiner points is next important structural property. If we consider our efforts of minimizing tree, it occurs that there is upper limit on how many Steiner points we can add. The reason why this is the case will be partially clarified later.
 	A Steiner tree has at most \(m\) Steiner points
 	\[
 	m \le n-2.
@@ -396,53 +471,37 @@
 	such tree is called a full Steiner tree.
 	Moreover, in such topology every Steiner point has degree three and every terminal has degree one, or in other words, every terminal is a leaf.
 	
-	In the Euclidean Steiner problem, terminals are usually understood as the input, while Steiner points are treated as variables. On behalf of the Steiner points there is enormous variability in how the final tree can be constructed. The first source of variability is the number of Steiner points introduced, the second is the way in which they are connected within the tree, and the third is their placement in the Euclidean plane. As a consequence, the number of possible Steiner tree configurations grows superexponentially with the number of terminals. 
+	The Euclidean Steiner problem is computationally difficult and belongs to the class of NP-hard optimization problems. In the Euclidean Steiner problem, terminals are usually understood as the input, while Steiner points are treated as variables. On behalf of the Steiner points there is enormous variability in how the final tree can be constructed. The first source of variability is the number of Steiner points introduced, the second is the way in which they are connected within the tree, and the third is their placement in the Euclidean plane. As a consequence, the number of possible Steiner tree configurations grows superexponentially with the number of terminals. 
 	
+	We now state several additional properties of Steiner minimal trees. Some of them will be justified immediately, while others will become clearer later in the discussion of the three-terminal case.
 	
+	A fundamental local optimality condition is that no two incident edges of a Steiner minimal tree may meet at an angle smaller than \(120^\circ\). This property plays a central role in the structure of Steiner trees.
 	
-	\begin{figure}[h!]
-		\centering
-		\begin{subfigure}[b]{0.4\textwidth}
-			\centering
-			\begin{tikzpicture}[baseline=(current bounding box.north)]
-				\node (v1) at (0,1) [circle,fill,inner sep=2pt] {};
-				\node (v2) at (0,0) [circle,fill,inner sep=2pt] {};
-				\node (v3) at (2,1.5) [circle,fill,inner sep=2pt] {};
-				\node (v4) at (2,-0.5) [circle,fill,inner sep=2pt] {};
-				
-				\draw (v1) -- (v2);
-				\draw (v1) -- (v3);
-				\draw (v2) -- (v4);
-			\end{tikzpicture}
-			\caption{Spanning tree with 4 vertices}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}[b]{0.4\textwidth}
-			\centering
-			\begin{tikzpicture}[baseline=(current bounding box.north)]
-				\node (v1) at (0,1) [circle,fill,inner sep=2pt] {};
-				\node (v2) at (0,0) [circle,fill,inner sep=2pt] {};
-				\node (v3) at (2,1.5) [circle,fill,inner sep=2pt] {};
-				\node (v4) at (2,-0.5) [circle,fill,inner sep=2pt] {};
-				\node (s1) at (0.6,0.5) [circle,fill,inner sep=2pt] {};
-				\node (s2) at (1.3,0.5) [circle,fill,inner sep=2pt] {};
-				
-				\draw (v1) -- (s1);
-				\draw (v2) -- (s1);
-				\draw (v3) -- (s2);
-				\draw (s1) -- (s2);
-				\draw (v4) -- (s2);
-			\end{tikzpicture}
-			\caption{Steiner tree with additional points}
-		\end{subfigure}
-	\end{figure}
+	An immediate consequence is that Steiner minimal trees contain no crossing edges. Indeed, if two edges intersected, at least one of the angles formed at the intersection would necessarily be smaller than \(120^\circ\), contradicting the optimality condition. Moreover, such a crossing could always be replaced by a shorter non-crossing configuration.
 	
+	Another important structural property concerns the degrees of Steiner points. A Steiner point cannot have degree one, since such a point would only extend the tree without contributing to connectivity and could therefore be removed to shorten the total length of the tree. Similarly, a Steiner point cannot have degree two, because the two adjacent edges could be replaced by a single edge connecting their endpoints directly, again without increasing the total length.
 	
-	\section{LED trees}
-	-intro
+	On the other hand, the \(120^\circ\) angle condition also excludes Steiner points of degree four or higher. Around a single point, it is impossible for four or more edges to meet while maintaining angles of at least \(120^\circ\). Consequently, every Steiner point in a Steiner minimal tree has degree exactly three.
 	
-	A special type of tree is rooted tree, a rooted tree is a tree\(G = (V , E, R)\) in which one vertex \( R \in V \) has been designated the root.A Euclidean rooted tree can be defined as a pair \( \Psi = (G, \psi) \), where \( G \) is a rooted tree and \( \psi : V \to \mathbb{R}^n \) is an arbitrary map. The vertices of \( \Psi \) are the images of the elements of \( V \), and the role of the root is naturally assigned to the vertex \( \psi(R) \). Since \( \mathbb{R}^n \) is equipped with its standard metric, we can measure the length of any edge of \( \Psi \) by evaluating the distance between its adjacent vertices.
+	\section{Rooted trees}
+
+	Another special type of tree is a rooted tree. A rooted tree is a tree
+	\[
+	G = (V,E)
+	\]
+	in which one vertex \( R \in V \) is distinguished and called the root.
 	
+	A Euclidean rooted tree is a Euclidean tree
+	\[
+	G = (V,E,\mu,w)
+	\]
+	together with a distinguished root vertex \( R \in V \). The image
+	\[
+	\mu(R) \in \mathbb{E}^n
+	\]
+	is called the root of the Euclidean rooted tree.
+	
+	In the following, we introduce the basic terminology and notions related to rooted trees
 	\begin{itemize}
 		\item A \emph{leaf} of a tree is any vertex of degree one (with just one adjacent edge). Any other vertex is called an \emph{inner vertex}.
 		\item The \emph{root path} of a vertex of a rooted tree is the unique path that connects the vertex with the root.
@@ -452,15 +511,16 @@
 		\item The \emph{parent} of a vertex is its successor on the root path. A \emph{child} of a vertex is its successor on any of its leaf paths.
 	\end{itemize}
 	
-	
-	-some descrition (drz sa clanku L-M LEDtrees)
+	Rooted trees are important for our purposes because LED trees are derived from them. They provide a basic structure on which additional properties of LED trees are built.
 	
 	\section{Relaxed LED trees}	
 	
-	- treba vysvetlit pojmy relaxovania a natahoania lebo s nimi pracujes v pravej sekcii o led s 3 listami
-	\\
+	Informally speaking, LED trees can be understood as rooted trees in which all root-to-leaf paths have the same length.
 	
-	% presunute z kapitoly 2 a zovseobecnene
+	In our setting, we additionally introduce the concept of relaxed LED trees. Informally, relaxation means that edges of the tree are no longer restricted to straight line segments. Geometrically, this can be imagined as replacing a straight edge by a curve connecting the same pair of vertices. Consequently, the length assigned to an edge may differ from the Euclidean distance between its endpoints.
+	
+	Relaxed price of an edge connecting vertices \(u\) and \(v\) will be denoted by \(\Price{u}{v}.\)
+
 	
 	For every edge connecting two vertices in a tree, we assign two values:
 	\begin{itemize}
@@ -471,9 +531,8 @@
 	
 	We will also denote \( \Price{u}{v} \) for vertices \( u \) and \( v \) that are not directly connected by an edge. In this case, \( \Price{u}{v} \) represents the sum of relaxed values along the unique path from \( u \) to \( v \). Since a tree contains no cycles, there exists exactly one such path for every pair of vertices.
 	
-	% tu neviem ci mam pisat takto alebo je v clanku L-M LEDtrees
 	\begin{definition}\label{def:led}
-		A tree is called a relaxed LED (Leaves of Equal Depth) tree if the price of the path from the root \( R \) to each leaf is the same. That is, for any two leaves \( l_1 \) and \( l_2 \), it holds that
+		A tree is called a relaxed LED tree if the price of the path from the root \( R \) to each leaf is the same. That is, for any two leaves \( l_1 \) and \( l_2 \), it holds that
 		\[
 		\Price{R}{l_1} = \Price{R}{l_2}.
 		\]
@@ -487,7 +546,6 @@
 	
 	From the definition of relaxed LED trees, we obtain a relation that we will find useful later.
 	\begin{lemma}\label{lem:led}
-		% musi byt povedane ze listy su obe za V
 		Let \( V \) be a vertex that is neither a leaf nor a root, and let \( L_1 \) and \( L_2 \) be leaves. Assume that \( V \) is a common ancestor of both leaves \( L_1 \) and \( L_2 \).
 		If the root \( R \) does not lie on either of the paths from \( V \) to \( L_1 \) or from \( V \) to \( L_2 \), then:
 		\[
@@ -499,35 +557,30 @@
 		Let \(M'_1\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = V\) and \(v_k = L_1\).
 		Let \(M'_2\) be the path consisting of edges \((v_i, v_{i+1})\), where \(v_0 = V\) and \( v_k = L_2\).
 		Define \( M_1 = N \cup M'_1 \) and \( M_2 = N \cup M'_2 \).\\
-		Since the prizes along the paths from \( R \) to \( L_1 \) and \( R \) to \( L_2 \) are equal, we have:
+		Since the prices along the paths from \( R \) to \( L_1 \) and \( R \) to \( L_2 \) are equal, we have:
 		\begin{align*}
 			\Price{R}{l_1} &= \Price{R}{l_2}\\
 			\sum_{(u,v) \in M_1} \Price{u}{v} &= \sum_{(u,v) \in M_2} \Price{u}{v}\\
-			\sum_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_1}\Price{v_i}{v_{i+1}} 
-			&=\sum_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}} +\sum_{(v_i,v_{i+1}) \in M'_2}\Price{v_i}{v_{i+1}}\\
+			\sum\!_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}} +\sum\!_{(v_i,v_{i+1}) \in M'_1}\Price{v_i}{v_{i+1}} 
+			&=\\=\sum\!_{(v_i,v_{i+1}) \in N}\Price{v_i}{v_{i+1}}& +\sum\!_{(v_i,v_{i+1}) \in M'_2}\Price{v_i}{v_{i+1}}\\
 			\Price{R}{V} + \Price{V}{l_1} &= \Price{R}{V} + \Price{V}{l_2} \\
 			\Price{V}{l_1} &= \Price{V}{l_2}
 		\end{align*}
-		For clarity, we expanded the prize terms into sums here.  
-		However, in the rest of the text, we will write prize values without explicitly unfolding the paths.
+		For clarity, we expanded the price terms into sums here.  
+		However, in the rest of the text, we will write price values without explicitly unfolding the paths.
 	\end{proof}
 	
 	We define the price of tree \(\Ptotal{T}\) as the sum of all individual \(\Price{}{}\) values.
-	
-	LED (leaves of equal depth)
-	
-	
+
 	
 	%--------------------------------------------------------------------------------------------
-	\maketitle
-	
-	\chapter{Case of 3 leaves}
+	\chapter{Three-Leaf Case}
 	
 	
 	
-	\section{Fermat problem}
+	\section{Fermat's problem}
 	
-	Historically speaking, in section about Steiner Trees, we were getting ahead of ourself. Respecting the historical chronology, it must be noted that Fermat's problem was studied long before Steiner tree problem. Fermat problem was called after Pierre de Fermat (1601-1655), French mathematician. Unlike Euclidean Steiner problem, Fermat problem was formulated by Fermat. This is the proposed form: Given three points in a plane, find a fourth point such
+	Historically speaking, in section about Steiner Trees, we were getting ahead of ourself. Respecting the historical chronology, it must be noted that Fermat's problem was studied long before Steiner tree problem. Fermat's problem was called after Pierre de Fermat (1601-1655), French mathematician. Unlike Euclidean Steiner problem, Fermat's problem was formulated by Fermat. This is the proposed form: Given three points in a plane, find a fourth point such
 	that the sum of its distances to the three given points is a minimum.
 	In this form it's a case of Euclidean Steiner problem where:
 	\[
@@ -544,11 +597,47 @@
 	\end{aligned}
 	\]
 	
-	In section about Steiner Trees we have already mentioned some properties about them not only that they aply for fermat problem as well, but proportion of them were obtained from case with tree terminals. Since komplex structure of thee with many terminals, can be aranged as simple triangles with steiner point inside. In fact minimal steiner trees behave this way and we will later show this. We have introduced the definition and would like to now discuss fermat problem further. Whenever the discussed results apply to the general case as well, we will point them out.  
+	In section about Steiner Trees we have already mentioned some properties about them. Not only that they apply for Fermat's problem as well, but proportion of them were obtained from case with tree terminals. Since complex structure of thee with many terminals, can be arranged as simple triangles with Steiner point inside. In fact minimal Steiner trees behave this way and we will later show this. We have introduced the definition and would like to now discuss Fermat problem further. Whenever the discussed results apply to the general case as well, we will point them out.  
 	
+	Approximately one hundred years after Fermat proposed the problem, two mathematicians, Torricelli and Simpson, introduced geometric constructions for its solution. These are purely geometric constructions in the Euclidean plane. The obtained solution corresponds to the minimal Steiner tree for three terminals. The constructions are illustrated in Figure~\ref{fig:TorSim}.
 	
+	The Torricelli method begins by constructing an equilateral triangle on each side of the original triangle $ABC$. Subsequently, circumcircles of the constructed equilateral triangles are drawn. The Steiner point is then located at the common intersection of all three circumcircles.
+	
+	The Simpson method starts in a similar manner, again by constructing equilateral triangles on the sides of $ABC$. Afterward, for each constructed equilateral triangle, a line segment is drawn connecting the newly constructed point, which does not belong to the original triangle, with the point opposite to the side on which the corresponding equilateral triangle was constructed. The intersection of these three line segments determines the Steiner point.
+	
+	\begin{figure}[H]
+		\centering
+		
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/torricelli_method.pdf}
+			\caption{Torricelli method}
+			\label{fig:torricelli_method}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.48\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/simpson_method.pdf}
+			\caption{Simpson method}
+			\label{fig:simpson_method}
+		\end{subfigure}
+		
+		\caption{Geometric constructions of the Fermat point using the Torricelli and Simpson methods.}
+		\label{fig:TorSim}
+	\end{figure}
 
+	It follows that both geometric constructions fail whenever one of the interior angles of triangle $\triangle ABC$ exceeds \(120^\circ\). In such a case, the constructed point lies outside the triangle, which contradicts the minimality property of the Steiner tree. This leads to the following characterization of the solution to Fermat's problem.
+	
+	\begin{enumerate}
+		\item If one of the interior angles of $\triangle ABC$ is greater than or equal to \(120^\circ\), then the solution to Fermat's problem coincides with the point at which this angle occurs.
+		
+		\item If all interior angles of $\triangle ABC$ are smaller than \(120^\circ\), then the solution is the Torricelli point, equivalently the intersection point of the Simpson lines. In this case, the obtained point forms three angles of \(120^\circ\) with the points \(A\), \(B\), and \(C\).
+	\end{enumerate}
 
+	It should be noted that the characteristic \(120^\circ\) angle property of Steiner trees originates from three-terminal case. In the configuration described above, the tree edges incident to the Steiner point meet at angles of \(120^\circ\). This local optimality condition also appears in larger Steiner minimal trees and forms the basis for many structural properties and optimization rules related to Steiner trees.
+	
+	The three-terminal case also explains the angle condition stated in Section~\ref{sec:steiner_trees}. If two edges of a tree meet at an angle smaller than \(120^\circ\), the total length of the tree can be decreased by introducing an additional Steiner point in a suitable position. Consequently, such configurations cannot occur in a Steiner minimal tree.
+	
 	
     \section{relaxed LED tree with three leaves}	
 
@@ -562,9 +651,9 @@
 	We call the vertex \(R\) Root. 
  	\end{definition}
  		
- 	\section{Optimal position of R, S}	
+ 	\section{minimal relaxed LED tree with three leaves}	
  	
-	Throughout this section, we work with the tree \(T\) as defined in \cref{def:LED3} our purpose will be, to analyze how to optimize positions of points \(S, R\), in order to achieve minimal total price \(\Ptotal{T}\) of three leaved tree, in particular topology. we assume the tree as defined in \cref{def:LED3}. The approach in this section is to start from a given geometry and derive the geometric properties of individual points. By the end of this section, we will know, for given topology and fixed terminal points \(A,B,C\), how to determine position of \(S, R\), in order to minimize  total price \(\Ptotal{T}\). 
+	Throughout this section, we work with the tree \(T\) as defined in \cref{def:LED3} our purpose will be, to analyze how to optimize positions of points \(S, R\), in order to achieve minimal total price \(\Ptotal{T}\) of three leaved tree, in particular topology. we assume the tree as defined in \cref{def:LED3}. The approach in this section is to start from a given geometry and derive the geometric properties of individual points. By the end of this section, we will know, for given topology and fixed terminal points \(A,B,C\), how to determine position of \(S, R\), in order to minimize total price \(\Ptotal{T}\). 
 	
 	For tree \( T \), we have three options how to arrange the edges, depending on which vertex other than vertex S is Root \( R \) adjacent to.
 	Throughout this section, the topology of the tree is assumed to be fixed and specified as follows.
@@ -779,7 +868,7 @@
 		from \(S\) to \(C\).
 		we conclude that \(V\) attains its
 		minimum at the point \(S\): \(V(S) = |AS| - |SC|\) and its maximum at the point \(C\): \(V(C) = |AS| + |SC|\).
-		According to \cref{prop:price-rule}, the rule for computing the minimal
+		According to \cref{prop:tp}, the rule for computing the minimal
 		total price of the LED tree depends on the sign of \(V(R)\).
 		Indeed, if \(V(R) \geq 0\), then
 		\[
@@ -862,35 +951,6 @@
 		\end{align*}
 	\end{proof}
 
-	
- 	TOTO som tu este nechal, to je pozostatok z mojich predoslich zly dokazov. Usek nad tymto je uz hotovy podla dobruch dokazov. neverthless, neviem usudit ci je toto tvrdenie spravne a ci je dokaz pravny. prosim posudte a podla toho to necham alebo zmazem.
-	\begin{proposition}\label{prop:R} 
-		To obtain the minimal total price \(P(T)\) of the tree for given points \(A, B, C, S\), the root \(R\) must lie on the longest edge among \( |AS|, |BS|, |CS| \). Without loss of generality, assume that \( |CS| \) is the longest, so \( R \in \overline{CS} \).
-	\end{proposition}
-
-	\begin{proof}
-		Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( BS \).  
-		Let us assume that the minimal LED tree satisfies:
-		\[
-		\Price{R}{C} = \Price{R}{B} = \Price{R}{A}
-		\]
-		Then in particular:
-		\[
-		\Price{R}{C} = \Price{R}{S} + \Price{S}{C} = \Price{R}{B} = |BR|
-		\]
-		
-		Now since \( R \in \overline{BS} \), we have \( |BR| < |BS| \), and from the assumption above
-		\[
-		|SR| + |CS| = |BR| < |BS| < |CS|
-		\quad \Rightarrow \quad |SR| < 0
-		\]
-		
-		which is a contradiction.  
-		The same argument applies if \( R \in \overline{AS} \).  
-		Therefore, the only edge that avoids contradiction is the longest one, i.e. \( \overline{CS} \).  
-		Hence, to minimize the total length while satisfying the LED condition, the root must lie on the longest edge from \( S \).
-	\end{proof}
-
 		Having determined the optimal placement of the root \(R\) for fixed points \(A, B, C, S\) we now turn to the problem of locating the point \(S\) for fixed points \(A, B, C\).
 		
 		The point \(S\) is constrained to lie on the axis of symmetry of two leaves. For the time being, we leave the choice of the particular axis open. It is important to say that the selection of the axis matters If unsuitable axis is chose the tree can start to relax in order to satisfy \cref{def:led}. At this stage, we do not have the tools to provide a more detailed analysis of the problem. However, this will be addressed in next section. 
@@ -906,7 +966,7 @@
 		The quantities \(a\), \(c\), \(x\), and \(\ell\) denote the distances indicated	in the figure. In particular, \(x\) determines the position of \(S\) along the
 		axis.
 		
-		\begin{figure}[ht]
+		\begin{figure}[H]
 			\centering
 			\begin{tikzpicture}[
 				>=stealth,
@@ -1123,12 +1183,10 @@
 		2 \sin \theta_1 = \sin \theta_2.
 		\]
 		which represents a weighted analogue of Snell's law. Where the weights reflect the fact that the contribution of the branch \(AS\) appears twice in function \(L(T)=2|AS|+|CS|\).
-	
-		In the end of this section we would like to devote a few words to the history of Snell's law. It is meant to provide a brief pause in this otherwise mathematically dense text.  about Willebrord Snellius (1580–1626) - Snell and 
 	\end{remark}	
 
 	With the axis chosen for the given side and two leafs, the computation of the minimal S depends on the position of the third leaf.
-	figure\ref{fig:Careas} describes how possition of C for fixed A, B and its axis affects determination of S for minimization of the tree. Only the upper half of the diagram is shown, due to symmetry with respect to AB. 
+	figure \ref{fig:Careas} describes how possition of C for fixed A, B and its axis affects determination of S for minimization of the tree. Only the upper half of the diagram is shown, due to symmetry with respect to AB. 
 	
 	\begin{figure}[H]
 		\centering
@@ -1854,18 +1912,19 @@
 	Consequently, all geometric relations required for the construction of the
 	minimal relaxed LED tree on three leaves are explicitly determined.
 	
-	\begin{proposition}
+	\begin{proposition}\label{grandfinal}
 		In a minimal relaxed LED tree on three leaves, the Steiner point \(S\) lies
 		on the perpendicular bisector of the shortest side of the triangle.
 		
 		The minimal total price \(\Ptotal{T} \) is given by sum of Euclidean lengths of its edges.
+		
 	\end{proposition}
 	
-	\chapter{Case of 3 leaves, Steiner vs relaxed LED tree}
-	From previous chapters we know how to construct minimal Steiner tree and minimal relaxed LED tree for prescribed 3 terminals/leaves. Roughly speaking, in case of three leafs, we have the same input structures and the only difference is in rules of optimization. Since we have for both, Steiner tree with three terminals and for relaxed LED tree with three leafs, extensive theory. We would like to in this chapter, mostly visually demostrate the difference between two and also to reinforce the reader’s understanding.  
+	\chapter{Three-Leaf Case, Comparison}
+	From previous chapters we know how to construct minimal Steiner tree and minimal relaxed LED tree for prescribed 3 terminals/leaves. Roughly speaking, in case of three leafs, we have the same input structures and the only difference is in rules of optimization. Since we have for both, Steiner tree with three terminals and for relaxed LED tree with three leafs, extensive theory. We would like to in this chapter, mostly visually demonstrate the difference between two and also to reinforce the reader’s understanding.  
 	
 	
-	For clarification, We used to use term terminal in context of Steiner trees and term leaf in context of LED trees. These two term are definitely not the same but in case when we only work with 3 terminals/leafs, it refers in most cases to the same thing, we will later state when they are not the same thing.
+	For clarification, We used to use term terminal in context of Steiner trees and term leaf in context of LED trees. These two term are definitely not the same but in case when we only work with 3 terminals/leafs, it refers in most cases to the same thing. 
 	
 	In following text we will be computing minimal Steiner and minimal LED tree for the set of leafs \(A,B,C\). In first case we will be computing Steiner point \(S\) and in second case we will be computing points \(S,R\). Since for both cases we have 3 fixed vertices, we will be working with triangles, assuming the point of triangle are non degenerative. Since we work with triangles and aim to understand how the situation appears in each triangle, we will continue with triangles in our representative domain. This way we approach the task more universally.
 	Let us recall that, representative domain
@@ -1893,7 +1952,7 @@
 		\label{fig:vypoctova_oblast}
 	\end{figure}
 	
-	\section{Minimal Steiner tree}
+	\section{Minimal Steiner tree in \(\Omega\)}
 	
 	Let us distinguish, that for Steiner tree with \(C\) from domain \(\Omega\), there are two cases when \(S\neq R\) and \(S = R\). This follows from the angle condition for triangles in the Fermat point problem. If on of the interior angles is greater than 120 then Steiner point coincides with the terminal where angle is greater than 120. In our representative domain the only possible angle that can be greater than 120 is angle \(\angle ACB\). Therefore we distinguish these two cases.  
 	\begin{figure}[H]
@@ -1985,16 +2044,16 @@
 		\label{fig:boundary120_region}
 	\end{figure}
 	We will use this separation when computing minimal Steiner point, tree length. 
-	Let us define a function $P(C)$, which assigns to each point $C$ in the domain the total length of the minimal Steiner tree. It is defined as the sum of Euclidean lengths of all edges in the tree.
+	Let us define a function $L(C)$, which assigns to each point $C$ in the domain the total length of the minimal Steiner tree. It is defined as the sum of Euclidean lengths of all edges in the tree.
 	More precisely, we define
 	\[
-	P(C) =
+	L(C) =
 	\begin{cases}
 		|AC| + |BC|, & \text{if } \angle ACB \geq 120^\circ, \\[0.5em]
 		|AS| + |BS| + |CS|, & \text{if } \angle ACB < 120^\circ,
 	\end{cases}
 	\]
-	For second case, the solution is straight forward but in order to evaluate the function $P(C)$, in first case. it is necessary to determine the position of the minimal Steiner point $S$
+	For second case, the solution is straight forward but in order to evaluate the function $L(C)$, in first case. it is necessary to determine the position of the minimal Steiner point $S$
 	
 	For this purpose, we use an iterative numerical method proposed by mathematician called Smith. It provides algorithm for computing minimal Steiner points in a given topology. This algorithm has it's importance and it is worth mentioning, because it provides numerical solution for arbitrary configuration.  
 	
@@ -2044,9 +2103,9 @@
 	\end{align}
 		Therefore, in each iteration, only two equations need to be solved.	In practice, the iteration converges rapidly and only a small number of steps is required to achieve sufficient accuracy.
 		
-		Using the methodology described above, we now evaluate the function $P(C)$ over the computational domain $\Omega$.
+		Using the methodology described above, we now evaluate the function $L(C)$ over the computational domain $\Omega$.
 		
-		A three-dimensional visualization of the function $P(C)$ over $\Omega$ is shown in Figure~\ref{fig:steiner_3d}.
+		A three-dimensional visualization of the function $L(C)$ over $\Omega$ is shown in Figure~\ref{fig:steiner_3d}.
 		
 		\begin{figure}[H]
 			\centering
@@ -2063,11 +2122,11 @@
 				\caption{Point plot.}
 				\label{fig:gs4_points3d}
 			\end{subfigure}
-			\caption{Three-dimensional visualization of $P(C)$}
+			\caption{Three-dimensional visualization of $L(C)$}
 			\label{fig:steiner_3d}
 		\end{figure}
 		
-		We also presented results in Figure~\ref{fig:steiner_2d} in the form of a density plot and contour lines. This representation provides additional insight into the solution. The density plot provides a global view of the variation of $P(C)$, while the contour plot highlights level sets of equal tree length.
+		We also presented results in Figure~\ref{fig:steiner_2d} in the form of a density plot and contour lines. This representation provides additional insight into the solution. The density plot provides a global view of the variation of $L(C)$, while the contour plot highlights level sets of equal tree length.
 
 	\begin{figure}[H]
 		\centering
@@ -2084,27 +2143,27 @@
 			\caption{Contour plot.}
 			\label{fig:gs2_contours}
 		\end{subfigure}
-		\caption{Minimal \(P(C)\) over the computational domain.}
+		\caption{Minimal \(L(C)\) over the computational domain.}
 		\label{fig:steiner_2d}
 	\end{figure}
 	
-	\section{Minimal LED tree}
+	\section{Minimal relaxed LED tree in \(\Omega\)}
 	
 	In chapter 2. we have formulated many relations, conditions and rules what holds in minimal relaxed LED tree. 
 	To compute $P(C)$ of minimal relaxes LED tree with 3 leaves we will use all these observations and rules.
 	
 	So let Suppose that \(A=(0,0), B=(1,0), C=(x,y)\) where \(C\in \Omega \)
-	In order, for relaxe LED tree with leafs \(A,B,C\), to be minimal.
+	In order, for relaxed LED tree with leafs \(A,B,C\), to be minimal.
 	
-	First, we need to determine on which axis, of side of the triangle, the point S lies. Based on Proposition~\ref{prop:axis}, we know that point S lies on the axis of the shortest side of the triangle. For configuration with \(c\) in region \(\Omega \), the shortest side is always \(AC\). Therfore, to minimize tree lenght, \(S\) lie on perpendicular bisector of\(AC\).  
+	First, we need to determine on which axis, of side of the triangle, the point S lies. Based on Proposition~\ref{grandfinal}, we know that point S lies on the axis of the shortest side of the triangle. For configuration with \(C\) in region \(\Omega \), the shortest side is always \(AC\). Therefore, to minimize tree length, \(S\) lie on perpendicular bisector of\(AC\).  
 	
 	We know based on Figure~\ref{fig:Careas} that for each axis there are three possible formulas how the total price of tree can be obtained, which depends on the possition of the remaining point. Let us propose that the point \(C\),\(C\in \Omega \) will always be in area \(R_3\) of diagram in Figure~\ref{fig:Careas} and therefore, based on Figure~\ref{prop:R3},  \(P(C)\) is obtained as \(P(C)=2|AS|+|BS|\). We note that the configuration is oriented differently, although the relation is correct.
 	
-	What remains to determine, on order to express \(P(C)=2|AS|+|BS|\), position of point \(S\). So far , we know that \(S\) lies on axis of \(AC\). To clearly determine the position, we need to identify where on the axis the point. Let \(x\) be the distance between \(S\) and side \(AC\). The distance \(x\) is than obtained as Equation~\ref{eq:xSpos}. 
+	What remains to determine, in order to express \(P(C)=2|AS|+|BS|\), position of point \(S\). So far , we know that \(S\) lies on axis of \(AC\). To clearly determine the position, we need to identify where on the axis the point. Let \(x\) be the distance between \(S\) and side \(AC\). The distance \(x\) is than obtained as Equation~\ref{eq:xSpos}. 
 	In our computations particularly, the equation was solved numerically using Newton's method.
 	This is all necessary to obtain total price \(P(C)\) of the tree.
 	
-	To obtain a clearer picture, we proceed. From Figure~\ref{prop:R3} we know that is fully stretched. From figure(este neni) that in minimal LED tree \(R\) lies on edge \(SB\). Furthermore from prop(este neni dooncena) we know that possition of \(R\) satisfies ref(vzorec na vypocet R)
+	To obtain a clearer picture, we proceed. From Figure~\ref{prop:R3} we know that is fully stretched. From Figure \ref{PbasedonR} that in minimal LED tree \(R\) lies on edge \(SB\). Furthermore we know that position of \(R\) satisfies Corollary \label{cor:sr} 
 	
 	The following figure provides a visual representation of the mathematical structure described above.
 	\begin{figure}[H]
@@ -2157,6 +2216,10 @@
 		\end{subfigure}
 		\caption{Minimal $P(C)$ over the computational domain.}
 		\label{fig:led_2d}
+
+	
+	Figure~\ref{fig:compare_3d} shows a clear difference between the Steiner and LED solutions. We also observe that the corresponding values coincide on the boundary of the domain \(\Omega\). This property is stated here only as an observation, and its proof is not included in this thesis.
+
 	\end{figure} 
 		\begin{figure}[H]
 			\centering
@@ -2176,6 +2239,17 @@
 			\caption{Three-dimensional comparison of the Steiner and LED solutions.}
 			\label{fig:compare_3d}
 		\end{figure}
+	
+	\chapter{Conclusions}
+	
+	In this thesis, we studied optimization trees related to the Euclidean Steiner problem and LED trees. The work first introduced the necessary notions from graph theory, weighted graphs, Euclidean graphs, and rooted trees. Afterwards, we summarized the basic theory of Steiner minimal trees, including their geometric properties and the classical Fermat problem for three terminals.
+	
+	The main focus of the thesis was the study of minimal relaxed LED trees in the case of three leaves. We introduced the notion of relaxed LED trees and investigated their geometric behavior. In particular, we described the structure of minimal configurations and presented a constructive procedure for obtaining minimal relaxed LED trees in the three-leaf case.
+	
+	An important part of the thesis was the comparison between Steiner minimal trees and relaxed LED trees. Although both problems are based on similar combinatorial structures, the obtained geometric properties differ in several aspects. The comparison showed both similarities and fundamental differences between these two optimization models.
+	
+	The obtained results suggest several possible directions for further research. One natural continuation would be the study of relaxed LED trees with a larger number of leaves and the investigation of their structural properties. Another possible direction is the development of algorithms for constructing minimal relaxed LED trees or the study of these problems in higher-dimensional Euclidean spaces.
 
-
+\nocite{*}
+\printbibliography
 \end{document}
