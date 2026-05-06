@@ -828,11 +828,11 @@
 		It follows that the minimal total price is attained at \(R = Q\).
 		
 		Since \(Q\) is the zero of \(V\), we have
-		\[
-		V(R) = 0
-		|AS| + |SR| - |RC| = 0.
-		|AS| + |SR| = |RC|
-		\]
+		\begin{align*}
+		V(R) &= 0 \\
+		|AS| + |SR| - |RC| &= 0\\
+		|AS| + |SR| &= |RC|\\
+		\end{align*}
 		Now we show that, under the condition \(|AS| + |SR| = |RC|\), the pricing rule corresponding to both cases (1), (2) and cases (3), (4)
 		coincides. Moreover, if \(|AS| = |BS|\), then the total price of the tree is given simply by the sum of the Euclidean lengths of its edges. In the computation, we also use \cref{cor:sr}.
 		\begin{align*}
@@ -869,7 +869,7 @@
 	\end{proposition}
 
 	\begin{proof}
-		Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( \overline{BS} \).  
+		Assume \( |AS| < |BS| < |CS| \) and suppose, for contradiction, that the root \( R \) lies on edge \( BS \).  
 		Let us assume that the minimal LED tree satisfies:
 		\[
 		\Price{R}{C} = \Price{R}{B} = \Price{R}{A}
@@ -962,7 +962,7 @@
 		\end{figure}
 		 
 		\begin{proposition}\label{prop:xSopt}
-			Let \(a,c,\ell>0\) be fixed. Let us define the function
+			Let \(a,c,\ell>0\) be given. Let us define the function \(f(x)\) that will represent euclidean length of minimal relaxed LED tree 
 			\[
 			f(x) := 2\sqrt{a^{2}+x^{2}}+\sqrt{c^{2}+(\ell-x)^{2}} .
 			\]
@@ -977,8 +977,7 @@
 			\end{equation}
 		\end{proposition}
 	 	\begin{proof}
-		 By the previous results, in the optimal configuration of \(R\) the total price
-		 of the tree reduces to the sum of the Euclidean lengths
+		 By the previous results, in the optimal configuration of \(R\), the total price of the tree reduces to the sum of the Euclidean lengths
 		 \[
 		 |AS|+|BS|+|CS|.
 		 \]
@@ -993,7 +992,7 @@
 		
 		We now express \(f\) according to Figure~\ref{fig:Sopt}, using Pythagoras theorem. 
 		\begin{align*}
-			L(T)
+			f
 			&= 2|AS| + |CS| \\
 			&= 2\sqrt{a^{2} + x^{2}} + \sqrt{c^{2} + (\ell - x)^{2}} ,
 		\end{align*}
@@ -1001,7 +1000,7 @@
 		where \(a\), \(c\), and \(\ell\) are fixed, and variable \(x\) represents the position of the Steiner point \(S\) along the symmetry axis.
 		Since the length tree \(f(x)\) is expressed as a differentiable function of the variable \(x\), its minimum is attained at a critical point. We therefore compute the derivative of \(f(x)\) and set it equal to zero.
 		\begin{align*}
-			\frac{\mathrm{d}L}{\mathrm{d}x}
+			\frac{\mathrm{d}f}{\mathrm{d}x}
 			&= \frac{2x}{\sqrt{a^{2} + x^{2}}}
 			- \frac{\ell - x}{\sqrt{c^{2} + (\ell - x)^{2}}} =0 
 		\end{align*}
@@ -1033,7 +1032,7 @@
 	
 	The geometric configuration of Snell's law is similar to that shown in Figure~\ref{fig:Sopt}. 
 	
-	\begin{figure}[ht]
+	\begin{figure}
 		\centering
 		\begin{tikzpicture}[
 			>=stealth,
@@ -1127,15 +1126,11 @@
 	
 		In the end of this section we would like to devote a few words to the history of Snell's law. It is meant to provide a brief pause in this otherwise mathematically dense text.  about Willebrord Snellius (1580–1626) - Snell and 
 	\end{remark}	
-		
-	
-	---------------------------------------NOVE
 
-	With the axis chosen for the given side, the computation of the minimal S depends on the position of the third point.
-	figure N describes how possition of C for fixed A, B and its axis affects determination of S for minimalization of the tree. Only the upper half of the diagram is shown, due to symmetry with respect to AB. 
+	With the axis chosen for the given side and two leafs, the computation of the minimal S depends on the position of the third leaf.
+	figure\ref{fig:Careas} describes how possition of C for fixed A, B and its axis affects determination of S for minimization of the tree. Only the upper half of the diagram is shown, due to symmetry with respect to AB. 
 	
-	
-	\begin{figure}[ht]
+	\begin{figure}[H]
 		\centering
 		\begin{tikzpicture}[
 			x=5cm,y=5cm, % <-- zväčšenie
@@ -1200,7 +1195,7 @@
 	\end{figure}
 	
 	
-	In this figure, we can distinguish three distinct regions R1, R2, R3. We now describe the nature of each region in turn.
+	In this figure, we can distinguish three distinct regions R1, R2, R3. In the following propositions \ref{prop:R3}, \ref{prop:R2}, \ref{prop:R1}, we assume that the total price \Ptotal{T} of relaxed LED tree \(T\) is minimal. We now describe the nature of each region in turn.
 		
 %------------------------------------------------------------------------------------------------------------------------------		
 	\begin{proposition}\label{prop:R3}
@@ -1212,7 +1207,7 @@
 		\frac{x^2}{a^2} + \frac{y^2}{3a^2} \geq 1 \right\}.
 		\]
 		
-		Then, for every point \( C \in R_3 \), the Steiner point \( S \) is determined as in Figure~\ref{fig:Sopt}, and the root \(R\) as in Proposition~\ref{prop:R}.
+		Then, for every point \( C \in R_3 \), the point \( S \) is determined as in Figure~\ref{fig:Sopt}, and the root \(R\) as in Proposition~\ref{prop:R}.
 		The Total Price \(\Ptotal{T}\) of such three is equal to \( f = 2|SA| + |SC| \). Every tree in this area is stretched. \(R \neq S\) except for points that lies on the boundary.  
 	\end{proposition}
 	
@@ -1264,45 +1259,44 @@
 			node[midway,fill=white,inner sep=1pt] {$\ell$};
 			
 		\end{tikzpicture}
-		\caption{Geometric configuration used for the optimization of point S, where \(C \in o\) }
+		\caption{Geometric configuration where \(C \in o\) }
 		\label{fig:Soptspec}
 	\end{figure}
 
-	Let  us express \(L(T)\) using Pythagoras theorem and analyze for which x is \(L(T)\) minimal. 
+	Let  us express \(f(x)\) using Pythagoras theorem and analyze for which x is minimal. 
 	\begin{align*}
-		L(T)
+		f(x)
 		&= 2|AS| + |CS| \\
 		&= 2\sqrt{a^{2}+ x^{2}} + \ell - x ,
 	\end{align*}
 	
 	\begin{align*}
-		\frac{\mathrm{d}L}{\mathrm{d}x}
+		\frac{\mathrm{d}f}{\mathrm{d}x}
 		&= \frac{2x}{\sqrt{a^{2} + x^{2}}} - 1
 	\end{align*}
 	
-	From the derivative of \( L(T) \), it follows that the minimum is independent of \( \ell \), since \( \ell \) does not appear in the expression for the derivative.
+	From the derivative of \( f(x) \), it follows that the minimum is independent of \( \ell \), since \( \ell \) does not appear in the expression of the derivative.
 		
 	\begin{align*}
-		\frac{\mathrm{d}L}{\mathrm{d}x}
+		\frac{\mathrm{d}f}{\mathrm{d}x}
 		= \frac{2x}{\sqrt{a^{2} + x^{2}}} - 1 &= 0 \\
 		x &= \frac{a}{\sqrt{3}}
 	\end{align*}
 	
 	This implies that, regardless of the position of \( C \) on the axis \( o \), the position of \( S \) remains fixed.
-	We now continue with set of statements we leave without proof, as their proofs are straightforward.
 	The issue arises when we attempt to place the root point. For LED tree, such in Figure~\ref{fig:Soptspec}, to be fully stretched we need to satisfy \(|AS|+|SR|=|CR|\). This is not exactly possible if \(|AS|>|CS|\). If we are left with such a tree we know that the tree will must be relaxed to satisfy LED tree definition. In this scenario to minimize the  \Ptotal{T} of tree, root R lies in point S. That way the minimal amount relaxation is acquired.
 	
 	Using computation from above, the boundary point \( C \) that lies on axis \(o\) for which no relaxation is required is the one for which all edges have equal length, and hence \( R = S \).
 	A straightforward computation shows that the distance of such a point \(C \in o\), from the segment \( AB \) is
 	\[ \frac{3 a}{\sqrt{3}} \]
 	
-	To analyze how would the boundary looks like outside of axis o, we have to bring back ("general" Formula to compute S):
+	To analyze how would the boundary looks like outside of axis o, we have to return to expression from Proposition \ref{prop:xSopt}:
 	\begin{align*}
-		\frac{\mathrm{d}L}{\mathrm{d}x}
+		\frac{\mathrm{d}f}{\mathrm{d}x}
 		= \frac{2x}{\sqrt{a^{2} + x^{2}}}
 		- \frac{\ell - x}{\sqrt{c^{2} + (\ell - x)^{2}}} &=0
 	\end{align*}
-	Let us remind that we are looking for set of points in plane that satisfy condition mentioned in Proposition~\ref{prop:R}, again since we want to avoid relaxing, such LED tree is one where \(R\) collapses into \(S\). This leaves us with condition \(|AS|=|CS|\). Let denote this distance \(d\).
+	Let us remind that we are looking for set of points in plane that satisfy condition mentioned in Proposition~\ref{prop:R}, again since we want to avoid relaxing, such LED tree is the one where \(R\) collapses into \(S\). This leaves us with condition \(|AS|=|CS|\). Let denote this distance \(d\).
 		\[
 		|AS| = |CS| = d, \quad
 		|AS| = \sqrt{a^{2} + x^{2}}, \quad
@@ -1327,10 +1321,10 @@
 
 	centered at \( M \), with semi-axes of lengths \( a \) in the horizontal direction and \( \sqrt{3}\,a \) in the vertical direction.
 	
-	This also confirms the boundary point computed on the axis, since the vertical coordinate of \( C \) is equivalent with vertical length of semi-axis the ellipse.
+	This also confirms the boundary point computed on the axis, since the vertical coordinate of \( C \) is equivalent with vertical length of semi-axis of the ellipse.
 	\end{proof}
 	
-	\begin{proposition}
+	\begin{proposition}\label{prop:R2}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
 		Define the region
@@ -1341,16 +1335,17 @@
 		\right\}.
 		\]
 		
-		Then, for every point \( C \in R_2 \),S satisfies \(|SA|=|SB|=|SC|\) root point \(R, R = S\) and total price \(\Ptotal{T}\) of the tree is equal to \(g = 3|SA|\).  The tree is fully stretched.
+		Then, for every point \( C \in R_2 \), \(S\) is the circumcenter of \(ABC\), therefore satisfies \(|SA|=|SB|=|SC|\), root point \(R\) coincides with \(S\), \( R = S\) and total price \(\Ptotal{T}\) of the tree is equal to \(g = 3|SA|\).  The tree is fully stretched.
 	\end{proposition}
 	
 	\begin{proof}
-		This is the case when function \(f\) no longer provides the shortest total price of tree \(P(T)\). We have already obtained the upper boundary of \(R_2\) in previous proof. In this proof we will analyze the region \(R_2\). And in next proof we will focus on lower boudary. In order to obtain minimal \(\Ptotal{T}\), let consider expressing the function, such that it is not relaxed.    
-		Recall from previous proof that \(|AS|=|BS|\), \(f = 2|AS| + |CS|\). Because we are in region \(R_2\), minimization of function \(f\) obtained point \(S\), leave us with case where \(|SA|\geq|SC|\). Consequently, \(R=S\). And in respect to \ref{prop:R} about minimal \(R\), \(R\) can only lie on \(SA\). 
+		This is the case when function \(f\) no longer provides the shortest total price of tree \(P(T)\). We have already obtained the upper boundary of \(R_2\) in previous proof. In this proof we will analyze the region \(R_2\). And in next proof we will focus on lower boundary. In order to obtain minimal \(\Ptotal{T}\), let consider expressing the function, such that it is not relaxed.    
+		Recall from previous proof that \(|AS|=|BS|\), \(f = 2|AS| + |CS|\). Because we are in region \(R_2\), minimization of function \(f\) obtained point \(S\), leave us with case where \(|SA|\geq|SC|\). Consequently, \(R=S\).
+		% And in respect to Proposition \ref{prop:R} about minimal \(R\), \(R\) can only lie on \(SA\). 
 		If \(|SA|\leq|CS|\) than \(\Ptotal{T}\) is equal to \(g = 3|SA|\). Under such a condition \(|SA|\) in minimal when \(|AS| = |CS|\). From this condition, it follows that \(S\) is the circumcenter of the points \(A, B, C\). 	
 	\end{proof}
 	
-	\begin{proposition}
+	\begin{proposition}\label{prop:R1}
 		Let \( M \) be the midpoint of the segment \( AB \), and let \( C = (x,y) \) be a point in the plane with respect to a coordinate system centered at \( M \).
 		
 		Define the region
@@ -1364,22 +1359,16 @@
 
 
 	\begin{proof}
-	From the results of the previous proofs, we can conclude that the only way to construct a non-relaxed tree for \( C \in R_1 \) is to impose the condition \(|SA| = |SB| = |SC|.\) Consequently, the point \( S \) is the circumcenter of triangle \( ABC \). It is clear that this circumcenter lies below the segment \( AB \). We denote its vertical distance by \( d \). pre takuto formaciu by sa P(T) pocitalo ako g=3|SA|. mozeme si vsimnut ze ak s klesajucou vziadlenostou h, klesa aj g. To mimochodom znamena to ze hrana CS bute relaxovana. kedze g zavysi iba on |SA| a |SA| je je najkratsie z definicie vzialenosti boda a priamky prave v vtedy ked je SA kolme na o, tak minimalna g bude pre bod S = M. Z dovodu rozlisenia kedy je strom relaxovany a kedy nie oznacime funciu pocitajucu \(\Ptotal{T}\) ako h = 3|SA|, ak ked je zhodna s g   
-	For this configuration, the total tree length \(P(T)\) can be expressed as \(g=3|SA|\). Observe that as the distance \(d\) decreases, the value of \(g\) also decreases. This implies that \(|SA|>|SC|\),therefore the edge \(CS\) becomes relaxed.
+	From the results of the previous proofs, we can conclude that the only way to construct a non-relaxed tree for \( C \in R_1 \) is to impose the condition \(|SA| = |SB| = |SC|.\) Consequently, the point \( S \) is the circumcenter of triangle \( ABC \). It is clear that this circumcenter lies below the segment \( AB \). We denote it's vertical distance by \( d \).	For this configuration, the total tree length \(P(T)\) can be expressed as \(g=3|SA|\). Observe that as the distance \(d\) decreases, the value of \(g\) also decreases. This implies that \(|SA|>|SC|\),therefore the edge \(CS\) becomes relaxed.
 	Since \(g\) depends only on \(|SA|\), and the distance \(|SA|\) is minimized precisely when the segment \(SA\) is perpendicular to the line \(AB\), it follows that the minimal value of \(g\) is attained at the point \(S=M\).
 	
 	For the reason to distinguish the relaxed and non-relaxed configurations functions, we denote that \(\Ptotal{T}\) is equal to function \(h=3|SA|\). Even though \(h\)and\(g\) coincides.
 	\end{proof}
 	
-	\section{rozuzlenie osi}
-
-	Sekcie su pracovne
-	
-	
+	\section{Selection of Topology}
 	
 	We have not yet resolved on axis of which side of triangle should lie the point S. To address this question in a universal way, we reformulate the problem on a representative domain that encodes all possible triangles up to similarity.
-	
-	\section{representative domain}
+
 	We start by introducing the representative domain. To describe all triangles up to similarity transformations, we construct a representative domain in the plane such that each similarity class of triangles corresponds to exactly one point in this domain.
 	Let $\mathcal{T}$ denote the set of all non-degenerate triangles in the plane. 
 	Two triangles $T_1, T_2 \in \mathcal{T}$ are said to be similar if their corresponding 
@@ -1397,7 +1386,7 @@
 	
 	To obtain a unique representative of each similarity class, we fix two vertices
 	\[
-	A = (0,0), \qquad B = (1,0),
+	A = (-0.5,0), \qquad B = (0.5,0),
 	\]
 	so that the side $AB$ has unit length and lies on the $x$-axis. 
 	The third vertex is denoted by $C = (x,y)$.
@@ -1409,7 +1398,9 @@
 	\]
 	In Cartesian coordinates this implies the conditions
 	\[
-	x^2 + y^2 \le 1, \qquad (x-1)^2 + y^2 \le 1.
+	\left(x+\frac12\right)^2+y^2 \le 1,
+	\qquad
+	\left(x-\frac12\right)^2+y^2 \le 1.
 	\]
 	
 	To avoid counting mirror images, we restrict to the upper half-plane
@@ -1417,158 +1408,213 @@
 	y > 0.
 	\]
 	Furthermore, interchanging the vertices $A$ and $B$ reflects the point $C$ across 
-	the line $x = \tfrac{1}{2}$. To ensure uniqueness of the representation, 
+	the line $x = 0$. To ensure uniqueness of the representation, 
 	we therefore impose the additional condition
 	\[
-	x \le \tfrac{1}{2}.
+	x\le0.
 	\]
-	
+	\begin{definition}\label{def:domain}
 	We thus define the representative domain
 	\[
 	\Omega =
 	\left\{
 	(x,y) \in \mathbb{R}^2 :
 	y > 0,\;
-	x^2 + y^2 \le 1,\;
-	(x-1)^2 + y^2 \le 1,\;
-	x \le \tfrac{1}{2}
+	\left(x+\frac12\right)^2 + y^2 \le 1,\;
+	\left(x-\frac12\right)^2 + y^2 \le 1,\;
+	x \le 0
 	\right\}.
 	\]
 	
 	Each point $C \in \Omega$ uniquely determines a triangle
 	\[
-	T(C) = \{(0,0), (1,0), (x,y)\},
+	T(C) = \{(-0.5,0), (0.5,0), (x,y)\},
 	\]
 	and every triangle in $\mathcal{T}$ is similar to exactly one such triangle. 
 	Therefore, the domain $\Omega$ provides a complete and non-redundant 
 	parametrization of all triangle shapes.
+	\end{definition}
+	We analyze, over the representative domain, which of the three possible
+	topologies yields the minimal total price. Since we work with a representative
+	domain, every triangle (up to similarity) can be transformed into this domain.
+	Therefore, once the optimal topology is identified within the domain, we can
+	determine the minimal relaxed LED tree for any given set of three leaves.
 	
-	
-	\section{zmena oblasti}\label{prop:axis}
-	
-	We have previously stated in proposition 2 that to minimize P(T), the point S has to lie on axis of symmetry of two points of triangle. We have not yet specified which two points it should be. 
-	
-	\begin{proposition}
-	To minimize P(T), point S has to lie on axis of symmetry of two points that's euclidean distance is the shortest among all.
- 	\end{proposition}
- 
-	\begin{proof}
-	Let us modify the representative domain we formulated earlier, so that we shift A, B. It's new coordinates will be 
-	\[
-	A = (-0,5;0), \qquad B = (0,5;0),
-	\]
-	to simplify matters we will not consider boundaries.
-	
-	First we focus on comparison of Total lenghts of trees of axis of point A,C and B,C.
-	
-	Let $T_1$ be an arbitrary tree in the plane such that S lies on axis of A,C. Furthermore lets denote this C $C_1$ and S $S_1$ accordingly. 
-	Also Let $T_2$ be an arbitrary tree in the plane such that S lies on axis of A,B and also denote this C $C_2$ and S $S_2$ accordingly.
-	
-	Let \(C_1 = [x_{C1},k], C_2 = [x_{C2},k] \) where \(k \in \mathbb{R}\) is an arbitrary constant
-	
-	and \(S_1 = [x_{S1},y_{S2}], S_2 = [x_{S2},y_{S2} ] \), where we consider the coordinates to be given by the aforementioned computation. So for each C, exactly one S is assigned. 
-	
-	In this case we can express \(\Ptotal{T}\) as sum of all euclidean distances between points of triangle and S:
-	(Tu sa predpoklada ze sa vzdy da najst take R ze strom je plne napnuty(do dokazovania toho sa radsej nepustam))
-	\begin{align*}
-	P(T) = |(x_S,y_S),(x_A,y_A)| + |(x_S,y_S),(x_B,y_B)| + |(x_S,y_S),(x_C,y_C)| =\\
-	 \sqrt{(-0,5 - x_S)^2 + y_S^2}
-	+ \sqrt{(0,5 - x_S)^2 + y_S^2}
-	+ \sqrt{(x_C - x_S)^2 + (k - y_S)^2}
-	\end{align*}
-	
-	
-	Next, we define the functions $f_1$ and $f_2$ as follows:
-	(citim ze tento uhol pohladu sa mi bude neskor byt s vecami... lebo tu je vlastnost f1 f2 definovana cez c1 , c2 a to myslim ze nieje uplne spravne. v danom momente ked som to pisal mi to prislo elegantne ale teraz ked dochadzam ku koncu celeho dokazu tak to robi problem a kazi mi to pohlad na vec. Potreboval by som od vas triezvy pohlat a radu. lebo moj pohlad uz nieje triezvy uz je taky domotany, opity tym ze nad tym uz dlho rozmyslam)
-	\begin{align*}
-		f_1(x_{C1}) = \Ptotal{T_1}
-		&= \sqrt{(-0.5 - x_{S1})^2 + y_{S1}^2}
-		+ \sqrt{(0.5 - x_{S1})^2 + y_{S1}^2} \\
-		&\quad + \sqrt{(x_{C1} - x_{S1})^2 + (k - y_{S1})^2}, \\[1em]
-		f_2(x_{C2}) = \Ptotal{T_2}
-		&= \sqrt{(-0.5 - x_{S2})^2 + y_{S2}^2}
-		+ \sqrt{(0.5 - x_{S2})^2 + y_{S2}^2} \\
-		&\quad + \sqrt{(x_{C2} - x_{S2})^2 + (k - y_{S2})^2}.
-	\end{align*}
-
-\section{convexity of f}	
-	Dokaz konvexnosti ... 2 sposoby, neviem ktory je korektnejsi - treba prerobit
-	\begin{proposition}	
-		Functions  \(f_1, f_2\) are convex functions.  
-	\end{proposition}
-	\begin{proof}
-		We show this property on general example, for Arbitrarily C and arbitrary axis that S lies on. 
-		\begin{align*}
-		f(x)&=\Ptotal{T}	\\
-		f(x)''&=\frac{\sqrt{(x_C-x_S)^2+(k-y_S)^2}-\dfrac{(x_C-x_S)^2}{\sqrt{(x_C-x_S)^2+(k-y_S)^2}}}{(x_C-x_S)^2+(k-y_S)^2}
-		\end{align*}
-		Denominator in \(f(x)''\) is always positive so we will further focus on numerator.
-		\begin{align*}
-			f''(x) &> 0	\\
-			\sqrt{(x_C-x_S)^2+(k-y_S)^2}-\dfrac{(x_C-x_S)^2}{\sqrt{(x_C-x_S)^2+(k-y_S)^2}} &> 0 \\
-			(k-y_S)^2 &> 0			
-		\end{align*}
-		which is always true, except for \(k = y_s\) which would occur only if A = C, which would not be a triangle no more. 
-	$\square$
-	\end{proof}
-	\begin{proof}
-		The proof follows from the fact that the Euclidean norm is a convex function.
-		If \( |e| \) is convex and If \(e = s - x\), where s is a fixed point and x is variable, than function representing th euclidean distance from x to s is also convex. 
-		\(\Ptotal{T}\) is just sum of such euclidean distances and since sum of convex functions is convex, than \(\Ptotal{T}\) is convex. Hence  \(f_1, f_2 \) are just specific case of \(\Ptotal{T}\) they are convex as well.
-	$\square$
-	\end{proof}
-
-	\begin{proposition}	
-	The functions \(f_1, f_2\) are symmetric with respect to the y-axis and intersect at the point where x=0.
-	\end{proposition}
-	\begin{proof}
-		We show that
+	In this section, we work with the function \(f\) representing the total price of the tree. It is function considered in area \(R_3\), for which it is
+	possible to determine minimal positions of \(S,R\) without relaxation. In other words, we assume that the tree is minimal. Since the tree is stretched, the total price is given by the sum of the Euclidean lengths of it's edges.
+	In following propositions we will work with \(f\):
+	\begin{definition}\label{def:f}
+		Let \(A = \left(-\tfrac12,0\right)\) and \(B = \left(\tfrac12,0\right)\) be fixed.
+		We define the function \(f : \mathbb{R}^2 \to \mathbb{R}\) by
 		\[
-		f_1(x_{C1}) = f_2(-x_{C1}).
+		f(C) := 2|AS| + |CS|,
 		\]
-		By definition,
-		\begin{align*}
-			f_1(x_{C1})
-			&= \sqrt{(-0.5-x_{S1})^2+y_{S1}^2}
-			+ \sqrt{(0.5-x_{S1})^2+y_{S1}^2}
-			+ \sqrt{(x_{C1}-x_{S1})^2+(k-y_{S1})^2}, \\
-			f_2(-x_{C1})
-			&= \sqrt{(-0.5+x_{S1})^2+y_{S1}^2}
-			+ \sqrt{(0.5+x_{S1})^2+y_{S1}^2}
-			+ \sqrt{(-x_{C1}+x_{S1})^2+(k-y_{S1})^2}.
-		\end{align*}
+		where \(S\) denotes point corresponding to the point \(C\) in minimal tree.
+	\end{definition}
+	We consider the function \(f\) in the plane containing the representative
+	domain, with fixed vertices \(A\) and \(B\), while the point \(C\) is allowed
+	to vary in the entire plane.
+	Furthermore we define functions \(f_1, f_2\) that will consider 2 different topologies
+	\begin{definition}\label{def:f1}
+		Let \(f_1 : \mathbb{R}^2 \to \mathbb{R}\) be the function defined as in
+		\cref{def:f}, under the additional assumption that the point \(S\)
+		lies on the perpendicular bisector of the segment \(AC\).
+		
+		Equivalently, the tree has the topology with edges \((A,S),\ (C,S),\ (S,R),\ (B,R).\)
+	\end{definition}
+	\begin{definition}\label{def:f2}
+		Let \(f_2 : \mathbb{R}^2 \to \mathbb{R}\) be defined analogously to
+		\cref{def:f1}, with the  point \(S\) lying on the perpendicular
+		bisector of the segment \(CB\).
+		
+		In this case, the tree has the topology with edges \( (C,S),\ (B,S),\ (S,R),\ (A,R), \)
+	\end{definition}
+	
+	(tu by sa hodil obrazok jak budes stihat...)
+	
+	In the following lines, we show that the functions \(f, f_1, f_2\) are convex, this property will be useful later. 
+	\begin{definition}\label{def:convex_function}
+		Let \(D \subseteq \mathbb{R}^n\) be a convex set. A function
+		\(g : D \to \mathbb{R}\) is called convex if for all \(x_1,x_2 \in D\)
+		and all \(\lambda \in [0,1]\), we have
+		\[
+		g(\lambda x_1 + (1-\lambda)x_2)
+		\leq
+		\lambda g(x_1) + (1-\lambda)g(x_2).
+		\]
+	\end{definition}
+	First, we show that any function of the form of, sum of edges, is convex. We then show that the minimal function of this form is also convex.
+	
+	\begin{lemma}\label{lem:Fconvex}
+		Let \(A,B \in \mathbb{R}^2\) be fixed points. Define the function
+		\[
+		F : \mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}
+		\]
+		by
+		\[
+		F(S,C) := |AS| + |SB| + |SC|.
+		\]
+		Then \(F\) is convex function of the variables \((S,C)\).
+	\end{lemma}
+	
+	\begin{proof}
+		We write
+		\[
+		F(S,C)=F_1(S)+F_2(S,C),
+		\]
+		where
+		\[
+		F_1(S):=|AS|+|SB|,
+		\qquad
+		F_2(S,C):=|SC|=\|C-S\|.
+		\]
+		The function \(F_1\) is convex, since it is the sum of two Euclidean distance
+		functions with fixed endpoints.
+
+		For the function \(F_2\), let \(S_1,S_2,C_1,C_2\in\mathbb{R}^2\) and
+		\(\lambda\in[0,1]\). Put
+		\[
+		\widetilde S=\lambda S_1+(1-\lambda)S_2,
+		\qquad
+		\widetilde C=\lambda C_1+(1-\lambda)C_2.
+		\]
+		Then
+		\[
+		F_2(\widetilde S,\widetilde C)
+		=
+		\|\widetilde C-\widetilde S\|.
+		\]
 		Since
 		\[
-		(-0.5-x_{S1})^2 = (0.5+x_{S1})^2,\qquad
-		(0.5-x_{S1})^2 = (-0.5+x_{S1})^2,
+		\widetilde C-\widetilde S
+		=
+		\lambda(C_1-S_1)+(1-\lambda)(C_2-S_2),
 		\]
-		and
+		we obtain, by the convexity of the Euclidean norm,
 		\[
-		(x_{C1}-x_{S1})^2 = (-x_{C1}+x_{S1})^2,
+		\begin{aligned}
+			F_2(\widetilde S,\widetilde C)
+			&=
+			\|\lambda(C_1-S_1)+(1-\lambda)(C_2-S_2)\| \\
+			&\leq
+			\lambda\|C_1-S_1\|+(1-\lambda)\|C_2-S_2\| \\
+			&=
+			\lambda F_2(S_1,C_1)+(1-\lambda)F_2(S_2,C_2).
+		\end{aligned}
 		\]
-		the first term of $f_1$ equals the second term of $f_2$, the second term of $f_1$ equals the first term of $f_2$, and the third terms are equal. Therefore,
-		\[
-		f_1(x_{C1}) = f_2(-x_{C1}),
-		\]
-		so the functions are symmetric with respect to the y-axis.
-	\end{proof}
+		Thus \(F_2\) is convex and since \(F\) is the sum of the convex functions \(F_1\) and \(F_2\), it follows
+		that \(F\) is convex.
 	\end{proof}
 
-	\section{krok 2. f1 je kolma na CS}
-	\begin{proposition}
+	\begin{proposition}\label{prop:f_convex}
+		Let \(f : \mathbb{R}^2 \to \mathbb{R}\) be function for minimal price defined by
+		\[
+		f(C) := |AS| + |SB| + |SC|,
+		\]
+		where S is chosen such that the expression attains its minimum.
+		Then \(f\) is convex.
+	\end{proposition}
+	\begin{proof}
+		Let \(C_1, C_2 \in \mathbb{R}^2\) and let \(S_1, S_2\) be corresponding
+		minimizers, i.e.,
+		\[
+		f(C_1) = F(S_1, C_1), \qquad f(C_2) = F(S_2, C_2).
+		\]
+		
+		Let \(\lambda \in [0,1]\) and define
+		\[
+		\widetilde C = \lambda C_1 + (1-\lambda) C_2,
+		\qquad
+		\widetilde S = \lambda S_1 + (1-\lambda) S_2.
+		\]
+		
+		By definition of \(f\) as a minimum over all \(S\), we have
+		\[
+		f(\widetilde C)
+		\leq
+		F(\widetilde S, \widetilde C).
+		\]
+		
+		Since \(F\) is convex by \cref{lem:Fconvex}, it follows that
+		\[
+		F(\widetilde S, \widetilde C)
+		\leq
+		\lambda F(S_1,C_1) + (1-\lambda)F(S_2,C_2).
+		\]
+		
+		Combining these inequalities, we obtain
+		\[
+		f(\widetilde C)
+		\leq
+		\lambda f(C_1) + (1-\lambda)f(C_2).
+		\]
+		
+		Therefore, \(f\) is convex.
+	\end{proof}
+
+	\begin{corollary}\label{cor:f1f2_convex}
+		The functions \(f_1\) and \(f_2\) are convex.
+	\end{corollary}
+	\begin{proof}
+		The proof follows analogously to \cref{prop:f_convex}, since both functions
+		\(f_1\) and \(f_2\) are defined same as \(f\), to prescribed topology.
+	\end{proof}
+
+
+	\begin{lemma}\label{lem:f1_level_normal}
 		Let \(C \in \Omega\), and let
 		\[
 		L_C := \{X \in \Omega : f_1(X)=f_1(C)\}
 		\]
 		denote the level curve of \(f_1\) passing through the point \(C\).
-		Furthermore, let \(S = S(C)\) be the Steiner point corresponding
+		Furthermore, let \(S = S(C)\) be the point corresponding
 		to \(f_1(C)\).
 		Then the vector
 		\[
 		CS^0 := \frac{CS}{|CS|}
 		\]
 		is the inward normal vector to the level curve \(L_C\).
-	\end{proposition}
+	\end{lemma}
 	\begin{proof}
 		Let \(v\) be a tangent vector to the level curve \(L_C\).
 		This by definition means that directional derivative of \(f_1\) in direction of vector \(v\),
@@ -1580,12 +1626,12 @@
 		\[
 		f_1(C)=2|AS|+|BS|,
 		\]   
-		where the Steiner point \(S=S(C)\) depends on the position of \(C\).
+		where the point \(S=S(C)\) depends on the position of \(C\).
 		
 		Differentiating in the direction \(v\), we obtain
-		\[
+		\begin{align}\label{eq:kolmost}
 		0 = D_v f_1(C) = (2AS^0+BS^0)\cdot \frac{dS}{dv}.
-		\]
+		\end{align}
 		Hence,
 		\[
 		2AS^0+BS^0 \perp \frac{dS}{dv}.
@@ -1594,7 +1640,7 @@
 		\[
 		2 \sin \theta_1 = \sin \theta_2.
 		\] 
-		where \(\theta_1\) denotes the angle between the segment \(AS\) and the normal to \(AC\) axis (interface in Figure~\ref{fig:Snell}), and \(\theta_2\) denotes the angle between the segment \(BS\) and the same normal to \(AC\) axis. 
+		where \(\theta_1\) denotes the angle between the segment \(AS\) and the normal to \(AC\) axis, and \(\theta_2\) denotes the angle between the segment \(BS\) and the same normal to \(AC\) axis.  These angles are illustrated in Figure~\ref{fig:Snell}).
 		
 		Now let \(n_{AC}\) denote a unit normal vector to the side \(AC\). Furthermore, let \(\alpha\) be the angle between \(n_{AC}\) and the segment \(AS\), and let \(\beta\) be the angle between the segment \(BS\) and \(n_{AC}\). Since  \(\alpha\), \(\beta\) are complementary to \(\theta_1\),\(\theta_2\) 
 		\[
@@ -1643,9 +1689,177 @@
 		+
 		CS^0\cdot v.
 		\]
-		
-
+	From equation \ref{eq:kolmost} we know that first term of expression is equal to zero. Therefore the second term is equal to zero as well. 
+	 	\[
+	 	CS^0\cdot v=0.
+	 	\]
+	Thus \(CS^0\) is perpendicular to every tangent vector \(v\) of the level curve
+	\(L_C\). In other words \(CS^0\) is a normal vector to \(L_C\).
+	
+	We know that level sets of \(f_1\) are convex and the function attains its minimum near the point \(A\), the
+	vector \(CS^0\) points towards the interior of the level set. Hence, it is the inward normal vector.
 	\end{proof}
+	
+	\begin{lemma}\label{lem:f2_normal}
+		An analogous statement holds for the function \(f_2\). In particular, if
+		\(L_C^{(2)} := \{X \in \Omega : f_2(X)=f_2(C)\}\) denotes the level curve
+		of \(f_2\) passing through \(C\), then the unit vector
+		\[
+		CS_2^0 := \frac{S_2 - C}{|S_2 - C|}
+		\]
+		is the inward normal vector to \(L_C^{(2)}\).
+	\end{lemma}
+	
+	\begin{proof}
+		The proof follows analogously to Lemma \ref{lem:f1_level_normal}. Indeed, the
+		function \(f_2\) is obtained from \(f_1\) by symmetry with respect to the
+		\(y\)-axis, and the corresponding minimal tree has the same geometric
+		properties. Therefore, the same argument applies.
+	\end{proof}
+
+	\begin{proposition}\label{prop:f1_leq_f2}
+		For every \(C\in\Omega\), we have
+		\[
+		f_1(C)\leq f_2(C).
+		\]
+	\end{proposition}
+	\begin{proof}
+		Let \(C\in\Omega\). We move from \(C\) along the level curve of \(f_1\) in the
+		tangent direction \(v\) chosen so that \(|AC|\) increases and \(|BC|\)
+		decreases. Along this motion, the value of \(f_1\) remains constant.
+		
+		By \cref{lem:f1_level_normal}, the vector \(CS_1^0\) is the inward normal to
+		the level curve of \(f_1\). Analogously, \(CS_2^0\) is the inward normal to the
+		level curve of \(f_2\). From the geometry of the domain \(\Omega\), the chosen
+		direction \(v\) forms an acute angle with \(CS_2^0\). Hence, moving in the
+		direction \(v\) decreases the value of \(f_2\).
+		
+		We continue this motion until either
+		\[
+		|AC|+|BC|=|AB|
+		\quad \text{or} \quad
+		|AC|=|BC|.
+		\]
+		At such a point \(C^\ast\), the inequality \(f_1(C^\ast)\leq f_2(C^\ast)\)
+		follows from the degenerate or symmetric configuration.
+		
+		Since \(f_1\) remains constant along the motion and \(f_2\) is strictly
+		decreasing, we have
+		\[
+		f_2(C) \ge f_2(C^\ast).
+		\]
+		Combining this with \(f_1(C)=f_1(C^\ast)\), we obtain
+		\[
+		f_1(C)=f_1(C^\ast)\le f_2(C^\ast)\le f_2(C),
+		\]
+		which implies
+		\[
+		f_1(C)\le f_2(C).
+		\]
+	\end{proof}
+	
+	We have shown that \(f_1(C) \le f_2(C)\) for every point \(C \in \Omega\).
+	However, this comparison involves only two of the possible expressions for the
+	total price of a minimal relaxed LED tree.
+	
+	Recall Figure~\ref{fig:Careas} and the corresponding propositions. In that
+	setting, depending on the position of the third point, the total price is
+	described by one of the functions \(f\), \(g\), or \(h\).
+	
+	We now explain how this classification applies in the representative domain
+	\(\Omega\). The argument is most naturally understood geometrically.
+	
+	Consider placing the diagram from Figure~\ref{fig:Careas} at a point
+	\(C \in \Omega\). If we align the configuration so that it corresponds to
+	the topology defining \(f_1\), that is, the symmetry axis is aligned with the
+	perpendicular bisector of the side \(AC\), then the remaining vertex \(B\)
+	always lies in the region \(R_3\). Consequently, only the function \(f\)
+	is relevant in this case, and the value of \(f_1(C)\) coincides with the
+	minimal price.
+	
+	On the other hand, if we orient the diagram so that it corresponds to the
+	topology defining \(f_2\), that is, with the symmetry axis aligned with the
+	perpendicular bisector of the side \(BC\), then the remaining vertex \(A\)
+	lies predominantly in the region \(R_3\), but in certain configurations it
+	may also lie in the region \(R_2\). In those cases, the total price is given
+	by the function \(g\), which is larger than \(f\).
+	
+	Therefore, the value corresponding to the topology \(f_2\) is never smaller
+	than the value corresponding to \(f_1\).
+	\begin{proposition}\label{prop:PabPbc}
+		For all \(C \in \Omega\), we have
+		\[
+		P_{AB}(C) \le P_{BC}(C),
+		\]
+		where \(P_{AB} = f_1\) and \(P_{BC} > f_2\).
+	\end{proposition}
+
+	The third possible configuration corresponds to the case where the point \(S\)
+	lies on the perpendicular bisector of the side \(AB\), that is, on the
+	\(y\)-axis.
+	
+	In this case, for points \(C \in \Omega\), the third vertex lies in the regions
+	\(R_1\) or \(R_2\), and the total price is given by the function
+	\[
+	g(C) = 3|AS|.
+	\]
+	In such a configuration, all edges of the tree have equal length.
+	
+	This implies that the corresponding triangle is equilateral in the sense that
+	the perpendicular bisectors of its sides intersect at a single point.
+	Consequently, the point \(S\) also lies on the perpendicular bisector of the
+	side \(AC\).
+	
+	However, we have already shown that among all configurations where \(S\) lies
+	on the perpendicular bisector of \(AC\), the minimal price is given by the
+	function \(f_1\). Therefore, the configuration corresponding to \(g\) cannot
+	yield a smaller value than \(f_1\).
+	\begin{proposition}
+		For all \(C \in \Omega\), we have
+		\[
+		P_{AC}(C) \le P_{AB}(C),
+		\]
+		where \(P_{AC} = f_1\) and \(P_{AB} = g\).
+	\end{proposition}
+
+	Combining this result with \cref{prop:PabPbc}, we conclude that for all
+	\(C \in \Omega\),
+	\[
+	f_1(C) \le f_2(C)
+	\quad \text{and} \quad
+	f_1(C) \le g(C).
+	\]
+	
+	Therefore, in our configuration, the topology that has minimal total price
+	is the one in which the Steiner point \(S\) lies on the perpendicular bisector
+	of the segment \(AC\). In other words, this topology has edges
+	\[
+	(A,S),\ (C,S),\ (S,R),\ (R,B),
+	\]
+	and corresponds to the function \(f_1\).
+	
+	In particular, the minimal total price for this topology is given by
+	\[
+	\Ptotal{C} = f(C).
+	\]
+	
+	We have shown that the topology yielding the minimal total price is the one
+	in which the Steiner point \(S\) lies on the perpendicular bisector of the
+	segment \(AC\).
+	
+	Since we work in the representative domain, this implies that in any triangle,
+	the point \(S\) lies on the perpendicular bisector of the shortest side of the
+	triangle formed by the leaves.
+	
+	Consequently, all geometric relations required for the construction of the
+	minimal relaxed LED tree on three leaves are explicitly determined.
+	
+	\begin{proposition}
+		In a minimal relaxed LED tree on three leaves, the Steiner point \(S\) lies
+		on the perpendicular bisector of the shortest side of the triangle.
+		
+		The minimal total price \(\Ptotal{T} \) is given by sum of Euclidean lengths of its edges.
+	\end{proposition}
 	
 	\chapter{Case of 3 leaves, Steiner vs relaxed LED tree}
 	From previous chapters we know how to construct minimal Steiner tree and minimal relaxed LED tree for prescribed 3 terminals/leaves. Roughly speaking, in case of three leafs, we have the same input structures and the only difference is in rules of optimization. Since we have for both, Steiner tree with three terminals and for relaxed LED tree with three leafs, extensive theory. We would like to in this chapter, mostly visually demostrate the difference between two and also to reinforce the reader’s understanding.  
@@ -1679,7 +1893,7 @@
 		\label{fig:vypoctova_oblast}
 	\end{figure}
 	
-	\section{Minimal lenght of Steiner tree}
+	\section{Minimal Steiner tree}
 	
 	Let us distinguish, that for Steiner tree with \(C\) from domain \(\Omega\), there are two cases when \(S\neq R\) and \(S = R\). This follows from the angle condition for triangles in the Fermat point problem. If on of the interior angles is greater than 120 then Steiner point coincides with the terminal where angle is greater than 120. In our representative domain the only possible angle that can be greater than 120 is angle \(\angle ACB\). Therefore we distinguish these two cases.  
 	\begin{figure}[H]
@@ -1874,7 +2088,8 @@
 		\label{fig:steiner_2d}
 	\end{figure}
 	
-	\section{Minimal lenght of LED tree}
+	\section{Minimal LED tree}
+	
 	In chapter 2. we have formulated many relations, conditions and rules what holds in minimal relaxed LED tree. 
 	To compute $P(C)$ of minimal relaxes LED tree with 3 leaves we will use all these observations and rules.
 	
